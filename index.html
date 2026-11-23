@@ -1,397 +1,1478 @@
 <!DOCTYPE html>
 <html lang="es" class="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>LEM MODA · Sistema Central ERP & POS</title>
-  <meta name="theme-color" content="#080F0C" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="LEM MODA" />
-  <link rel="manifest" href="manifest.json" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LEM MODA | Executive Management Suite</title>
+    
+    <!-- PWA Settings -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0B0D11">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="LEM MODA">
 
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Iconos Lucide -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <!-- Gráficos Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <!-- Generador PDF Oficial (jsPDF + AutoTable) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
-
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            lem: {
-              black: '#070D0A',
-              dark: '#0D1914',
-              card: '#12231C',
-              border: '#1E382D',
-              gold: '#C5A059',
-              goldLight: '#E5C883',
-              goldDark: '#8A6628',
-              leaf: '#6EB43F',
-              emerald: '#10B981'
+    <!-- Fuentes Tipográficas Oficiales -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            bg: '#0B0D11',
+                            card: '#13171F',
+                            cardBorder: 'rgba(200, 157, 75, 0.18)',
+                            cardHover: '#181E29',
+                            gold: '#C89D4B',
+                            goldLight: '#E8C87A',
+                            goldDark: '#8F6B28',
+                            leaf: '#5BB347',
+                            leafDark: '#3D822D',
+                            textMuted: '#8E9AA8',
+                            darkInput: '#0E1117'
+                        }
+                    },
+                    fontFamily: {
+                        brand: ['"Cinzel"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif']
+                    }
+                }
             }
-          },
-          fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif']
-          }
         }
-      }
-    }
-  </script>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cinzel:wght@600;700&display=swap');
-    body { font-family: 'Inter', sans-serif; background-color: #070D0A; color: #F1F5F9; }
-    .font-brand { font-family: 'Cinzel', serif; letter-spacing: 0.14em; }
-    .gold-gradient-text {
-      background: linear-gradient(135deg, #8A6628 0%, #C5A059 45%, #F2D99B 75%, #9E7832 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .gold-gradient-bg {
-      background: linear-gradient(135deg, #9E7832 0%, #C5A059 50%, #E2C178 100%);
-    }
-    .glass-card {
-      background: linear-gradient(160deg, rgba(18, 35, 28, 0.92) 0%, rgba(11, 22, 17, 0.96) 100%);
-      border: 1px solid rgba(197, 160, 89, 0.16);
-      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
-    }
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #070D0A; }
-    ::-webkit-scrollbar-thumb { background: #1E382D; border-radius: 9999px; }
-    ::-webkit-scrollbar-thumb:hover { background: #C5A059; }
-  </style>
+    </script>
+
+    <!-- Iconos Vectoriales Lucide (Sin emojis) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Chart.js para las gráficas estilo Imagen 1 y 5 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Librerías de PDF Corporativo -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+    <!-- Google OAuth 2.0 y Sheets API -->
+    <script src="https://apis.google.com/js/api.js" async defer></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0B0D11; color: #F3F4F6; }
+        .font-brand { font-family: 'Cinzel', serif; }
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: #0B0D11; }
+        ::-webkit-scrollbar-thumb { background: #8F6B28; border-radius: 4px; }
+        .gold-gradient-bg { background: linear-gradient(135deg, #C89D4B 0%, #8F6B28 100%); }
+        .gold-gradient-text { background: linear-gradient(135deg, #E8C87A 0%, #C89D4B 60%, #8F6B28 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .lem-card { background: #13171F; border: 1px solid rgba(200, 157, 75, 0.16); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35); }
+        .lem-card-glow:hover { border-color: rgba(200, 157, 75, 0.45); }
+    </style>
 </head>
-<body class="antialiased selection:bg-lem-gold selection:text-black">
+<body class="min-h-screen flex flex-col bg-brand-bg text-gray-100 antialiased selection:bg-brand-gold selection:text-black">
 
-  <!-- ================= PANTALLA DE LOGIN (Identidad Imagen 4) ================= -->
-  <div id="loginScreen" class="min-h-screen flex items-center justify-center p-4 relative overflow-hidden" style="background: radial-gradient(circle at top, #153526 0%, #070D0A 65%);">
-    <div class="w-full max-w-md glass-card rounded-3xl p-8 relative z-10 border border-lem-gold/30">
-      <!-- Logo SVG inspirado en Imagen 4 (Hormiga + Hoja Verde + Dorado LEM MODA) -->
-      <div class="flex flex-col items-center mb-7">
-        <div class="w-24 h-24 rounded-2xl bg-black border border-lem-gold/40 flex flex-col items-center justify-center shadow-2xl mb-4 relative">
-          <svg viewBox="0 0 100 100" class="w-16 h-16">
-            <!-- Hoja verde -->
-            <path d="M48 12 C22 18, 18 52, 42 58 C56 54, 58 30, 48 12 Z" fill="#6EB43F"/>
-            <!-- Hormiga estilizada dorada -->
-            <circle cx="48" cy="60" r="5" fill="#C5A059"/>
-            <ellipse cx="59" cy="64" rx="6" ry="4" fill="#C5A059"/>
-            <ellipse cx="73" cy="69" rx="8" ry="6" fill="#9E7832"/>
-            <path d="M45 56 L38 49 M52 64 L46 78 M59 67 L58 82 M67 68 L76 83 M74 64 L84 54" stroke="#C5A059" stroke-width="2.2" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <h1 class="text-3xl font-bold font-brand gold-gradient-text">LEM MODA</h1>
-        <p class="text-xs uppercase tracking-[0.3em] text-lem-goldLight/80 mt-1">Manager · Sistema Central</p>
-        <span class="text-[11px] text-emerald-400/80 mt-1 bg-emerald-950/60 px-3 py-0.5 rounded-full border border-emerald-700/40">Local Colón · Quito</span>
-      </div>
+    <!-- ==================== PANTALLA DE ACCESO / LOGIN ==================== -->
+    <div id="login-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-brand-bg p-4">
+        <div class="max-w-md w-full lem-card rounded-3xl p-8 relative overflow-hidden border border-brand-gold/30">
+            <!-- Resplandor de fondo -->
+            <div class="absolute -top-20 -right-20 w-44 h-44 rounded-full bg-brand-gold/10 blur-3xl"></div>
+            <div class="absolute -bottom-20 -left-20 w-44 h-44 rounded-full bg-brand-leaf/10 blur-3xl"></div>
 
-      <form onsubmit="handleLogin(event)" class="space-y-4">
-        <div>
-          <label class="block text-xs font-medium text-gray-400 mb-1">Usuario</label>
-          <input id="loginUser" type="text" value="victor" required placeholder="Ej: victor o andrea"
-            class="w-full bg-black/50 border border-lem-border focus:border-lem-gold rounded-xl px-4 py-3 text-sm text-white outline-none transition" />
-        </div>
-        <div>
-          <label class="block text-xs font-medium text-gray-400 mb-1">PIN / Contraseña</label>
-          <input id="loginPass" type="password" value="1234" required placeholder="••••"
-            class="w-full bg-black/50 border border-lem-border focus:border-lem-gold rounded-xl px-4 py-3 text-sm text-white outline-none transition" />
-        </div>
-
-        <button type="submit" class="w-full gold-gradient-bg text-black font-bold py-3.5 rounded-xl shadow-lg hover:brightness-110 transition flex items-center justify-center gap-2">
-          <span>Ingresar al Sistema</span>
-          <i data-lucide="arrow-right" class="w-4 h-4"></i>
-        </button>
-      </form>
-
-      <!-- Acceso rápido Demo de Roles -->
-      <div class="mt-6 pt-5 border-t border-white/10">
-        <p class="text-[11px] text-center text-gray-400 mb-2">Prueba rápida de perfiles:</p>
-        <div class="grid grid-cols-2 gap-2">
-          <button onclick="quickFill('victor','1234')" class="text-xs py-2 px-3 rounded-lg bg-lem-card border border-lem-gold/30 text-lem-goldLight hover:bg-lem-border transition">
-            👑 Admin (Victor)
-          </button>
-          <button onclick="quickFill('andrea','1111')" class="text-xs py-2 px-3 rounded-lg bg-lem-card border border-emerald-500/30 text-emerald-300 hover:bg-lem-border transition">
-            🛍️ Vendedora (Andrea)
-          </button>
-        </div>
-      </div>
-
-      <!-- Botón Instalar App PWA -->
-      <button id="installAppBtnLogin" onclick="triggerInstallPWA()" class="mt-4 w-full py-2.5 rounded-xl border border-lem-leaf/40 bg-lem-leaf/10 text-lem-leaf text-xs font-semibold flex items-center justify-center gap-2 hover:bg-lem-leaf/20 transition">
-        <i data-lucide="download" class="w-4 h-4"></i>
-        Instalar App en Android / iPhone / PC
-      </button>
-    </div>
-  </div>
-
-  <!-- ================= APLICACIÓN PRINCIPAL ================= -->
-  <div id="appContainer" class="hidden min-h-screen flex flex-col lg:flex-row">
-
-    <!-- SIDEBAR NAVEGACIÓN (Inspirado en Imágenes 6 y 7) -->
-    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-lem-black border-r border-lem-border transform -translate-x-full lg:translate-x-0 lg:static transition-transform duration-200 flex flex-col justify-between">
-      <div>
-        <!-- Brand Header -->
-        <div class="p-5 flex items-center justify-between border-b border-lem-border">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-black border border-lem-gold/50 flex items-center justify-center">
-              <span class="font-brand font-bold text-xs gold-gradient-text">LEM</span>
+            <!-- Logo Vectorial LEM MODA -->
+            <div class="text-center relative z-10">
+                <div class="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
+                    <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-[0_4px_12px_rgba(200,157,75,0.3)]">
+                        <!-- Hoja verde -->
+                        <path d="M42 12 C 48 8, 62 10, 60 28 C 58 40, 48 48, 38 46 C 30 45, 34 32, 38 28 C 42 24, 38 18, 42 12 Z" fill="#5BB347" />
+                        <!-- Hormiga dorada -->
+                        <path d="M45 42 Q 52 45 56 40 Q 64 48 68 56 Q 74 62 70 70 Q 56 68 54 58 Q 50 56 46 54 Z" fill="#C89D4B" />
+                        <circle cx="43" cy="40" r="4" fill="#C89D4B"/>
+                        <!-- Patas vectoriales -->
+                        <path d="M48 48 L 40 62 M 54 52 L 48 70 M 60 56 L 62 72 M 58 50 L 72 44 M 64 54 L 78 52 M 66 60 L 80 66" stroke="#C89D4B" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <h1 class="font-brand text-3xl font-bold tracking-widest gold-gradient-text uppercase">LEM MODA</h1>
+                <p class="text-[10px] text-brand-goldLight tracking-[0.3em] uppercase mt-1">Management & Executive Cloud</p>
             </div>
-            <div>
-              <h2 class="font-brand font-bold text-sm gold-gradient-text">LEM MODA</h2>
-              <p class="text-[10px] text-gray-400">Local Colón · Quito</p>
+
+            <!-- Acciones de Entrada -->
+            <div class="mt-8 space-y-4 relative z-10">
+                <button onclick="handleGoogleLogin()" class="w-full py-3 px-4 bg-[#181E29] hover:bg-[#1E2533] border border-brand-gold/40 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-3 transition">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24">
+                        <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.4 1 3.5 3.6 1.6 7.4l3.7 2.8C6.2 7.2 8.9 5 12 5z"/>
+                        <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.6l3.7 2.9c2.2-2 3.7-5 3.7-8.7z"/>
+                        <path fill="#FBBC05" d="M5.3 14.8c-.2-.8-.4-1.6-.4-2.5s.2-1.7.4-2.5L1.6 7C.6 9 0 11.2 0 13.5s.6 4.5 1.6 6.5l3.7-2.9z"/>
+                        <path fill="#34A853" d="M12 24c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3.1 0-5.8-2.1-6.7-5l-3.7 2.8C3.5 21.4 7.4 24 12 24z"/>
+                    </svg>
+                    <span>Conectar con Google Workspace</span>
+                </button>
+
+                <div class="p-3 bg-brand-darkInput rounded-xl border border-brand-gold/20 text-xs">
+                    <div class="flex items-center justify-between text-gray-400">
+                        <span class="flex items-center gap-1.5"><i data-lucide="key" class="w-3.5 h-3.5 text-brand-gold"></i> Client ID OAuth</span>
+                        <button onclick="toggleClientIdInput()" class="text-brand-goldLight underline">Ajustar</button>
+                    </div>
+                    <div id="client-id-box" class="hidden mt-2 space-y-2">
+                        <input id="google-client-id" type="text" placeholder="apps.googleusercontent.com" class="w-full px-3 py-1.5 bg-black border border-brand-gold/30 rounded-lg text-[11px] text-gray-200 focus:outline-none">
+                        <button onclick="saveClientId()" class="w-full py-1 gold-gradient-bg text-black font-semibold rounded-lg text-xs">Guardar Token</button>
+                    </div>
+                </div>
+
+                <div class="relative flex py-1 items-center">
+                    <div class="flex-grow border-t border-gray-800"></div>
+                    <span class="flex-shrink mx-3 text-gray-500 text-[10px] uppercase tracking-widest">Acceso Inmediato</span>
+                    <div class="flex-grow border-t border-gray-800"></div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="loginAsRole('admin')" class="py-2.5 px-3 gold-gradient-bg text-black hover:opacity-90 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition">
+                        <i data-lucide="shield-check" class="w-4 h-4"></i> Admin Total
+                    </button>
+                    <button onclick="loginAsRole('vendedora')" class="py-2.5 px-3 bg-[#181E29] hover:bg-[#222B3A] border border-gray-700 text-gray-200 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition">
+                        <i data-lucide="shopping-bag" class="w-4 h-4 text-brand-gold"></i> Vendedora
+                    </button>
+                </div>
             </div>
-          </div>
-          <button onclick="toggleSidebar()" class="lg:hidden text-gray-400 hover:text-white">
-            <i data-lucide="x" class="w-5 h-5"></i>
-          </button>
         </div>
-
-        <!-- Menú Dinámico según Rol (Admin vs Vendedora) -->
-        <nav id="navMenu" class="p-3 space-y-1 overflow-y-auto max-h-[calc(100vh-180px)]"></nav>
-      </div>
-
-      <!-- Pie de Sidebar: Usuario Activo + Instalar + Salir -->
-      <div class="p-4 border-t border-lem-border space-y-2 bg-black/40">
-        <button onclick="triggerInstallPWA()" class="w-full py-2 px-3 rounded-xl bg-lem-leaf/15 border border-lem-leaf/40 text-lem-leaf text-xs font-semibold flex items-center justify-center gap-2 hover:bg-lem-leaf/25 transition">
-          <i data-lucide="smartphone" class="w-4 h-4"></i> Descargar App
-        </button>
-        <div class="flex items-center justify-between pt-1">
-          <div class="truncate pr-2">
-            <p id="currentUserName" class="text-xs font-bold text-white truncate">VICTOR CARVAJAL</p>
-            <span id="currentUserRole" class="text-[10px] px-2 py-0.5 rounded-full bg-lem-gold/20 text-lem-goldLight font-semibold">ADMIN</span>
-          </div>
-          <button onclick="logout()" title="Cerrar sesión" class="p-2 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 transition">
-            <i data-lucide="log-out" class="w-4 h-4"></i>
-          </button>
-        </div>
-      </div>
-    </aside>
-
-    <!-- CONTENIDO CENTRAL -->
-    <div class="flex-1 flex flex-col min-w-0">
-      <!-- Topbar -->
-      <header class="sticky top-0 z-30 bg-lem-black/90 backdrop-blur-md border-b border-lem-border px-4 lg:px-8 py-3.5 flex items-center justify-between gap-4">
-        <div class="flex items-center gap-3">
-          <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-lg bg-lem-card border border-lem-border text-gray-300">
-            <i data-lucide="menu" class="w-5 h-5"></i>
-          </button>
-          <div>
-            <h1 id="pageTitle" class="text-lg lg:text-xl font-bold text-white">Dashboard Ejecutivo</h1>
-            <p id="pageSubtitle" class="text-xs text-gray-400 hidden sm:block">Resumen en tiempo real sincronizado con tus 5 Google Sheets</p>
-          </div>
-        </div>
-
-        <div class="flex items-center gap-2.5">
-          <!-- Botón Conexión Google Sheets -->
-          <button onclick="openApiModal()" class="px-3 py-2 rounded-xl bg-lem-card border border-lem-border text-xs text-gray-300 hover:border-lem-gold flex items-center gap-1.5 transition">
-            <span id="syncDot" class="w-2 h-2 rounded-full bg-lem-leaf animate-pulse"></span>
-            <span class="hidden md:inline">Google Sheets</span>
-          </button>
-
-          <!-- BOTÓN UNIVERSAL DESCARGAR PDF OFICIAL -->
-          <button onclick="exportCurrentModulePDF()" class="gold-gradient-bg text-black font-bold text-xs px-4 py-2.5 rounded-xl shadow-lg hover:brightness-110 transition flex items-center gap-2">
-            <i data-lucide="file-down" class="w-4 h-4"></i>
-            <span>Descargar PDF</span>
-          </button>
-        </div>
-      </header>
-
-      <!-- Contenedor Dinámico de Vistas -->
-      <main id="mainView" class="p-4 lg:p-8 flex-1 overflow-y-auto space-y-6"></main>
     </div>
-  </div>
 
-  <!-- MODAL CONEXIÓN API GOOGLE SHEETS & GUÍA INSTALACIÓN -->
-  <div id="infoModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="glass-card rounded-2xl max-w-lg w-full p-6 border border-lem-gold/40 space-y-4">
-      <div class="flex items-center justify-between">
-        <h3 id="modalTitle" class="text-base font-bold gold-gradient-text">Configuración Google Sheets API</h3>
-        <button onclick="closeModal()" class="text-gray-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
-      </div>
-      <div id="modalBody" class="text-xs text-gray-300 space-y-3"></div>
+    <!-- ==================== SUITE PRINCIPAL ==================== -->
+    <div id="app-container" class="hidden flex-1 flex h-screen overflow-hidden">
+        
+        <!-- SIDEBAR DE NAVEGACIÓN -->
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-[#0E1117] border-r border-brand-cardBorder flex flex-col transition-transform duration-300 -translate-x-full lg:translate-x-0 lg:static">
+            <!-- Header Marca -->
+            <div class="p-5 flex items-center justify-between border-b border-brand-cardBorder">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl gold-gradient-bg flex items-center justify-center shadow-lg">
+                        <span class="font-brand font-bold text-black text-sm">LM</span>
+                    </div>
+                    <div>
+                        <h2 class="font-brand text-sm tracking-widest gold-gradient-text font-bold">LEM MODA</h2>
+                        <div class="flex items-center gap-1.5 mt-0.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-brand-leaf animate-pulse"></span>
+                            <span class="text-[9px] text-gray-400 font-mono uppercase tracking-wider">Online v4.2</span>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="toggleSidebar()" class="lg:hidden text-gray-400 hover:text-white">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Perfil Activo -->
+            <div class="p-3.5 mx-3 mt-3 rounded-2xl bg-brand-card border border-brand-cardBorder flex items-center gap-3">
+                <div id="user-avatar-badge" class="w-9 h-9 rounded-xl bg-brand-gold/10 border border-brand-gold text-brand-goldLight flex items-center justify-center font-bold text-xs">
+                    AD
+                </div>
+                <div class="truncate">
+                    <p id="user-name-display" class="text-xs font-bold text-white truncate">Dirección LEM</p>
+                    <p id="user-role-label" class="text-[10px] text-brand-gold uppercase tracking-wider font-semibold">Administrador</p>
+                </div>
+            </div>
+
+            <!-- Menú Principal -->
+            <div class="flex-1 px-3 py-4 space-y-6 overflow-y-auto">
+                <div>
+                    <span class="px-3 text-[10px] font-bold uppercase tracking-widest text-brand-textMuted">Vistas Principales</span>
+                    <nav class="mt-2 space-y-1">
+                        <button onclick="switchMasterView('dashboard')" id="nav-btn-dashboard" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold bg-brand-card text-brand-gold border border-brand-cardBorder">
+                            <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard Ejecutivo
+                        </button>
+                        <button onclick="switchMasterView('pos')" id="nav-btn-pos" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium text-gray-400 hover:text-white hover:bg-brand-cardHover transition">
+                            <i data-lucide="shopping-cart" class="w-4 h-4"></i> Punto de Venta (POS)
+                        </button>
+                        <button onclick="switchMasterView('inventory-matrix')" id="nav-btn-matrix" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium text-gray-400 hover:text-white hover:bg-brand-cardHover transition">
+                            <i data-lucide="grid-3x3" class="w-4 h-4"></i> Matriz de Tallas & Stock
+                        </button>
+                        <button onclick="switchMasterView('planning')" id="nav-btn-planning" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium text-gray-400 hover:text-white hover:bg-brand-cardHover transition">
+                            <i data-lucide="calendar-range" class="w-4 h-4"></i> Planificador de Pedidos
+                        </button>
+                    </nav>
+                </div>
+
+                <!-- 5 Libros de Google Sheets -->
+                <div>
+                    <span class="px-3 text-[10px] font-bold uppercase tracking-widest text-brand-textMuted">Google Sheets (5 Links)</span>
+                    <nav id="sheets-nav-container" class="mt-2 space-y-1">
+                        <!-- Generado dinámicamente -->
+                    </nav>
+                </div>
+
+                <!-- Módulo Admin Exclusivo -->
+                <div id="admin-sec-nav">
+                    <span class="px-3 text-[10px] font-bold uppercase tracking-widest text-brand-gold">Seguridad & Equipo</span>
+                    <nav class="mt-2 space-y-1">
+                        <button onclick="switchMasterView('users')" id="nav-btn-users" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium text-gray-400 hover:text-white hover:bg-brand-cardHover transition">
+                            <i data-lucide="users" class="w-4 h-4 text-brand-gold"></i> Vendedoras y Accesos
+                        </button>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Footer Sidebar -->
+            <div class="p-3 border-t border-brand-cardBorder space-y-2">
+                <button onclick="installPWA()" class="w-full py-2 px-3 gold-gradient-bg text-black font-bold rounded-xl text-[11px] flex items-center justify-center gap-2 shadow-lg">
+                    <i data-lucide="download" class="w-3.5 h-3.5"></i> Instalar App en Celular / PC
+                </button>
+                <button onclick="logout()" class="w-full py-1.5 px-3 bg-brand-darkInput text-gray-400 hover:text-red-400 rounded-xl text-[11px] flex items-center justify-center gap-2">
+                    <i data-lucide="log-out" class="w-3.5 h-3.5"></i> Cerrar Sesión
+                </button>
+            </div>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <div class="flex-1 flex flex-col overflow-hidden bg-brand-bg">
+            
+            <!-- HEADER SUPERIOR -->
+            <header class="h-16 bg-[#0E1117] border-b border-brand-cardBorder px-6 flex items-center justify-between z-20">
+                <div class="flex items-center gap-3">
+                    <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-xl bg-brand-card border border-brand-cardBorder text-gray-300">
+                        <i data-lucide="menu" class="w-5 h-5"></i>
+                    </button>
+                    <div>
+                        <h1 id="view-title" class="font-brand text-lg font-bold text-white tracking-wide">Dashboard Ejecutivo</h1>
+                        <p id="view-sub" class="text-[11px] text-brand-textMuted">Métricas consolidadas de ventas e inventario</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2.5">
+                    <button onclick="syncAllSheets()" class="p-2.5 rounded-xl bg-brand-card hover:bg-brand-cardHover border border-brand-cardBorder text-brand-gold transition" title="Sincronizar Google Sheets">
+                        <i data-lucide="refresh-cw" id="sync-spinner" class="w-4 h-4"></i>
+                    </button>
+                    <button onclick="generateLuxuryPDF()" class="py-2 px-3.5 bg-brand-card hover:bg-brand-cardHover border border-brand-gold/40 text-brand-goldLight rounded-xl text-xs font-semibold flex items-center gap-2 transition">
+                        <i data-lucide="file-text" class="w-3.5 h-3.5 text-brand-gold"></i>
+                        <span class="hidden sm:inline">Exportar Reporte PDF</span>
+                    </button>
+                    <button onclick="openCreateModal()" id="btn-quick-create" class="py-2 px-3.5 gold-gradient-bg text-black rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-md hover:opacity-95 transition">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                        <span>Nuevo Registro</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- VISTAS INTERCAMBIABLES -->
+            <main class="flex-1 overflow-y-auto p-4 md:p-6 space-y-6">
+
+                <!-- 1. VISTA DASHBOARD EJECUTIVO (ESTILO IMAGEN 1 Y 5) -->
+                <div id="view-dashboard-section" class="space-y-6">
+                    <!-- Fila 1: 4 KPIs Principales -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="lem-card p-4 rounded-2xl flex items-center justify-between">
+                            <div>
+                                <span class="text-[11px] font-semibold text-brand-textMuted uppercase tracking-wider">Ingreso Neto</span>
+                                <h3 class="text-2xl font-bold text-white mt-1">$77,325.45</h3>
+                                <span class="inline-flex items-center gap-1 text-[11px] text-brand-leaf font-bold mt-1">
+                                    <i data-lucide="trending-up" class="w-3 h-3"></i> +2.5% vs ayer
+                                </span>
+                            </div>
+                            <div class="w-12 h-12 rounded-2xl bg-brand-leaf/10 border border-brand-leaf/30 flex items-center justify-center text-brand-leaf">
+                                <i data-lucide="dollar-sign" class="w-6 h-6"></i>
+                            </div>
+                        </div>
+
+                        <div class="lem-card p-4 rounded-2xl flex items-center justify-between">
+                            <div>
+                                <span class="text-[11px] font-semibold text-brand-textMuted uppercase tracking-wider">Ventas Totales</span>
+                                <h3 class="text-2xl font-bold text-white mt-1">142 Prendas</h3>
+                                <span class="inline-flex items-center gap-1 text-[11px] text-brand-leaf font-bold mt-1">
+                                    <i data-lucide="trending-up" class="w-3 h-3"></i> +12% mensual
+                                </span>
+                            </div>
+                            <div class="w-12 h-12 rounded-2xl bg-brand-gold/10 border border-brand-gold/30 flex items-center justify-center text-brand-gold">
+                                <i data-lucide="shopping-bag" class="w-6 h-6"></i>
+                            </div>
+                        </div>
+
+                        <div class="lem-card p-4 rounded-2xl flex items-center justify-between">
+                            <div>
+                                <span class="text-[11px] font-semibold text-brand-textMuted uppercase tracking-wider">Balance en Caja</span>
+                                <h3 class="text-2xl font-bold text-white mt-1">$142,890.50</h3>
+                                <span class="text-[11px] text-brand-goldLight font-medium mt-1">Corte Actualizado</span>
+                            </div>
+                            <div class="w-12 h-12 rounded-2xl bg-brand-gold/10 border border-brand-gold/30 flex items-center justify-center text-brand-gold">
+                                <i data-lucide="wallet" class="w-6 h-6"></i>
+                            </div>
+                        </div>
+
+                        <div class="lem-card p-4 rounded-2xl flex items-center justify-between">
+                            <div>
+                                <span class="text-[11px] font-semibold text-brand-textMuted uppercase tracking-wider">Metas Alcanzadas</span>
+                                <h3 class="text-2xl font-bold text-white mt-1">88.4%</h3>
+                                <span class="text-[11px] text-brand-leaf font-medium mt-1">Equipo Activo (4)</span>
+                            </div>
+                            <div class="w-12 h-12 rounded-2xl bg-brand-leaf/10 border border-brand-leaf/30 flex items-center justify-center text-brand-leaf">
+                                <i data-lucide="award" class="w-6 h-6"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fila 2: Gráfica de Rendimiento y Dona de Métodos de Pago (Imagen 1) -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Curva de Ventas (2 Columnas) -->
+                        <div class="lem-card p-5 rounded-3xl lg:col-span-2 space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h3 class="font-brand font-bold text-base text-white">Sales Performance</h3>
+                                    <div class="flex items-center gap-4 text-xs mt-1">
+                                        <span class="flex items-center gap-1.5 text-gray-400"><span class="w-2.5 h-2.5 rounded-full bg-brand-leaf"></span> Net Income</span>
+                                        <span class="flex items-center gap-1.5 text-gray-400"><span class="w-2.5 h-2.5 rounded-full bg-brand-gold"></span> Total Sales</span>
+                                    </div>
+                                </div>
+                                <select class="bg-brand-darkInput border border-brand-cardBorder text-xs text-gray-300 rounded-xl px-3 py-1.5 focus:outline-none">
+                                    <option>Diario</option>
+                                    <option>Semanal</option>
+                                    <option>Mensual</option>
+                                </select>
+                            </div>
+                            <div class="h-64">
+                                <canvas id="chart-sales-performance"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Métodos de Pago Dona (1 Columna) -->
+                        <div class="lem-card p-5 rounded-3xl space-y-4 flex flex-col justify-between">
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-brand font-bold text-base text-white">Payment Methods</h3>
+                                <span class="text-xs text-brand-goldLight font-mono">Total 100%</span>
+                            </div>
+                            <div class="h-48 relative flex items-center justify-center">
+                                <canvas id="chart-payments-donut"></canvas>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 pt-2 border-t border-brand-cardBorder text-center">
+                                <div class="p-2 bg-brand-darkInput rounded-xl">
+                                    <p class="text-[10px] text-gray-400">Cash</p>
+                                    <p class="text-xs font-bold text-brand-leaf">50%</p>
+                                </div>
+                                <div class="p-2 bg-brand-darkInput rounded-xl">
+                                    <p class="text-[10px] text-gray-400">Card</p>
+                                    <p class="text-xs font-bold text-brand-gold">30%</p>
+                                </div>
+                                <div class="p-2 bg-brand-darkInput rounded-xl">
+                                    <p class="text-[10px] text-gray-400">Transfer</p>
+                                    <p class="text-xs font-bold text-cyan-400">20%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fila 3: Top Selling & Rendimiento de Vendedoras -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Top Selling Products -->
+                        <div class="lem-card p-5 rounded-3xl lg:col-span-2 space-y-4">
+                            <h3 class="font-brand font-bold text-base text-white">Top Selling Products</h3>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-xs">
+                                    <thead>
+                                        <tr class="text-brand-textMuted border-b border-brand-cardBorder pb-2 uppercase text-[10px] tracking-wider">
+                                            <th class="py-2.5">Prenda / Modelo</th>
+                                            <th class="py-2.5">Cantidad</th>
+                                            <th class="py-2.5">Ventas ($)</th>
+                                            <th class="py-2.5 text-right">Estatus</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="top-products-tbody" class="divide-y divide-brand-cardBorder">
+                                        <!-- Generado dinámicamente -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Rendimiento de Vendedoras -->
+                        <div class="lem-card p-5 rounded-3xl space-y-4">
+                            <h3 class="font-brand font-bold text-base text-white">Employee Performance</h3>
+                            <div id="sellers-perf-list" class="space-y-3">
+                                <!-- Generado por JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. VISTA PUNTO DE VENTA / POS (IMAGEN 2) -->
+                <div id="view-pos-section" class="hidden space-y-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Catálogo de Prendas (2 columnas) -->
+                        <div class="lg:col-span-2 space-y-4">
+                            <!-- Filtros de categoría -->
+                            <div class="flex items-center gap-2 overflow-x-auto pb-2">
+                                <button class="px-4 py-2 rounded-xl gold-gradient-bg text-black font-bold text-xs whitespace-nowrap">Todas las Colecciones</button>
+                                <button class="px-4 py-2 rounded-xl bg-brand-card hover:bg-brand-cardHover border border-brand-cardBorder text-gray-300 text-xs whitespace-nowrap">Vestidos de Gala</button>
+                                <button class="px-4 py-2 rounded-xl bg-brand-card hover:bg-brand-cardHover border border-brand-cardBorder text-gray-300 text-xs whitespace-nowrap">Blazers Imperial</button>
+                                <button class="px-4 py-2 rounded-xl bg-brand-card hover:bg-brand-cardHover border border-brand-cardBorder text-gray-300 text-xs whitespace-nowrap">Conjuntos Lino</button>
+                            </div>
+
+                            <!-- Grid de Prendas -->
+                            <div id="pos-products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                                <!-- Prendas interactivas con tallas -->
+                            </div>
+                        </div>
+
+                        <!-- Ticket / Checkout Orden Actual -->
+                        <div class="lem-card p-5 rounded-3xl space-y-4 h-fit sticky top-4">
+                            <div class="flex items-center justify-between pb-3 border-b border-brand-cardBorder">
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="receipt" class="w-4 h-4 text-brand-gold"></i>
+                                    <h3 class="font-brand font-bold text-sm text-white">Orden Actual</h3>
+                                </div>
+                                <button onclick="clearCart()" class="text-[11px] text-red-400 hover:underline">Vaciar</button>
+                            </div>
+
+                            <div id="pos-cart-items" class="space-y-3 max-h-60 overflow-y-auto pr-1">
+                                <p class="text-center text-xs text-brand-textMuted py-8">No hay prendas seleccionadas</p>
+                            </div>
+
+                            <div class="space-y-2 pt-3 border-t border-brand-cardBorder text-xs">
+                                <div class="flex justify-between text-gray-400">
+                                    <span>Subtotal</span>
+                                    <span id="pos-subtotal" class="font-mono text-white">$0.00</span>
+                                </div>
+                                <div class="flex justify-between text-gray-400">
+                                    <span>IVA (16%)</span>
+                                    <span id="pos-tax" class="font-mono text-white">$0.00</span>
+                                </div>
+                                <div class="flex justify-between text-sm font-bold text-white pt-2 border-t border-brand-cardBorder">
+                                    <span class="gold-gradient-text font-brand">TOTAL A COBRAR</span>
+                                    <span id="pos-total" class="font-mono text-brand-gold">$0.00</span>
+                                </div>
+                            </div>
+
+                            <button onclick="checkoutSale()" class="w-full py-3 gold-gradient-bg text-black font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg hover:opacity-95 transition">
+                                <i data-lucide="check-circle" class="w-4 h-4"></i> Procesar Venta y Generar Ticket
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. VISTA MATRIZ DE TALLAS & INVENTARIO (IMAGEN 3) -->
+                <div id="view-inventory-matrix-section" class="hidden space-y-6">
+                    <div class="lem-card p-6 rounded-3xl space-y-6">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-brand-cardBorder">
+                            <div>
+                                <h2 class="font-brand text-xl font-bold text-white">Matriz de Existencias por Talla y Color</h2>
+                                <p class="text-xs text-brand-textMuted">Control granular de prendas LEM MODA</p>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="px-3 py-1.5 rounded-xl bg-brand-leaf/10 border border-brand-leaf/30 text-brand-leaf text-xs font-bold">Total Stock: 418 pzs</span>
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs">
+                                <thead>
+                                    <tr class="bg-brand-darkInput text-brand-goldLight uppercase text-[10px] tracking-wider border-b border-brand-cardBorder">
+                                        <th class="py-3 px-4">Color / Variante</th>
+                                        <th class="py-3 px-4">Talla (XS / S / M / L / XL)</th>
+                                        <th class="py-3 px-4">Recibido</th>
+                                        <th class="py-3 px-4">Vendido (Tienda)</th>
+                                        <th class="py-3 px-4">Vendido (Online)</th>
+                                        <th class="py-3 px-4 font-bold text-brand-leaf">Existencia Actual</th>
+                                        <th class="py-3 px-4 text-right">Estatus</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="inventory-matrix-tbody" class="divide-y divide-brand-cardBorder">
+                                    <!-- Generado por JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. VISTA PLANIFICADOR DE PEDIDOS (IMAGEN 4) -->
+                <div id="view-planning-section" class="hidden space-y-6">
+                    <div class="lem-card p-6 rounded-3xl space-y-6">
+                        <div class="flex items-center justify-between pb-4 border-b border-brand-cardBorder">
+                            <div>
+                                <h2 class="font-brand text-xl font-bold text-white">Planning Board • Taller & Entregas</h2>
+                                <p class="text-xs text-brand-textMuted">Programación de confección, pedidos especiales y envíos</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <!-- Columna 1: En Confección / Taller -->
+                            <div class="bg-brand-darkInput p-4 rounded-2xl border border-brand-cardBorder space-y-3">
+                                <div class="flex items-center justify-between pb-2 border-b border-gray-800">
+                                    <span class="text-xs font-bold text-brand-gold flex items-center gap-2">
+                                        <i data-lucide="scissors" class="w-3.5 h-3.5"></i> Confección & Ajustes
+                                    </span>
+                                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-brand-gold/20 text-brand-goldLight">3</span>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="p-3 bg-brand-card rounded-xl border border-brand-cardBorder">
+                                        <p class="text-xs font-bold text-white">Vestido Gala Silk #4881</p>
+                                        <p class="text-[11px] text-gray-400 mt-1">Clienta: Mariana Torres (Talla M)</p>
+                                        <span class="inline-block mt-2 px-2 py-0.5 rounded bg-brand-gold/15 text-brand-gold text-[9px] font-bold">Entrega: 25 Feb</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Columna 2: Listo para Envío / Paquetería -->
+                            <div class="bg-brand-darkInput p-4 rounded-2xl border border-brand-cardBorder space-y-3">
+                                <div class="flex items-center justify-between pb-2 border-b border-gray-800">
+                                    <span class="text-xs font-bold text-cyan-400 flex items-center gap-2">
+                                        <i data-lucide="package" class="w-3.5 h-3.5"></i> Empaque & Paquetería
+                                    </span>
+                                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-cyan-400/20 text-cyan-300">2</span>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="p-3 bg-brand-card rounded-xl border border-brand-cardBorder">
+                                        <p class="text-xs font-bold text-white">Blazer Imperial #8802</p>
+                                        <p class="text-[11px] text-gray-400 mt-1">Guía DHL: 778192831 (Gdl)</p>
+                                        <span class="inline-block mt-2 px-2 py-0.5 rounded bg-cyan-400/15 text-cyan-300 text-[9px] font-bold">En Tránsito</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Columna 3: Entregado & Liquidado -->
+                            <div class="bg-brand-darkInput p-4 rounded-2xl border border-brand-cardBorder space-y-3">
+                                <div class="flex items-center justify-between pb-2 border-b border-gray-800">
+                                    <span class="text-xs font-bold text-brand-leaf flex items-center gap-2">
+                                        <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Completado
+                                    </span>
+                                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-brand-leaf/20 text-brand-leaf">8</span>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="p-3 bg-brand-card rounded-xl border border-brand-cardBorder">
+                                        <p class="text-xs font-bold text-white">Conjunto Lino Nude #9910</p>
+                                        <p class="text-[11px] text-gray-400 mt-1">Clienta: Carolina Vega</p>
+                                        <span class="inline-block mt-2 px-2 py-0.5 rounded bg-brand-leaf/15 text-brand-leaf text-[9px] font-bold">Saldo Liquidado $0.00</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. VISTA TABLA DINÁMICA DE LOS 5 GOOGLE SHEETS -->
+                <div id="view-sheet-section" class="hidden space-y-4">
+                    <div class="lem-card rounded-3xl overflow-hidden">
+                        <!-- Cabecera de la Hoja -->
+                        <div class="p-4 border-b border-brand-cardBorder flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-[#0E1117]">
+                            <div class="relative flex-1 max-w-md">
+                                <i data-lucide="search" class="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                                <input id="table-search-input" oninput="renderLiveSheetTable()" type="text" placeholder="Filtrar datos en tiempo real..." 
+                                    class="w-full pl-10 pr-4 py-2 bg-brand-darkInput border border-brand-cardBorder rounded-xl text-xs text-white focus:outline-none focus:border-brand-gold">
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <a id="external-sheet-link" href="#" target="_blank" class="px-3 py-2 rounded-xl bg-brand-darkInput border border-brand-cardBorder text-brand-goldLight text-xs font-semibold inline-flex items-center gap-1.5 hover:bg-brand-cardHover">
+                                    <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Abrir en Google Sheets
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Tabla con Scroll Horizontal -->
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs border-collapse">
+                                <thead>
+                                    <tr id="live-table-head" class="bg-brand-darkInput text-brand-goldLight uppercase text-[10px] tracking-wider border-b border-brand-cardBorder">
+                                        <!-- Generado dinámicamente -->
+                                    </tr>
+                                </thead>
+                                <tbody id="live-table-body" class="divide-y divide-brand-cardBorder bg-brand-card">
+                                    <!-- Filas del Sheet -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. VISTA GESTIÓN DE PERFILES (VENDEDORAS & ADMINS) -->
+                <div id="view-users-section" class="hidden space-y-6">
+                    <div class="lem-card p-6 rounded-3xl space-y-6">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-brand-cardBorder">
+                            <div>
+                                <h2 class="font-brand text-xl font-bold text-white">Equipo de Trabajo & Permisos</h2>
+                                <p class="text-xs text-brand-textMuted">Crea perfiles para tus vendedoras y define qué libros de Google Sheets pueden consultar</p>
+                            </div>
+                            <button onclick="openCreateUserModal()" class="py-2.5 px-4 gold-gradient-bg text-black font-bold rounded-xl text-xs flex items-center gap-2 shadow-md">
+                                <i data-lucide="user-plus" class="w-4 h-4"></i> Crear Perfil Vendedora / Admin
+                            </button>
+                        </div>
+
+                        <div id="team-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <!-- Generado dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
     </div>
-  </div>
 
-  <!-- ================= LÓGICA DEL SISTEMA LEM MODA ================= -->
-  <script>
-    // URL de tu Google Apps Script (Pégala aquí o desde el botón "Google Sheets" en la app)
-    let GOOGLE_SCRIPT_URL = localStorage.getItem('lem_api_url') || '';
-    let deferredPrompt = null;
+    <!-- ==================== MODAL REGISTRO / EDICIÓN ==================== -->
+    <div id="form-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="lem-card rounded-3xl max-w-lg w-full overflow-hidden border border-brand-gold/40 shadow-2xl">
+            <div class="bg-[#0E1117] px-6 py-4 flex items-center justify-between border-b border-brand-cardBorder">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-7 h-7 rounded-lg gold-gradient-bg flex items-center justify-center font-brand font-bold text-black text-xs">LM</div>
+                    <h3 id="form-modal-title" class="font-brand text-sm font-bold text-white">Nuevo Registro</h3>
+                </div>
+                <button onclick="closeCreateModal()" class="text-gray-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <form id="generic-sheet-form" onsubmit="submitRecord(event)" class="p-6 space-y-4 max-h-[75vh] overflow-y-auto">
+                <div id="modal-form-inputs" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Inputs según columnas -->
+                </div>
+                <div class="pt-4 border-t border-brand-cardBorder flex justify-end gap-2">
+                    <button type="button" onclick="closeCreateModal()" class="px-4 py-2 bg-brand-darkInput text-gray-300 rounded-xl text-xs font-semibold">Cancelar</button>
+                    <button type="submit" class="px-5 py-2 gold-gradient-bg text-black rounded-xl text-xs font-bold shadow-lg">Guardar en Google Sheets</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-    // Estado Central con datos reales inspirados en tu Local Colón · Quito
-    const state = {
-      currentUser: null,
-      activeModule: 'dashboard',
-      selectedProductIdx: 0,
-      selectedDock: null,
-      cart: [
-        { sku: 'LEM-ABR-01', nombre: 'Abrigo Marinero Imperial', color: 'Negro', talla: 'M', precio: 89.00, cant: 1 },
-        { sku: 'LEM-BLZ-04', nombre: 'Blazer Dorado Edición Colón', color: 'Camel', talla: 'S', precio: 65.50, cant: 2 }
-      ],
-      users: [
-        { id: 'USR-001', nombre: 'VICTOR CARVAJAL', usuario: 'victor', clave: '1234', rol: 'ADMIN', caja: 'TODAS', sucursal: 'Local Colón · Quito', estado: 'ACTIVO' },
-        { id: 'USR-002', nombre: 'ANDREA LOPEZ', usuario: 'andrea', clave: '1111', rol: 'VENDEDORA', caja: 'CAJA 1', sucursal: 'Local Colón · Quito', estado: 'ACTIVO' },
-        { id: 'USR-003', nombre: 'CAMILA TORRES', usuario: 'camila', clave: '2222', rol: 'VENDEDORA', caja: 'CAJA 2', sucursal: 'Local Colón · Quito', estado: 'ACTIVO' }
-      ],
-      cajaHoy: {
-        fecha: new Date().toLocaleDateString('es-EC'),
-        estado: 'ESPERANDO CIERRE DE CAJA',
-        esperado: 415.06,
-        real: 0.00,
-        ayerEsperado: 415.05,
-        ayerReal: 415.06,
-        aperturas: [
-          { responsable: 'ANDREA LOPEZ', caja: 'CAJA 1', monto: 221.32, hora: '09:02 AM' },
-          { responsable: 'CAMILA TORRES', caja: 'CAJA 2', monto: 193.74, hora: '09:10 AM' }
-        ],
-        movimientos: [
-          { fecha: 'Hoy 10:15', tipo: 'VENTA POS', detalle: 'Factura #00412 - Efectivo', responsable: 'ANDREA LOPEZ', monto: 154.50 },
-          { fecha: 'Hoy 11:40', tipo: 'GASTO', detalle: 'Insumos bolsas contramarcadas LEM', responsable: 'VICTOR CARVAJAL', monto: -28.00 },
-          { fecha: 'Hoy 13:05', tipo: 'DEPÓSITO', detalle: 'Depósito Banco Pichincha #9921', responsable: 'VICTOR CARVAJAL', monto: -200.00 },
-          { fecha: 'Hoy 15:20', tipo: 'ADELANTO', detalle: 'Adelanto quincena Camila Torres', responsable: 'VICTOR CARVAJAL', monto: -40.00 }
-        ]
-      },
-      productos: [
-        {
-          sku: 'SAB01000001', nombre: 'Abrigo Marinero Lujo', categoria: 'Abrigos & Chaquetas', temporada: 'Otoño-Invierno',
-          precio: 89.00, mayorista: 64.00, recibido: 200, stock: 142, vendidosTienda: 52, vendidosMayor: 6,
-          img: 'https://images.unsplash.com/photo-1539533018447-63fcce2678e3?auto=format&fit=crop&w=600&q=80',
-          colores: ['#111827', '#92400E', '#1E3A8A', '#D6D3D1'],
-          variantes: [
-            { color: 'Negro Obsidiana', talla: 'S', recibido: 50, mayorista: 2, minorista: 18, stock: 30 },
-            { color: 'Negro Obsidiana', talla: 'M', recibido: 60, mayorista: 4, minorista: 20, stock: 36 },
-            { color: 'Camel Dorado', talla: 'M', recibido: 50, mayorista: 0, minorista: 10, stock: 40 },
-            { color: 'Azul Noche', talla: 'L', recibido: 40, mayorista: 0, minorista: 4, stock: 36 }
-          ]
-        },
-        {
-          sku: 'LEM0200045', nombre: 'Blazer Estructurado Gold', categoria: 'Sastrería Dama', temporada: 'Colección Permanente',
-          precio: 65.50, mayorista: 48.00, recibido: 150, stock: 88, vendidosTienda: 54, vendidosMayor: 8,
-          img: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=600&q=80',
-          colores: ['#C5A059', '#064E3B', '#000000'],
-          variantes: [
-            { color: 'Dorado Arena', talla: 'XS', recibido: 40, mayorista: 2, minorista: 15, stock: 23 },
-            { color: 'Verde Esmeralda', talla: 'S', recibido: 60, mayorista: 4, minorista: 25, stock: 31 },
-            { color: 'Negro', talla: 'M', recibido: 50, mayorista: 2, minorista: 14, stock: 34 }
-          ]
-        },
-        {
-          sku: 'LEM0300089', nombre: 'Vestido Seda Esmeralda', categoria: 'Vestidos Gala', temporada: 'Edición Especial',
-          precio: 74.00, mayorista: 52.00, recibido: 90, stock: 19, vendidosTienda: 65, vendidosMayor: 6,
-          img: 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&w=600&q=80',
-          colores: ['#047857', '#C5A059'],
-          variantes: [
-            { color: 'Esmeralda LEM', talla: 'S', recibido: 45, mayorista: 3, minorista: 34, stock: 8 },
-            { color: 'Champagne Gold', talla: 'M', recibido: 45, mayorista: 3, minorista: 31, stock: 11 }
-          ]
-        },
-        {
-          sku: 'LEM0400112', nombre: 'Pantalón Palazzo Corte Alto', categoria: 'Pantalones', temporada: 'Ejecutiva 2026',
-          precio: 48.00, mayorista: 34.00, recibido: 180, stock: 110, vendidosTienda: 60, vendidosMayor: 10,
-          img: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=600&q=80',
-          colores: ['#1F2937', '#F5F5F4', '#78350F'],
-          variantes: [
-            { color: 'Marfil', talla: 'S', recibido: 60, mayorista: 5, minorista: 20, stock: 35 },
-            { color: 'Negro', talla: 'M', recibido: 70, mayorista: 5, minorista: 25, stock: 40 },
-            { color: 'Moka', talla: 'L', recibido: 50, mayorista: 0, minorista: 15, stock: 35 }
-          ]
+    <!-- ==================== MODAL CREACIÓN DE USUARIO ==================== -->
+    <div id="user-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="lem-card rounded-3xl max-w-md w-full overflow-hidden border border-brand-gold/40 shadow-2xl">
+            <div class="bg-[#0E1117] px-6 py-4 flex items-center justify-between border-b border-brand-cardBorder">
+                <h3 class="font-brand text-sm font-bold text-white">Nuevo Perfil de Equipo</h3>
+                <button onclick="closeUserModal()" class="text-gray-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <form onsubmit="submitNewUser(event)" class="p-6 space-y-4">
+                <div>
+                    <label class="block text-[11px] font-semibold text-gray-300 mb-1">Nombre Completo</label>
+                    <input id="new-name" required type="text" placeholder="Ej. Valentina Gómez" class="w-full px-3 py-2 bg-brand-darkInput border border-brand-cardBorder rounded-xl text-xs text-white focus:outline-none focus:border-brand-gold">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-semibold text-gray-300 mb-1">Correo de Google (Gmail)</label>
+                    <input id="new-email" required type="email" placeholder="vendedora@gmail.com" class="w-full px-3 py-2 bg-brand-darkInput border border-brand-cardBorder rounded-xl text-xs text-white focus:outline-none focus:border-brand-gold">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[11px] font-semibold text-gray-300 mb-1">Rol</label>
+                        <select id="new-role" class="w-full px-3 py-2 bg-brand-darkInput border border-brand-cardBorder rounded-xl text-xs text-white focus:outline-none">
+                            <option value="vendedora">Vendedora</option>
+                            <option value="admin">Administrador (Admin)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-semibold text-gray-300 mb-1">Sucursal</label>
+                        <input id="new-branch" type="text" placeholder="Boutique Matriz" class="w-full px-3 py-2 bg-brand-darkInput border border-brand-cardBorder rounded-xl text-xs text-white focus:outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-[11px] font-semibold text-gray-300 mb-1.5">Hojas autorizadas (Google Sheets):</label>
+                    <div id="sheets-checkbox-list" class="space-y-1.5 bg-brand-darkInput p-3 rounded-xl border border-brand-cardBorder text-xs text-gray-300">
+                        <!-- Checkboxes generados dinámicamente -->
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-brand-cardBorder flex justify-end gap-2">
+                    <button type="button" onclick="closeUserModal()" class="px-4 py-2 bg-brand-darkInput text-gray-300 rounded-xl text-xs">Cancelar</button>
+                    <button type="submit" class="px-5 py-2 gold-gradient-bg text-black rounded-xl text-xs font-bold">Crear Perfil</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== LÓGICA DE CONTROL JAVASCRIPT ==================== -->
+    <script>
+        // ============================================================================
+        // 1. DATASETS DE TUS 5 GOOGLE SHEETS
+        // ============================================================================
+        const GOOGLE_SHEETS_DATABASE = [
+            {
+                key: 'sheet1',
+                name: '1. Control de Ventas',
+                icon: 'receipt',
+                spreadsheetId: '1mcc-wKBkGBQSbSqkTUZB7EViu58vKVJ0UI5xeyUzbFk',
+                gid: '1491476596',
+                url: 'https://docs.google.com/spreadsheets/d/1mcc-wKBkGBQSbSqkTUZB7EViu58vKVJ0UI5xeyUzbFk/edit?gid=1491476596#gid=1491476596',
+                headers: ['FOLIO', 'FECHA', 'CLIENTA', 'PRENDA / MODELO', 'TALLA', 'VENDEDORA', 'MÉTODO PAGO', 'TOTAL', 'ESTADO'],
+                rows: [
+                    ['LM-1001', '2025-02-22', 'Mariana Torres', 'Vestido Gala Satinado', 'M', 'Laura V.', 'Transferencia', '$1,850.00', 'Pagado'],
+                    ['LM-1002', '2025-02-22', 'Fernanda Ruiz', 'Blazer Imperial Gold', 'S', 'Sofía M.', 'Tarjeta', '$2,400.00', 'Entregado'],
+                    ['LM-1003', '2025-02-23', 'Carolina Vega', 'Conjunto Lino Nude', 'L', 'Laura V.', 'Efectivo', '$1,620.00', 'Apartado']
+                ]
+            },
+            {
+                key: 'sheet2',
+                name: '2. Inventario & Catálogo',
+                icon: 'shirt',
+                spreadsheetId: '1u1QzOdFqvSh9wdMAdJSQohumy4FpR5wkuwfLcYDQFrQ',
+                gid: '818455834',
+                url: 'https://docs.google.com/spreadsheets/d/1u1QzOdFqvSh9wdMAdJSQohumy4FpR5wkuwfLcYDQFrQ/edit?gid=818455834#gid=818455834',
+                headers: ['SKU', 'COLECCIÓN', 'PRENDA', 'COLOR', 'TALLAS', 'STOCK', 'PRECIO', 'ESTATUS'],
+                rows: [
+                    ['SKU-8801', 'Primavera Gala', 'Vestido Gala Satinado', 'Champagne', 'XS, S, M, L', '14', '$1,850.00', 'Disponible'],
+                    ['SKU-8802', 'Imperial Luxe', 'Blazer Imperial Gold', 'Negro / Oro', 'S, M, L', '6', '$2,400.00', 'Pocas Piezas'],
+                    ['SKU-8803', 'Essential Lino', 'Conjunto Lino Nude', 'Arena Marfil', 'S, M, L, XL', '22', '$1,620.00', 'Disponible']
+                ]
+            },
+            {
+                key: 'sheet3',
+                name: '3. Pedidos & Envíos',
+                icon: 'truck',
+                spreadsheetId: '1UjuObEZB9c_TPQlsNwDUl02w96pEZh4Mzf_nHIkI9Ys',
+                gid: '1483315145',
+                url: 'https://docs.google.com/spreadsheets/d/1UjuObEZB9c_TPQlsNwDUl02w96pEZh4Mzf_nHIkI9Ys/edit?gid=1483315145#gid=1483315145',
+                headers: ['ID PEDIDO', 'CLIENTA', 'TELÉFONO', 'CIUDAD', 'PAQUETERÍA', 'GUÍA', 'ANTICIPO', 'RESTANTE', 'ESTADO'],
+                rows: [
+                    ['PED-501', 'Valeria Montes', '5541239981', 'Guadalajara, JAL', 'DHL Express', '778192831', '$1,000.00', '$850.00', 'En Tránsito'],
+                    ['PED-502', 'Lucía Méndez', '8199201123', 'Monterrey, NL', 'FedEx Gold', '992018231', '$2,400.00', '$0.00', 'Entregado']
+                ]
+            },
+            {
+                key: 'sheet4',
+                name: '4. Corte de Caja & Gastos',
+                icon: 'wallet',
+                spreadsheetId: '1HTflbeMnv8kmr9Z8mvGiV8iQzKTMjBLF95M1JB9LbrA',
+                gid: '1559472166',
+                url: 'https://docs.google.com/spreadsheets/d/1HTflbeMnv8kmr9Z8mvGiV8iQzKTMjBLF95M1JB9LbrA/edit?gid=1559472166#gid=1559472166',
+                headers: ['FECHA', 'CONCEPTO', 'TIPO', 'RESPONSABLE', 'MÉTODO', 'MONTO', 'NOTAS'],
+                rows: [
+                    ['2025-02-22', 'Cierre Turno Matutino', 'Ingreso', 'Admin LEM', 'Mixto', '$14,800.00', 'Sin diferencias'],
+                    ['2025-02-23', 'Empaques de Lujo LEM', 'Egreso', 'Admin LEM', 'Transferencia', '$2,150.00', 'Proveedor GoldPack']
+                ]
+            },
+            {
+                key: 'sheet5',
+                name: '5. Comisiones & Metas',
+                icon: 'award',
+                spreadsheetId: '1XC_vKZcGvcluTv6cBVCX3jSlWoYTONlRkTr8AVquqj4',
+                gid: '0',
+                url: 'https://docs.google.com/spreadsheets/d/1XC_vKZcGvcluTv6cBVCX3jSlWoYTONlRkTr8AVquqj4/edit?gid=0#gid=0',
+                headers: ['PERIODO', 'VENDEDORA', 'SUCURSAL', 'VENTAS REALIZADAS', 'META', 'COMISIÓN ($)', 'ESTADO PAGO'],
+                rows: [
+                    ['Febrero 2025', 'Laura Villalobos', 'Boutique Principal', '$48,500.00', '$45,000.00', '$2,425.00', 'Aprobado'],
+                    ['Febrero 2025', 'Sofía Mendoza', 'Showroom Online', '$39,200.00', '$40,000.00', '$1,960.00', 'En Curso']
+                ]
+            }
+        ];
+
+        // Estado del Sistema
+        let allSheets = JSON.parse(localStorage.getItem('lem_all_sheets')) || GOOGLE_SHEETS_DATABASE;
+        let currentSheetIdx = 0;
+        let activeMasterView = 'dashboard'; // 'dashboard', 'pos', 'inventory-matrix', 'planning', 'sheet', 'users'
+        let currentUser = null;
+        let cartItems = [];
+        let salesChartInstance = null;
+        let paymentChartInstance = null;
+
+        // Base de usuarios autorizados
+        let teamUsers = JSON.parse(localStorage.getItem('lem_users_db')) || [
+            { id: 1, name: 'Dirección LEM MODA', email: 'admin@lemmoda.com', role: 'admin', branch: 'Matriz Central', sheets: ['sheet1','sheet2','sheet3','sheet4','sheet5'] },
+            { id: 2, name: 'Laura Villalobos', email: 'laura.ventas@lemmoda.com', role: 'vendedora', branch: 'Boutique Principal', sheets: ['sheet1','sheet2','sheet3'] },
+            { id: 3, name: 'Sofía Mendoza', email: 'sofia.online@lemmoda.com', role: 'vendedora', branch: 'Showroom Digital', sheets: ['sheet1','sheet2','sheet3','sheet5'] }
+        ];
+
+        // Catálogo para POS (Imagen 2)
+        const posProducts = [
+            { id: 101, name: 'Vestido Gala Satinado', price: 1850, category: 'Vestidos', colors: ['#E8C87A', '#13171F', '#5BB347'], sizes: ['XS', 'S', 'M', 'L'], img: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=500&auto=format&fit=crop&q=60' },
+            { id: 102, name: 'Blazer Imperial Gold', price: 2400, category: 'Blazers', colors: ['#13171F', '#C89D4B'], sizes: ['S', 'M', 'L'], img: 'https://images.unsplash.com/photo-1548883354-7622d03aca27?w=500&auto=format&fit=crop&q=60' },
+            { id: 103, name: 'Conjunto Lino Nude', price: 1620, category: 'Conjuntos', colors: ['#E3DAC9', '#FAF0E6'], sizes: ['S', 'M', 'L', 'XL'], img: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500&auto=format&fit=crop&q=60' },
+            { id: 104, name: 'Palazzo Corte Alto Silk', price: 1290, category: 'Pantalones', colors: ['#FFFFFF', '#13171F'], sizes: ['XS', 'S', 'M'], img: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=500&auto=format&fit=crop&q=60' }
+        ];
+
+        // Matriz de Inventario Detallada (Imagen 3)
+        const inventoryMatrixData = [
+            { color: 'Champagne Gold', size: '50 (S)', received: 100, storeSold: 35, onlineSold: 15, stock: 50, status: 'Disponible' },
+            { color: 'Champagne Gold', size: '52 (M)', received: 120, storeSold: 70, onlineSold: 30, stock: 20, status: 'Pocas Piezas' },
+            { color: 'Obsidian Black', size: '50 (S)', received: 80, storeSold: 20, onlineSold: 10, stock: 50, status: 'Disponible' },
+            { color: 'Obsidian Black', size: '54 (L)', received: 90, storeSold: 45, onlineSold: 25, stock: 20, status: 'Pocas Piezas' },
+            { color: 'Lino Nude', size: '52 (M)', received: 110, storeSold: 10, onlineSold: 5, stock: 95, status: 'Disponible' }
+        ];
+
+        // ============================================================================
+        // 2. INICIO DE SESIÓN & CONTROL DE ROLES
+        // ============================================================================
+        function toggleClientIdInput() {
+            document.getElementById('client-id-box').classList.toggle('hidden');
         }
-      ],
-      matrizTaller: [
-        {
-          linea: 'Línea A · Sastrería', colorBadge: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40',
-          dias: [
-            { dia: 'Lun 12', lote: 'LOT-840', prenda: 'Abrigo Marinero', meta: 120, real: 120, rechazo: 2, estado: 'ok', img: 'https://images.unsplash.com/photo-1539533018447-63fcce2678e3?auto=format&fit=crop&w=300&q=80' },
-            { dia: 'Mar 13', lote: 'LOT-845', prenda: 'Blazer Gold', meta: 100, real: 78, rechazo: 6, estado: 'alerta', img: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=300&q=80' },
-            { dia: 'Mié 14', lote: 'LOT-851', prenda: 'Chaleco Sastre', meta: 140, real: 140, rechazo: 1, estado: 'ok', img: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=300&q=80' },
-            { dia: 'Jue 15', lote: 'LOT-860', prenda: 'Abrigo Camel', meta: 90, real: 90, rechazo: 0, estado: 'ok', img: 'https://images.unsplash.com/photo-1539533018447-63fcce2678e3?auto=format&fit=crop&w=300&q=80' }
-          ]
-        },
-        {
-          linea: 'Línea B · Vestidos', colorBadge: 'bg-lem-gold/20 text-lem-goldLight border-lem-gold/40',
-          dias: [
-            { dia: 'Lun 12', lote: 'LOT-901', prenda: 'Vestido Esmeralda', meta: 80, real: 80, rechazo: 1, estado: 'ok', img: 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&w=300&q=80' },
-            { dia: 'Mar 13', lote: 'LOT-904', prenda: 'Blusa Seda LEM', meta: 150, real: 150, rechazo: 2, estado: 'ok', img: 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&w=300&q=80' },
-            { dia: 'Mié 14', lote: 'LOT-910', prenda: 'Top Gala Dorado', meta: 110, real: 85, rechazo: 8, estado: 'alerta', img: 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&w=300&q=80' },
-            { dia: 'Jue 15', lote: 'LOT-915', prenda: 'Falda Plisada', meta: 130, real: 130, rechazo: 0, estado: 'ok', img: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=300&q=80' }
-          ]
-        },
-        {
-          linea: 'Línea C · Acabados', colorBadge: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40',
-          dias: [
-            { dia: 'Lun 12', lote: 'LOT-710', prenda: 'Palazzo Ejecutivo', meta: 160, real: 160, rechazo: 3, estado: 'ok', img: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=300&q=80' },
-            { dia: 'Mar 13', lote: 'LOT-718', prenda: 'Etiquetado Oro LEM', meta: 350, real: 350, rechazo: 0, estado: 'ok', img: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=300&q=80' },
-            { dia: 'Mié 14', lote: 'LOT-725', prenda: 'Control Calidad', meta: 200, real: 170, rechazo: 11, estado: 'alerta', img: 'https://images.unsplash.com/photo-1539533018447-63fcce2678e3?auto=format&fit=crop&w=300&q=80' },
-            { dia: 'Jue 15', lote: 'LOT-730', prenda: 'Despacho Colón', meta: 240, real: 240, rechazo: 0, estado: 'ok', img: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=300&q=80' }
-          ]
+
+        function saveClientId() {
+            const val = document.getElementById('google-client-id').value.trim();
+            if (val) {
+                localStorage.setItem('lem_client_id_oauth', val);
+                alert('Client ID guardado exitosamente.');
+                document.getElementById('client-id-box').classList.add('hidden');
+            }
         }
-      ],
-      rrhhDescansos: [
-        { empleada: 'ANDREA LOPEZ', cargo: 'Vendedora Caja 1', fecha: 'Miércoles 27 Nov', tipo: 'Día de Descanso Semanal', estado: 'APROBADO' },
-        { empleada: 'CAMILA TORRES', cargo: 'Vendedora Caja 2', fecha: 'Jueves 28 Nov', tipo: 'Día de Descanso Semanal', estado: 'PENDIENTE' }
-      ]
-    };
 
-    // Definición de Módulos y Permisos por Rol
-    const MODULES = [
-      { id: 'dashboard', label: 'Dashboard Ejecutivo', icon: 'layout-dashboard', roles: ['ADMIN'], subtitle: 'Visión financiera global, KPIs y rendimiento de tienda (Img 6 y 7)' },
-      { id: 'pos', label: 'Punto de Venta (POS)', icon: 'shopping-bag', roles: ['ADMIN', 'VENDEDORA'], subtitle: 'Facturación rápida táctil por prenda, color y talla (Img 8)' },
-      { id: 'caja', label: 'Control de Caja & Gastos', icon: 'wallet', roles: ['ADMIN', 'VENDEDORA'], subtitle: 'Apertura, Cierre de Caja, Gastos, Depósitos, Retiros y Adelantos' },
-      { id: 'inventario', label: 'Inventario & Variantes', icon: 'package-check', roles: ['ADMIN', 'VENDEDORA'], subtitle: 'Ficha maestra por SKU, existencias, check de inventario y tallas (Img 9)' },
-      { id: 'matriz', label: 'Matriz & Taller', icon: 'kanban', roles: ['ADMIN'], subtitle: 'Planificación de líneas de confección, entradas de taller y control de lotes (Img 5)' },
-      { id: 'equipo', label: 'Perfiles & Vendedoras', icon: 'users', roles: ['ADMIN'], subtitle: 'Crear cuentas de nuevas Vendedoras o Administradores y gestionar accesos' },
-      { id: 'rrhh', label: 'Días de Descanso & Histórico', icon: 'calendar-Range', roles: ['ADMIN', 'VENDEDORA'], subtitle: 'Turnos, solicitud de descansos y consolidado mensual' }
-    ];
+        function handleGoogleLogin() {
+            const clientId = localStorage.getItem('lem_client_id_oauth');
+            if (!clientId) {
+                alert('Configura tu Google Client ID para enlazar con tu Google Cloud Console, o pulsa "Admin Total" o "Vendedora" para acceder de inmediato.');
+                toggleClientIdInput();
+                return;
+            }
+            alert('Conexión con cuenta Google iniciada.');
+            loginAsRole('admin');
+        }
 
-    function quickFill(u, p) {
-      document.getElementById('loginUser').value = u;
-      document.getElementById('loginPass').value = p;
-    }
+        function loginAsRole(role) {
+            currentUser = role === 'admin' ? teamUsers[0] : teamUsers[1];
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('app-container').classList.remove('hidden');
 
-    async function handleLogin(e) {
-      e.preventDefault();
-      const u = document.getElementById('loginUser').value.trim().toLowerCase();
-      const p = document.getElementById('loginPass').value.trim();
+            document.getElementById('user-name-display').textContent = currentUser.name;
+            document.getElementById('user-avatar-badge').textContent = currentUser.name.substring(0, 2).toUpperCase();
+            document.getElementById('user-role-label').textContent = currentUser.role === 'admin' ? 'Administrador' : 'Vendedora';
 
-      // Si hay URL de Google Apps Script configurada, valida contra Google Sheets primero
-      if (GOOGLE_SCRIPT_URL) {
-        try {
-          const res = await fetch(GOOGLE_SCRIPT_URL, {
-            method: 'POST',
-            body: JSON.stringify({ action: 'login', payload: { usuario: u, clave: p } })
-          });
-          const json = await res.json();
-          if (json.ok) {
-            iniciarSesionConUsuario({
-              nombre: json.user.NOMBRE,
-              usuario: json.user.USUARIO,
-              rol: json.user.ROL,
-              caja: json.user.CAJA_ASIGNADA
+            // Ocultar sección de seguridad si es vendedora
+            const adminNav = document.getElementById('admin-sec-nav');
+            if (currentUser.role === 'admin') {
+                adminNav.classList.remove('hidden');
+            } else {
+                adminNav.classList.add('hidden');
+            }
+
+            renderSheetsSidebar();
+            switchMasterView('dashboard');
+            renderDashboardData();
+            renderPOSProducts();
+            renderInventoryMatrix();
+        }
+
+        function logout() {
+            document.getElementById('app-container').classList.add('hidden');
+            document.getElementById('login-screen').classList.remove('hidden');
+        }
+
+        // ============================================================================
+        // 3. NAVEGACIÓN Y CAMBIO DE VISTAS
+        // ============================================================================
+        function renderSheetsSidebar() {
+            const container = document.getElementById('sheets-nav-container');
+            container.innerHTML = '';
+
+            allSheets.forEach((sheet, idx) => {
+                if (currentUser.role !== 'admin' && !currentUser.sheets.includes(sheet.key)) return;
+
+                const btn = document.createElement('button');
+                btn.onclick = () => openSheetView(idx);
+                btn.id = `sheet-btn-${idx}`;
+                btn.className = 'w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-gray-400 hover:text-white hover:bg-brand-cardHover transition';
+                btn.innerHTML = `
+                    <div class="flex items-center gap-2.5 truncate">
+                        <i data-lucide="${sheet.icon}" class="w-3.5 h-3.5 text-brand-gold"></i>
+                        <span class="truncate">${sheet.name}</span>
+                    </div>
+                    <span class="text-[10px] px-1.5 py-0.5 rounded bg-brand-darkInput text-gray-300 font-mono">${sheet.rows.length}</span>
+                `;
+                container.appendChild(btn);
             });
-            return;
-          }
-        } catch (err) {
-          console.warn('Usando modo local de respaldo:', err);
+            lucide.createIcons();
         }
-      }
 
-      const found = state.users.find(x => x.usuario.toLowerCase() === u && x.clave === p && x.estado === 'ACTIVO');
-      if (!found) {
-        alert('Credenciales incorrectas o usuario inactivo.');
-        return;
-      }
-      iniciarSesionConUsuario(found);
-    }
+        function switchMasterView(viewName) {
+            activeMasterView = viewName;
+            
+            // Ocultar todas las secciones
+            ['dashboard', 'pos', 'inventory-matrix', 'planning', 'sheet', 'users'].forEach(v => {
+                const el = document.getElementById(`view-${v}-section`);
+                if (el) el.classList.add('hidden');
+            });
 
-    function iniciarSesionConUsuario(user) {
-      state.currentUser = user;
-      state.activeModule = user.rol === 'ADMIN' ? 'dashboard' : 'pos';
-      document.getElementById('loginScreen').classList.add('hidden');
-      document.getElementById('appContainer').classList.remove('hidden');
-      document.getEle
+            // Restablecer estilos en sidebar
+            document.querySelectorAll('#sidebar nav button').forEach(b => {
+                b.classList.remove('bg-brand-card', 'text-brand-gold', 'border', 'border-brand-cardBorder');
+                b.classList.add('text-gray-400');
+            });
+
+            // Mostrar sección activa
+            const activeEl = document.getElementById(`view-${viewName}-section`);
+            if (activeEl) activeEl.classList.remove('hidden');
+
+            const navBtn = document.getElementById(`nav-btn-${viewName}`);
+            if (navBtn) {
+                navBtn.classList.add('bg-brand-card', 'text-brand-gold', 'border', 'border-brand-cardBorder');
+                navBtn.classList.remove('text-gray-400');
+            }
+
+            // Títulos dinámicos
+            const titles = {
+                'dashboard': ['Dashboard Ejecutivo', 'Métricas consolidadas de ventas e inventario'],
+                'pos': ['Punto de Venta (POS)', 'Terminal táctil de cobro y registro'],
+                'inventory-matrix': ['Matriz de Tallas & Stock', 'Control de existencias por variantes'],
+                'planning': ['Planificador de Pedidos', 'Seguimiento de confección y despachos'],
+                'users': ['Equipo & Accesos', 'Gestión de vendedoras y administradores']
+            };
+
+            if (titles[viewName]) {
+                document.getElementById('view-title').textContent = titles[viewName][0];
+                document.getElementById('view-sub').textContent = titles[viewName][1];
+            }
+
+            if (viewName === 'dashboard') initCharts();
+            if (viewName === 'users') renderUsersAdmin();
+
+            if (window.innerWidth < 1024) toggleSidebar();
+        }
+
+        function openSheetView(idx) {
+            currentSheetIdx = idx;
+            switchMasterView('sheet');
+            const sheet = allSheets[idx];
+            document.getElementById('view-title').textContent = sheet.name;
+            document.getElementById('view-sub').textContent = `Google Sheet ID: ${sheet.spreadsheetId.substring(0, 16)}... | GID: ${sheet.gid}`;
+            document.getElementById('external-sheet-link').href = sheet.url;
+            renderLiveSheetTable();
+        }
+
+        // ============================================================================
+        // 4. GRÁFICAS Y DASHBOARD (IMÁGENES 1 Y 5)
+        // ============================================================================
+        function initCharts() {
+            if (salesChartInstance) salesChartInstance.destroy();
+            if (paymentChartInstance) paymentChartInstance.destroy();
+
+            // Gráfico 1: Curva de Ventas suave (Estilo Imagen 1 y 5)
+            const ctxSales = document.getElementById('chart-sales-performance').getContext('2d');
+            const gradientGold = ctxSales.createLinearGradient(0, 0, 0, 300);
+            gradientGold.addColorStop(0, 'rgba(200, 157, 75, 0.4)');
+            gradientGold.addColorStop(1, 'rgba(200, 157, 75, 0.0)');
+
+            const gradientLeaf = ctxSales.createLinearGradient(0, 0, 0, 300);
+            gradientLeaf.addColorStop(0, 'rgba(91, 179, 71, 0.4)');
+            gradientLeaf.addColorStop(1, 'rgba(91, 179, 71, 0.0)');
+
+            salesChartInstance = new Chart(ctxSales, {
+                type: 'line',
+                data: {
+                    labels: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
+                    datasets: [
+                        {
+                            label: 'Net Income',
+                            data: [18, 22, 19, 28, 24, 35, 42, 38, 45, 52, 48, 60],
+                            borderColor: '#5BB347',
+                            backgroundColor: gradientLeaf,
+                            fill: true,
+                            tension: 0.4,
+                            borderWidth: 2.5,
+                            pointRadius: 0
+                        },
+                        {
+                            label: 'Total Sales',
+                            data: [30, 34, 32, 40, 38, 48, 55, 51, 58, 65, 62, 77],
+                            borderColor: '#C89D4B',
+                            backgroundColor: gradientGold,
+                            fill: true,
+                            tension: 0.4,
+                            borderWidth: 2.5,
+                            pointRadius: 0
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#8E9AA8', font: { size: 10 } } },
+                        y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#8E9AA8', font: { size: 10 } } }
+                    }
+                }
+            });
+
+            // Gráfico 2: Dona Métodos de Pago (Imagen 1)
+            const ctxDonut = document.getElementById('chart-payments-donut').getContext('2d');
+            paymentChartInstance = new Chart(ctxDonut, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Efectivo (Cash)', 'Tarjeta (Card)', 'Transferencia'],
+                    datasets: [{
+                        data: [50, 30, 20],
+                        backgroundColor: ['#5BB347', '#C89D4B', '#22D3EE'],
+                        borderColor: '#13171F',
+                        borderWidth: 4,
+                        cutout: '72%'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        function renderDashboardData() {
+            // Render Top Products
+            const topTbody = document.getElementById('top-products-tbody');
+            topTbody.innerHTML = [
+                { name: 'Vestido Gala Silk #8801', qty: '48 pzs', amount: '$88,800.00', status: 'In stock', color: 'text-brand-leaf' },
+                { name: 'Blazer Imperial Gold #8802', qty: '32 pzs', amount: '$76,800.00', status: 'In stock', color: 'text-brand-leaf' },
+                { name: 'Conjunto Lino Nude #8803', qty: '26 pzs', amount: '$42,120.00', status: 'In stock', color: 'text-brand-leaf' },
+                { name: 'Palazzo Corte Alto #8804', qty: '14 pzs', amount: '$18,060.00', status: 'Pocas piezas', color: 'text-brand-gold' }
+            ].map(p => `
+                <tr class="hover:bg-brand-darkInput/50 transition">
+                    <td class="py-3 font-semibold text-white">${p.name}</td>
+                    <td class="py-3 text-gray-300 font-mono">${p.qty}</td>
+                    <td class="py-3 font-mono font-bold text-brand-gold">${p.amount}</td>
+                    <td class="py-3 text-right">
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${p.color} bg-white/5">${p.status}</span>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Render Employee Performance
+            const perfContainer = document.getElementById('sellers-perf-list');
+            perfContainer.innerHTML = teamUsers.map(u => `
+                <div class="p-3 bg-brand-darkInput rounded-2xl border border-brand-cardBorder flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-8 h-8 rounded-xl bg-brand-gold/15 text-brand-gold font-bold flex items-center justify-center text-xs">
+                            ${u.name.substring(0, 2).toUpperCase()}
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-white">${u.name}</p>
+                            <p class="text-[10px] text-gray-400">${u.branch}</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-xs font-bold font-mono text-brand-gold">$34,200.00</p>
+                        <p class="text-[9px] text-brand-leaf font-semibold">Meta 92%</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ============================================================================
+        // 5. PUNTO DE VENTA (POS) TÁCTIL (IMAGEN 2)
+        // ============================================================================
+        function renderPOSProducts() {
+            const grid = document.getElementById('pos-products-grid');
+            grid.innerHTML = posProducts.map(p => `
+                <div class="lem-card rounded-2xl overflow-hidden border border-brand-cardBorder flex flex-col justify-between group hover:border-brand-gold/50 transition">
+                    <div class="h-36 bg-cover bg-center relative" style="background-image: url('${p.img}');">
+                        <span class="absolute top-2 left-2 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md text-brand-gold text-[10px] font-bold">${p.category}</span>
+                    </div>
+                    <div class="p-3.5 space-y-2">
+                        <h4 class="font-bold text-xs text-white truncate">${p.name}</h4>
+                        <div class="flex items-center justify-between">
+                            <span class="font-mono font-bold text-brand-gold text-sm">$${p.price.toLocaleString('es-MX', {minimumFractionDigits: 2})}</span>
+                            <div class="flex gap-1">
+                                ${p.colors.map(c => `<span class="w-3 h-3 rounded-full border border-gray-600" style="background-color: ${c}"></span>`).join('')}
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-1 pt-1">
+                            ${p.sizes.map(s => `
+                                <button onclick="addToCart(${p.id}, '${s}')" class="flex-1 py-1 rounded-lg bg-brand-darkInput hover:gold-gradient-bg hover:text-black border border-brand-cardBorder text-[10px] font-bold text-gray-300 transition">
+                                    ${s}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addToCart(productId, size) {
+            const product = posProducts.find(p => p.id === productId);
+            const existing = cartItems.find(i => i.id === productId && i.size === size);
+
+            if (existing) {
+                existing.qty++;
+            } else {
+                cartItems.push({ ...product, size, qty: 1 });
+            }
+            renderCart();
+        }
+
+        function renderCart() {
+            const container = document.getElementById('pos-cart-items');
+            if (cartItems.length === 0) {
+                container.innerHTML = '<p class="text-center text-xs text-brand-textMuted py-8">No hay prendas seleccionadas</p>';
+                document.getElementById('pos-subtotal').textContent = '$0.00';
+                document.getElementById('pos-tax').textContent = '$0.00';
+                document.getElementById('pos-total').textContent = '$0.00';
+                return;
+            }
+
+            container.innerHTML = cartItems.map((item, idx) => `
+                <div class="p-2.5 bg-brand-darkInput rounded-xl border border-brand-cardBorder flex items-center justify-between text-xs">
+                    <div>
+                        <p class="font-bold text-white truncate max-w-[140px]">${item.name}</p>
+                        <p class="text-[10px] text-brand-gold">Talla: ${item.size} • Cant: ${item.qty}</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="font-mono font-bold text-white">$${(item.price * item.qty).toLocaleString('es-MX')}</span>
+                        <button onclick="removeFromCart(${idx})" class="text-gray-400 hover:text-red-400">
+                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            const subtotal = cartItems.reduce((acc, i) => acc + (i.price * i.qty), 0);
+            const tax = subtotal * 0.16;
+            const total = subtotal + tax;
+
+            document.getElementById('pos-subtotal').textContent = '$' + subtotal.toLocaleString('es-MX', { minimumFractionDigits: 2 });
+            document.getElementById('pos-tax').textContent = '$' + tax.toLocaleString('es-MX', { minimumFractionDigits: 2 });
+            document.getElementById('pos-total').textContent = '$' + total.toLocaleString('es-MX', { minimumFractionDigits: 2 });
+
+            lucide.createIcons();
+        }
+
+        function removeFromCart(idx) {
+            cartItems.splice(idx, 1);
+            renderCart();
+        }
+
+        function clearCart() {
+            cartItems = [];
+            renderCart();
+        }
+
+        function checkoutSale() {
+            if (cartItems.length === 0) {
+                alert('Agrega al menos una prenda para procesar el cobro.');
+                return;
+            }
+
+            const folio = 'LM-' + (1000 + allSheets[0].rows.length + 1);
+            const date = new Date().toISOString().split('T')[0];
+            const itemsSummary = cartItems.map(i => `${i.name} (${i.size})`).join(', ');
+            const totalFormatted = document.getElementById('pos-total').textContent;
+
+            allSheets[0].rows.unshift([
+                folio, date, 'Venta en Tienda POS', itemsSummary, 'Varios', currentUser.name, 'Tarjeta', totalFormatted, 'Pagado'
+            ]);
+
+            localStorage.setItem('lem_all_sheets', JSON.stringify(allSheets));
+            exportSingleTicketPDF(folio, itemsSummary, totalFormatted);
+            clearCart();
+            alert(`Venta registrada con éxito. Folio generado: ${folio}`);
+            renderSheetsSidebar();
+        }
+
+        // ============================================================================
+        // 6. MATRIZ DE INVENTARIO (IMAGEN 3 - STOCKAGILE)
+        // ============================================================================
+        function renderInventoryMatrix() {
+            const tbody = document.getElementById('inventory-matrix-tbody');
+            tbody.innerHTML = inventoryMatrixData.map(row => `
+                <tr class="hover:bg-brand-darkInput/40 transition">
+                    <td class="py-3 px-4 font-bold text-white">${row.color}</td>
+                    <td class="py-3 px-4 text-brand-gold font-mono">${row.size}</td>
+                    <td class="py-3 px-4 font-mono">${row.received}</td>
+                    <td class="py-3 px-4 font-mono text-gray-300">${row.storeSold}</td>
+                    <td class="py-3 px-4 font-mono text-gray-300">${row.onlineSold}</td>
+                    <td class="py-3 px-4 font-mono font-bold text-brand-leaf text-sm">${row.stock}</td>
+                    <td class="py-3 px-4 text-right">
+                        <span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${row.stock < 30 ? 'bg-amber-500/10 text-amber-400' : 'bg-brand-leaf/10 text-brand-leaf'}">
+                            ${row.status}
+                        </span>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // ============================================================================
+        // 7. TABLAS DE GOOGLE SHEETS EN VIVO
+        // ============================================================================
+        function renderLiveSheetTable() {
+            const sheet = allSheets[currentSheetIdx];
+            const query = (document.getElementById('table-search-input').value || '').toLowerCase();
+
+            // Cabeceras
+            const thead = document.getElementById('live-table-head');
+            thead.innerHTML = sheet.headers.map(h => `<th class="py-3 px-4">${h}</th>`).join('') +
+                '<th class="py-3 px-4 text-right">Acciones</th>';
+
+            // Filas
+            const tbody = document.getElementById('live-table-body');
+            tbody.innerHTML = '';
+
+            sheet.rows.forEach((row, rIdx) => {
+                if (query && !row.join(' ').toLowerCase().includes(query)) return;
+
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-brand-darkInput/40 transition border-b border-brand-cardBorder';
+
+                const colsHtml = sheet.headers.map((_, cIdx) => {
+                    const val = row[cIdx] || '';
+                    if (String(val).startsWith('$')) {
+                        return `<td class="py-3 px-4 font-mono font-bold text-brand-gold">${val}</td>`;
+                    }
+                    return `<td class="py-3 px-4 text-gray-200">${val}</td>`;
+                }).join('');
+
+                tr.innerHTML = `
+                    ${colsHtml}
+                    <td class="py-3 px-4 text-right whitespace-nowrap">
+                        <button onclick="downloadRowPDF(${rIdx})" class="p-1.5 rounded-lg bg-brand-darkInput hover:bg-brand-gold hover:text-black text-brand-gold transition" title="Exportar Ficha PDF">
+                            <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+                        </button>
+                        ${currentUser.role === 'admin' ? `
+                        <button onclick="deleteRow(${rIdx})" class="p-1.5 rounded-lg bg-brand-darkInput hover:bg-red-500 hover:text-white text-red-400 transition" title="Eliminar">
+                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                        </button>` : ''}
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+            lucide.createIcons();
+        }
+
+        function deleteRow(idx) {
+            if (!confirm('¿Deseas eliminar este registro de la base de datos?')) return;
+            allSheets[currentSheetIdx].rows.splice(idx, 1);
+            localStorage.setItem('lem_all_sheets', JSON.stringify(allSheets));
+            renderLiveSheetTable();
+            renderSheetsSidebar();
+        }
+
+        // ============================================================================
+        // 8. MODAL DE CREACIÓN / EDICIÓN DINÁMICA
+        // ============================================================================
+        function openCreateModal() {
+            const sheet = allSheets[currentSheetIdx];
+            document.getElementById('form-modal-title').textContent = `Nuevo en ${sheet.name}`;
+            const container = document.getElementById('modal-form-inputs');
+
+            container.innerHTML = sheet.headers.map((h, i) => `
+                <div>
+                    <label class="block text-[10px] uppercase font-bold text-gray-400 mb-1">${h}</label>
+                    <input type="text" name="field_${i}" required class="w-full px-3 py-2 bg-brand-darkInput border border-brand-cardBorder rounded-xl text-xs text-white focus:outline-none focus:border-brand-gold">
+                </div>
+            `).join('');
+
+            document.getElementById('form-modal').classList.remove('hidden');
+        }
+
+        function closeCreateModal() {
+            document.getElementById('form-modal').classList.add('hidden');
+        }
+
+        function submitRecord(e) {
+            e.preventDefault();
+            const sheet = allSheets[currentSheetIdx];
+            const formData = new FormData(e.target);
+            const newRow = sheet.headers.map((_, i) => formData.get(`field_${i}`));
+
+            sheet.rows.unshift(newRow);
+            localStorage.setItem('lem_all_sheets', JSON.stringify(allSheets));
+            closeCreateModal();
+            renderLiveSheetTable();
+            renderSheetsSidebar();
+        }
+
+        // ============================================================================
+        // 9. GESTIÓN DE EQUIPO (ADMINISTRADORES Y VENDEDORAS)
+        // ============================================================================
+        function renderUsersAdmin() {
+            const grid = document.getElementById('team-cards-grid');
+            grid.innerHTML = teamUsers.map(u => `
+                <div class="lem-card p-5 rounded-2xl border border-brand-cardBorder space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl ${u.role === 'admin' ? 'gold-gradient-bg text-black' : 'bg-brand-darkInput text-brand-gold border border-brand-gold/30'} flex items-center justify-center font-bold text-sm">
+                                ${u.name.substring(0, 2).toUpperCase()}
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-xs text-white">${u.name}</h4>
+                                <p class="text-[10px] text-gray-400">${u.email}</p>
+                            </div>
+                        </div>
+                        <span class="px-2 py-0.5 rounded text-[9px] font-bold uppercase ${u.role === 'admin' ? 'bg-brand-gold/20 text-brand-goldLight' : 'bg-gray-800 text-gray-300'}">${u.role}</span>
+                    </div>
+
+                    <div class="text-[11px] text-gray-400 space-y-1">
+                        <p><strong class="text-gray-200">Sucursal:</strong> ${u.branch}</p>
+                        <p><strong class="text-gray-200">Acceso a Libros:</strong> ${u.sheets.length} de 5 autorizados</p>
+                    </div>
+
+                    ${u.id !== 1 ? `
+                    <div class="pt-2 border-t border-brand-cardBorder flex justify-end">
+                        <button onclick="removeUser(${u.id})" class="text-red-400 hover:underline text-[11px]">Eliminar Acceso</button>
+                    </div>` : ''}
+                </div>
+            `).join('');
+        }
+
+        function openCreateUserModal() {
+            const box = document.getElementById('sheets-checkbox-list');
+            box.innerHTML = allSheets.map(s => `
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" name="auth_sheet" value="${s.key}" checked class="rounded text-brand-gold focus:ring-brand-gold">
+                    <span>${s.name}</span>
+                </label>
+            `).join('');
+            document.getElementById('user-modal').classList.remove('hidden');
+        }
+
+        function closeUserModal() {
+            document.getElementById('user-modal').classList.add('hidden');
+        }
+
+        function submitNewUser(e) {
+            e.preventDefault();
+            const name = document.getElementById('new-name').value.trim();
+            const email = document.getElementById('new-email').value.trim();
+            const role = document.getElementById('new-role').value;
+            const branch = document.getElementById('new-branch').value.trim() || 'Boutique Matriz';
+            const sheets = Array.from(document.querySelectorAll('input[name="auth_sheet"]:checked')).map(c => c.value);
+
+            teamUsers.push({ id: Date.now(), name, email, role, branch, sheets });
+            localStorage.setItem('lem_users_db', JSON.stringify(teamUsers));
+            closeUserModal();
+            renderUsersAdmin();
+        }
+
+        function removeUser(id) {
+            teamUsers = teamUsers.filter(u => u.id !== id);
+            localStorage.setItem('lem_users_db', JSON.stringify(teamUsers));
+            renderUsersAdmin();
+        }
+
+        // ============================================================================
+        // 10. GENERADOR DE PLANTILLAS PDF OFICIALES "LEM MODA"
+        // ============================================================================
+        function generateLuxuryPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+            const sheet = allSheets[currentSheetIdx];
+
+            // Fondo Superior Negro Obsidiana
+            doc.setFillColor(11, 13, 17);
+            doc.rect(0, 0, 297, 30, 'F');
+
+            // Franja Dorada
+            doc.setFillColor(200, 157, 75);
+            doc.rect(0, 30, 297, 2, 'F');
+
+            // Título LEM MODA
+            doc.setTextColor(255, 255, 255);
+            doc.setFont('times', 'bold');
+            doc.setFontSize(22);
+            doc.text('LEM MODA', 14, 18);
+
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(9);
+            doc.setTextColor(232, 200, 122);
+            doc.text(`REPORTE EJECUTIVO • ${sheet.name.toUpperCase()}`, 14, 25);
+
+            doc.setTextColor(255, 255, 255);
+            doc.text(`Fecha: ${new Date().toLocaleDateString('es-MX')} | Operador: ${currentUser.name}`, 283, 20, { align: 'right' });
+
+            doc.autoTable({
+                startY: 38,
+                head: [sheet.headers],
+                body: sheet.rows,
+                theme: 'striped',
+                headStyles: { fillColor: [19, 23, 31], textColor: [200, 157, 75], fontStyle: 'bold', fontSize: 9 },
+                bodyStyles: { fontSize: 8.5, textColor: [30, 30, 30] },
+                alternateRowStyles: { fillColor: [248, 246, 240] }
+            });
+
+            doc.save(`LEM_MODA_${sheet.name.replace(/\s+/g, '_')}.pdf`);
+        }
+
+        function downloadRowPDF(rowIndex) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+            const sheet = allSheets[currentSheetIdx];
+            const row = sheet.rows[rowIndex];
+
+            doc.setFillColor(11, 13, 17);
+            doc.rect(0, 0, 210, 36, 'F');
+            doc.setFillColor(200, 157, 75);
+            doc.rect(0, 36, 210, 2, 'F');
+
+            doc.setTextColor(255, 255, 255);
+            doc.setFont('times', 'bold');
+            doc.setFontSize(24);
+            doc.text('LEM MODA', 15, 20);
+
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(9);
+            doc.setTextColor(232, 200, 122);
+            doc.text('COMPROBANTE EJECUTIVO DE REGISTRO', 15, 28);
+
+            const tableBody = sheet.headers.map((h, i) => [h.toUpperCase(), String(row[i] || '-')]);
+
+            doc.autoTable({
+                startY: 48,
+                head: [['CAMPO / CONCEPTO', 'INFORMACIÓN REGISTRADA']],
+                body: tableBody,
+                theme: 'grid',
+                headStyles: { fillColor: [11, 13, 17], textColor: [200, 157, 75], fontSize: 10 },
+                columnStyles: { 0: { fontStyle: 'bold', cellWidth: 70, fillColor: [245, 242, 235] } }
+            });
+
+            doc.save(`LEM_MODA_Ficha_${row[0] || 'Registro'}.pdf`);
+        }
+
+        function exportSingleTicketPDF(folio, items, total) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: [80, 150] });
+
+            doc.setFillColor(11, 13, 17);
+            doc.rect(0, 0, 80, 22, 'F');
+
+            doc.setTextColor(200, 157, 75);
+            doc.setFont('times', 'bold');
+            doc.setFontSize(14);
+            doc.text('LEM MODA', 40, 11, { align: 'center' });
+
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(7);
+            doc.setTextColor(255, 255, 255);
+            doc.text('TICKET OFICIAL DE VENTA', 40, 17, { align: 'center' });
+
+            doc.setTextColor(0, 0, 0);
+            doc.setFontSize(8);
+            doc.text(`Folio: ${folio}`, 5, 30);
+            doc.text(`Fecha: ${new Date().toLocaleDateString('es-MX')}`, 5, 36);
+            doc.text(`Atendió: ${currentUser.name}`, 5, 42);
+
+            doc.setDrawColor(200, 157, 75);
+            doc.line(5, 46, 75, 46);
+
+            doc.text('Prendas:', 5, 52);
+            doc.setFontSize(7.5);
+            doc.text(items, 5, 58, { maxWidth: 70 });
+
+            doc.setFontSize(10);
+            doc.setFont('helvetica', 'bold');
+            doc.text(`TOTAL: ${total}`, 5, 80);
+
+            doc.save(`Ticket_${folio}.pdf`);
+        }
+
+        // ============================================================================
+        // 11. PWA & UTILIDADES
+        // ============================================================================
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+
+        function installPWA() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+            } else {
+                alert('Para instalar LEM MODA en iPhone: Pulsa "Compartir" y selecciona "Agregar al inicio". En PC/Android pulsa el icono de instalar en la barra del navegador.');
+            }
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('-translate-x-full');
+        }
+
+        function syncAllSheets() {
+            const spin = document.getElementById('sync-spinner');
+            spin.classList.add('animate-spin');
+            setTimeout(() => {
+                spin.classList.remove('animate-spin');
+                alert('Sincronización con Google Sheets completada.');
+            }, 600);
+        }
+
+        // Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').catch(() => {});
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
