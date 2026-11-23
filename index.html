@@ -130,6 +130,7 @@
             </div>
         </div>
     </div>
+
     <!-- ==================== SUITE PRINCIPAL ==================== -->
     <div id="app-container" class="hidden flex-1 flex h-screen overflow-hidden">
         
@@ -145,7 +146,7 @@
                     <div>
                         <h2 class="font-brand text-sm tracking-widest gold-gradient-text font-bold">LEM MODA</h2>
                         <div class="flex items-center gap-1.5 mt-0.5">
-                            <span class="w-1.5 h-1.5 rounded-full bg-brand-leaf animate-pulse"></span>
+                            <span id="sync-dot" class="w-1.5 h-1.5 rounded-full bg-brand-leaf animate-pulse"></span>
                             <span id="sync-status-indicator" class="text-[9px] text-gray-400 font-mono uppercase tracking-wider">Online v4.2</span>
                         </div>
                     </div>
@@ -185,7 +186,7 @@
                 </div>
                 <!-- 5 Libros de Google Sheets -->
                 <div>
-                    <span class="px-3 text-[10px] font-bold uppercase tracking-widest text-brand-textMuted">Google Sheets (5 Links)</span>
+                    <span class="px-3 text-[10px] font-bold uppercase tracking-widest text-brand-textMuted">Google Sheets en Vivo</span>
                     <nav id="sheets-nav-container" class="mt-2 space-y-1">
                         <!-- Generado dinámicamente -->
                     </nav>
@@ -210,6 +211,7 @@
                 </button>
             </div>
         </aside>
+
         <!-- CONTENIDO PRINCIPAL -->
         <div class="flex-1 flex flex-col overflow-hidden bg-brand-bg">
             
@@ -225,7 +227,7 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-2.5">
-                    <button onclick="syncCurrentLiveSheet()" class="p-2.5 rounded-xl bg-brand-card hover:bg-brand-cardHover border border-brand-cardBorder text-brand-gold transition" title="Sincronizar Google Sheets">
+                    <button onclick="syncAllGoogleSheets(true)" class="p-2.5 rounded-xl bg-brand-card hover:bg-brand-cardHover border border-brand-cardBorder text-brand-gold transition" title="Sincronizar Todas las Hojas de Google">
                         <i data-lucide="refresh-cw" id="sync-spinner" class="w-4 h-4"></i>
                     </button>
                     <button onclick="generateLuxuryPDF()" class="py-2 px-3.5 bg-brand-card hover:bg-brand-cardHover border border-brand-gold/40 text-brand-goldLight rounded-xl text-xs font-semibold flex items-center gap-2 transition">
@@ -238,6 +240,7 @@
                     </button>
                 </div>
             </header>
+
             <!-- VISTAS INTERCAMBIABLES -->
             <main class="flex-1 overflow-y-auto p-4 md:p-6 space-y-6">
                 <!-- 1. VISTA DASHBOARD EJECUTIVO -->
@@ -245,10 +248,10 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         <div class="lem-card p-4 rounded-2xl flex items-center justify-between">
                             <div>
-                                <span class="text-[11px] font-semibold text-brand-textMuted uppercase tracking-wider">Ingreso Neto</span>
-                                <h3 id="kpi-net-income" class="text-2xl font-bold text-white mt-1">$77,325.45</h3>
+                                <span class="text-[11px] font-semibold text-brand-textMuted uppercase tracking-wider">Ingreso Neto (Ventas)</span>
+                                <h3 id="kpi-net-income" class="text-2xl font-bold text-white mt-1">$0.00</h3>
                                 <span class="inline-flex items-center gap-1 text-[11px] text-brand-leaf font-bold mt-1">
-                                    <i data-lucide="trending-up" class="w-3 h-3"></i> +2.5% vs ayer
+                                    <i data-lucide="trending-up" class="w-3 h-3"></i> En tiempo real
                                 </span>
                             </div>
                             <div class="w-12 h-12 rounded-2xl bg-brand-leaf/10 border border-brand-leaf/30 flex items-center justify-center text-brand-leaf">
@@ -257,10 +260,10 @@
                         </div>
                         <div class="lem-card p-4 rounded-2xl flex items-center justify-between">
                             <div>
-                                <span class="text-[11px] font-semibold text-brand-textMuted uppercase tracking-wider">Ventas Totales</span>
-                                <h3 id="kpi-total-sales-count" class="text-2xl font-bold text-white mt-1">142 Prendas</h3>
+                                <span class="text-[11px] font-semibold text-brand-textMuted uppercase tracking-wider">Registros de Ventas</span>
+                                <h3 id="kpi-total-sales-count" class="text-2xl font-bold text-white mt-1">0 Prendas</h3>
                                 <span class="inline-flex items-center gap-1 text-[11px] text-brand-leaf font-bold mt-1">
-                                    <i data-lucide="trending-up" class="w-3 h-3"></i> +12% mensual
+                                    <i data-lucide="shopping-bag" class="w-3 h-3"></i> Google Sheet #1
                                 </span>
                             </div>
                             <div class="w-12 h-12 rounded-2xl bg-brand-gold/10 border border-brand-gold/30 flex items-center justify-center text-brand-gold">
@@ -270,8 +273,8 @@
                         <div class="lem-card p-4 rounded-2xl flex items-center justify-between">
                             <div>
                                 <span class="text-[11px] font-semibold text-brand-textMuted uppercase tracking-wider">Balance en Caja</span>
-                                <h3 class="text-2xl font-bold text-white mt-1">$142,890.50</h3>
-                                <span class="text-[11px] text-brand-goldLight font-medium mt-1">Corte Actualizado</span>
+                                <h3 id="kpi-cash-balance" class="text-2xl font-bold text-white mt-1">$0.00</h3>
+                                <span class="text-[11px] text-brand-goldLight font-medium mt-1">Google Sheet #4</span>
                             </div>
                             <div class="w-12 h-12 rounded-2xl bg-brand-gold/10 border border-brand-gold/30 flex items-center justify-center text-brand-gold">
                                 <i data-lucide="wallet" class="w-6 h-6"></i>
@@ -279,9 +282,9 @@
                         </div>
                         <div class="lem-card p-4 rounded-2xl flex items-center justify-between">
                             <div>
-                                <span class="text-[11px] font-semibold text-brand-textMuted uppercase tracking-wider">Metas de Equipo</span>
-                                <h3 class="text-2xl font-bold text-white mt-1">88.4%</h3>
-                                <span class="text-[11px] text-brand-leaf font-medium mt-1">Activo en Tiendas</span>
+                                <span class="text-[11px] font-semibold text-brand-textMuted uppercase tracking-wider">Stock Registrado</span>
+                                <h3 id="kpi-inventory-count" class="text-2xl font-bold text-white mt-1">0 pzs</h3>
+                                <span class="text-[11px] text-brand-leaf font-medium mt-1">Google Sheet #2</span>
                             </div>
                             <div class="w-12 h-12 rounded-2xl bg-brand-leaf/10 border border-brand-leaf/30 flex items-center justify-center text-brand-leaf">
                                 <i data-lucide="award" class="w-6 h-6"></i>
@@ -295,15 +298,10 @@
                                 <div>
                                     <h3 class="font-brand font-bold text-base text-white">Sales Performance</h3>
                                     <div class="flex items-center gap-4 text-xs mt-1">
-                                        <span class="flex items-center gap-1.5 text-gray-400"><span class="w-2.5 h-2.5 rounded-full bg-brand-leaf"></span> Net Income</span>
-                                        <span class="flex items-center gap-1.5 text-gray-400"><span class="w-2.5 h-2.5 rounded-full bg-brand-gold"></span> Total Sales</span>
+                                        <span class="flex items-center gap-1.5 text-gray-400"><span class="w-2.5 h-2.5 rounded-full bg-brand-leaf"></span> Ingresos Reales</span>
+                                        <span class="flex items-center gap-1.5 text-gray-400"><span class="w-2.5 h-2.5 rounded-full bg-brand-gold"></span> Tendencia Ventas</span>
                                     </div>
                                 </div>
-                                <select class="bg-brand-darkInput border border-brand-cardBorder text-xs text-gray-300 rounded-xl px-3 py-1.5 focus:outline-none">
-                                    <option>Diario</option>
-                                    <option>Semanal</option>
-                                    <option>Mensual</option>
-                                </select>
                             </div>
                             <div class="h-64">
                                 <canvas id="chart-sales-performance"></canvas>
@@ -312,23 +310,23 @@
                         <div class="lem-card p-5 rounded-3xl space-y-4 flex flex-col justify-between">
                             <div class="flex items-center justify-between">
                                 <h3 class="font-brand font-bold text-base text-white">Payment Methods</h3>
-                                <span class="text-xs text-brand-goldLight font-mono">Total 100%</span>
+                                <span class="text-xs text-brand-goldLight font-mono">100% Real</span>
                             </div>
                             <div class="h-48 relative flex items-center justify-center">
                                 <canvas id="chart-payments-donut"></canvas>
                             </div>
-                            <div class="grid grid-cols-3 gap-2 pt-2 border-t border-brand-cardBorder text-center">
+                            <div id="payment-methods-breakdown" class="grid grid-cols-3 gap-2 pt-2 border-t border-brand-cardBorder text-center">
                                 <div class="p-2 bg-brand-darkInput rounded-xl">
-                                    <p class="text-[10px] text-gray-400">Cash</p>
-                                    <p class="text-xs font-bold text-brand-leaf">50%</p>
+                                    <p class="text-[10px] text-gray-400">Efectivo</p>
+                                    <p id="donut-cash-pct" class="text-xs font-bold text-brand-leaf">0%</p>
                                 </div>
                                 <div class="p-2 bg-brand-darkInput rounded-xl">
-                                    <p class="text-[10px] text-gray-400">Card</p>
-                                    <p class="text-xs font-bold text-brand-gold">30%</p>
+                                    <p class="text-[10px] text-gray-400">Tarjeta</p>
+                                    <p id="donut-card-pct" class="text-xs font-bold text-brand-gold">0%</p>
                                 </div>
                                 <div class="p-2 bg-brand-darkInput rounded-xl">
-                                    <p class="text-[10px] text-gray-400">Transfer</p>
-                                    <p class="text-xs font-bold text-cyan-400">20%</p>
+                                    <p class="text-[10px] text-gray-400">Transf.</p>
+                                    <p id="donut-transfer-pct" class="text-xs font-bold text-cyan-400">0%</p>
                                 </div>
                             </div>
                         </div>
@@ -336,14 +334,14 @@
                     <!-- Fila 3: Top Selling & Vendedoras -->
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <div class="lem-card p-5 rounded-3xl lg:col-span-2 space-y-4">
-                            <h3 class="font-brand font-bold text-base text-white">Top Selling Products</h3>
+                            <h3 class="font-brand font-bold text-base text-white">Top Selling Products (Hoja de Ventas)</h3>
                             <div class="overflow-x-auto">
                                 <table class="w-full text-left text-xs">
                                     <thead>
                                         <tr class="text-brand-textMuted border-b border-brand-cardBorder pb-2 uppercase text-[10px] tracking-wider">
                                             <th class="py-2.5">Prenda / Modelo</th>
-                                            <th class="py-2.5">Cantidad</th>
-                                            <th class="py-2.5">Ventas ($)</th>
+                                            <th class="py-2.5">Clienta</th>
+                                            <th class="py-2.5">Monto ($)</th>
                                             <th class="py-2.5 text-right">Estatus</th>
                                         </tr>
                                     </thead>
@@ -361,18 +359,17 @@
                         </div>
                     </div>
                 </div>
+
                 <!-- 2. VISTA PUNTO DE VENTA / POS -->
                 <div id="view-pos-section" class="hidden space-y-6">
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <div class="lg:col-span-2 space-y-4">
-                            <div class="flex items-center gap-2 overflow-x-auto pb-2">
-                                <button class="px-4 py-2 rounded-xl gold-gradient-bg text-black font-bold text-xs whitespace-nowrap">Todas las Colecciones</button>
-                                <button class="px-4 py-2 rounded-xl bg-brand-card hover:bg-brand-cardHover border border-brand-cardBorder text-gray-300 text-xs whitespace-nowrap">Vestidos de Gala</button>
-                                <button class="px-4 py-2 rounded-xl bg-brand-card hover:bg-brand-cardHover border border-brand-cardBorder text-gray-300 text-xs whitespace-nowrap">Blazers Imperial</button>
-                                <button class="px-4 py-2 rounded-xl bg-brand-card hover:bg-brand-cardHover border border-brand-cardBorder text-gray-300 text-xs whitespace-nowrap">Conjuntos Lino</button>
+                            <div class="flex items-center justify-between pb-2">
+                                <h3 class="font-brand font-bold text-sm text-white">Catálogo en Vivo (Hoja #2 - Inventario)</h3>
+                                <span class="text-xs text-brand-gold" id="pos-items-count">0 modelos</span>
                             </div>
                             <div id="pos-products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                                <!-- Prendas interactivas -->
+                                <!-- Prendas generadas dinámicamente del Inventario Real -->
                             </div>
                         </div>
                         <div class="lem-card p-5 rounded-3xl space-y-4 h-fit sticky top-4">
@@ -406,29 +403,24 @@
                         </div>
                     </div>
                 </div>
+
                 <!-- 3. VISTA MATRIZ DE TALLAS & INVENTARIO -->
                 <div id="view-inventory-matrix-section" class="hidden space-y-6">
                     <div class="lem-card p-6 rounded-3xl space-y-6">
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-brand-cardBorder">
                             <div>
                                 <h2 class="font-brand text-xl font-bold text-white">Matriz de Existencias por Talla y Color</h2>
-                                <p class="text-xs text-brand-textMuted">Control granular de prendas LEM MODA</p>
+                                <p class="text-xs text-brand-textMuted">Datos directos de Google Sheet #2 (Inventario & Catálogo)</p>
                             </div>
                             <div class="flex items-center gap-3">
-                                <span class="px-3 py-1.5 rounded-xl bg-brand-leaf/10 border border-brand-leaf/30 text-brand-leaf text-xs font-bold">Total Stock: 418 pzs</span>
+                                <span id="matrix-total-badge" class="px-3 py-1.5 rounded-xl bg-brand-leaf/10 border border-brand-leaf/30 text-brand-leaf text-xs font-bold">Total Stock: Conectando...</span>
                             </div>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="w-full text-left text-xs">
                                 <thead>
-                                    <tr class="bg-brand-darkInput text-brand-goldLight uppercase text-[10px] tracking-wider border-b border-brand-cardBorder">
-                                        <th class="py-3 px-4">Color / Variante</th>
-                                        <th class="py-3 px-4">Talla (XS / S / M / L / XL)</th>
-                                        <th class="py-3 px-4">Recibido</th>
-                                        <th class="py-3 px-4">Vendido (Tienda)</th>
-                                        <th class="py-3 px-4">Vendido (Online)</th>
-                                        <th class="py-3 px-4 font-bold text-brand-leaf">Existencia Actual</th>
-                                        <th class="py-3 px-4 text-right">Estatus</th>
+                                    <tr id="matrix-table-head" class="bg-brand-darkInput text-brand-goldLight uppercase text-[10px] tracking-wider border-b border-brand-cardBorder">
+                                        <!-- Encabezados dinámicos del Sheet -->
                                     </tr>
                                 </thead>
                                 <tbody id="inventory-matrix-tbody" class="divide-y divide-brand-cardBorder">
@@ -438,64 +430,54 @@
                         </div>
                     </div>
                 </div>
+
                 <!-- 4. VISTA PLANIFICADOR DE PEDIDOS -->
                 <div id="view-planning-section" class="hidden space-y-6">
                     <div class="lem-card p-6 rounded-3xl space-y-6">
                         <div class="flex items-center justify-between pb-4 border-b border-brand-cardBorder">
                             <div>
                                 <h2 class="font-brand text-xl font-bold text-white">Planning Board • Taller & Entregas</h2>
-                                <p class="text-xs text-brand-textMuted">Programación de confección, pedidos especiales y envíos</p>
+                                <p class="text-xs text-brand-textMuted">Sincronizado con Google Sheet #3 (Pedidos & Envíos)</p>
                             </div>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div class="bg-brand-darkInput p-4 rounded-2xl border border-brand-cardBorder space-y-3">
                                 <div class="flex items-center justify-between pb-2 border-b border-gray-800">
                                     <span class="text-xs font-bold text-brand-gold flex items-center gap-2">
-                                        <i data-lucide="scissors" class="w-3.5 h-3.5"></i> Confección & Ajustes
+                                        <i data-lucide="scissors" class="w-3.5 h-3.5"></i> Confección & Pendientes
                                     </span>
-                                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-brand-gold/20 text-brand-goldLight">3</span>
+                                    <span id="planning-count-1" class="text-[10px] px-2 py-0.5 rounded-full bg-brand-gold/20 text-brand-goldLight">0</span>
                                 </div>
-                                <div class="space-y-2">
-                                    <div class="p-3 bg-brand-card rounded-xl border border-brand-cardBorder">
-                                        <p class="text-xs font-bold text-white">Vestido Gala Silk #4881</p>
-                                        <p class="text-[11px] text-gray-400 mt-1">Clienta: Mariana Torres (Talla M)</p>
-                                        <span class="inline-block mt-2 px-2 py-0.5 rounded bg-brand-gold/15 text-brand-gold text-[9px] font-bold">Entrega: 25 Feb</span>
-                                    </div>
+                                <div id="planning-col-1" class="space-y-2">
+                                    <!-- Pedidos pendientes -->
                                 </div>
                             </div>
                             <div class="bg-brand-darkInput p-4 rounded-2xl border border-brand-cardBorder space-y-3">
                                 <div class="flex items-center justify-between pb-2 border-b border-gray-800">
                                     <span class="text-xs font-bold text-cyan-400 flex items-center gap-2">
-                                        <i data-lucide="package" class="w-3.5 h-3.5"></i> Empaque & Paquetería
+                                        <i data-lucide="package" class="w-3.5 h-3.5"></i> En Tránsito / Paquetería
                                     </span>
-                                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-cyan-400/20 text-cyan-300">2</span>
+                                    <span id="planning-count-2" class="text-[10px] px-2 py-0.5 rounded-full bg-cyan-400/20 text-cyan-300">0</span>
                                 </div>
-                                <div class="space-y-2">
-                                    <div class="p-3 bg-brand-card rounded-xl border border-brand-cardBorder">
-                                        <p class="text-xs font-bold text-white">Blazer Imperial #8802</p>
-                                        <p class="text-[11px] text-gray-400 mt-1">Guía DHL: 778192831 (Gdl)</p>
-                                        <span class="inline-block mt-2 px-2 py-0.5 rounded bg-cyan-400/15 text-cyan-300 text-[9px] font-bold">En Tránsito</span>
-                                    </div>
+                                <div id="planning-col-2" class="space-y-2">
+                                    <!-- Pedidos en tránsito -->
                                 </div>
                             </div>
                             <div class="bg-brand-darkInput p-4 rounded-2xl border border-brand-cardBorder space-y-3">
                                 <div class="flex items-center justify-between pb-2 border-b border-gray-800">
                                     <span class="text-xs font-bold text-brand-leaf flex items-center gap-2">
-                                        <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Completado
+                                        <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Entregados & Liquidados
                                     </span>
-                                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-brand-leaf/20 text-brand-leaf">8</span>
+                                    <span id="planning-count-3" class="text-[10px] px-2 py-0.5 rounded-full bg-brand-leaf/20 text-brand-leaf">0</span>
                                 </div>
-                                <div class="space-y-2">
-                                    <div class="p-3 bg-brand-card rounded-xl border border-brand-cardBorder">
-                                        <p class="text-xs font-bold text-white">Conjunto Lino Nude #9910</p>
-                                        <p class="text-[11px] text-gray-400 mt-1">Clienta: Carolina Vega</p>
-                                        <span class="inline-block mt-2 px-2 py-0.5 rounded bg-brand-leaf/15 text-brand-leaf text-[9px] font-bold">Saldo Liquidado $0.00</span>
-                                    </div>
+                                <div id="planning-col-3" class="space-y-2">
+                                    <!-- Pedidos entregados -->
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <!-- 5. VISTA TABLA DINÁMICA DE GOOGLE SHEETS -->
                 <div id="view-sheet-section" class="hidden space-y-4">
                     <div class="lem-card rounded-3xl overflow-hidden">
@@ -525,6 +507,7 @@
                         </div>
                     </div>
                 </div>
+
                 <!-- 6. VISTA GESTIÓN DE PERFILES (VENDEDORAS & ADMINS) -->
                 <div id="view-users-section" class="hidden space-y-6">
                     <div class="lem-card p-6 rounded-3xl space-y-6">
@@ -545,6 +528,7 @@
             </main>
         </div>
     </div>
+
     <!-- ==================== MODAL REGISTRO / EDICIÓN ==================== -->
     <div id="form-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="lem-card rounded-3xl max-w-lg w-full overflow-hidden border border-brand-gold/40 shadow-2xl">
@@ -566,6 +550,7 @@
             </form>
         </div>
     </div>
+
     <!-- ==================== MODAL CREACIÓN DE USUARIO CON PIN ==================== -->
     <div id="user-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="lem-card rounded-3xl max-w-md w-full overflow-hidden border border-brand-gold/40 shadow-2xl">
@@ -608,10 +593,11 @@
             </form>
         </div>
     </div>
+
     <!-- ==================== LÓGICA DE CONTROL JAVASCRIPT ==================== -->
     <script>
         // ============================================================================
-        // 1. DATASETS DE TUS 5 GOOGLE SHEETS
+        // 1. CONFIGURACIÓN EXACTA DE TUS 5 GOOGLE SHEETS
         // ============================================================================
         const GOOGLE_SHEETS_DATABASE = [
             {
@@ -622,11 +608,7 @@
                 gid: '1491476596',
                 url: 'https://docs.google.com/spreadsheets/d/1mcc-wKBkGBQSbSqkTUZB7EViu58vKVJ0UI5xeyUzbFk/edit?gid=1491476596#gid=1491476596',
                 headers: ['FOLIO', 'FECHA', 'CLIENTA', 'PRENDA / MODELO', 'TALLA', 'VENDEDORA', 'MÉTODO PAGO', 'TOTAL', 'ESTADO'],
-                rows: [
-                    ['LM-1001', '2025-02-22', 'Mariana Torres', 'Vestido Gala Satinado', 'M', 'Laura V.', 'Transferencia', '$1,850.00', 'Pagado'],
-                    ['LM-1002', '2025-02-22', 'Fernanda Ruiz', 'Blazer Imperial Gold', 'S', 'Sofía M.', 'Tarjeta', '$2,400.00', 'Entregado'],
-                    ['LM-1003', '2025-02-23', 'Carolina Vega', 'Conjunto Lino Nude', 'L', 'Laura V.', 'Efectivo', '$1,620.00', 'Apartado']
-                ]
+                rows: []
             },
             {
                 key: 'sheet2',
@@ -636,11 +618,7 @@
                 gid: '818455834',
                 url: 'https://docs.google.com/spreadsheets/d/1u1QzOdFqvSh9wdMAdJSQohumy4FpR5wkuwfLcYDQFrQ/edit?gid=818455834#gid=818455834',
                 headers: ['SKU', 'COLECCIÓN', 'PRENDA', 'COLOR', 'TALLAS', 'STOCK', 'PRECIO', 'ESTATUS'],
-                rows: [
-                    ['SKU-8801', 'Primavera Gala', 'Vestido Gala Satinado', 'Champagne', 'XS, S, M, L', '14', '$1,850.00', 'Disponible'],
-                    ['SKU-8802', 'Imperial Luxe', 'Blazer Imperial Gold', 'Negro / Oro', 'S, M, L', '6', '$2,400.00', 'Pocas Piezas'],
-                    ['SKU-8803', 'Essential Lino', 'Conjunto Lino Nude', 'Arena Marfil', 'S, M, L, XL', '22', '$1,620.00', 'Disponible']
-                ]
+                rows: []
             },
             {
                 key: 'sheet3',
@@ -650,10 +628,7 @@
                 gid: '1483315145',
                 url: 'https://docs.google.com/spreadsheets/d/1UjuObEZB9c_TPQlsNwDUl02w96pEZh4Mzf_nHIkI9Ys/edit?gid=1483315145#gid=1483315145',
                 headers: ['ID PEDIDO', 'CLIENTA', 'TELÉFONO', 'CIUDAD', 'PAQUETERÍA', 'GUÍA', 'ANTICIPO', 'RESTANTE', 'ESTADO'],
-                rows: [
-                    ['PED-501', 'Valeria Montes', '5541239981', 'Guadalajara, JAL', 'DHL Express', '778192831', '$1,000.00', '$850.00', 'En Tránsito'],
-                    ['PED-502', 'Lucía Méndez', '8199201123', 'Monterrey, NL', 'FedEx Gold', '992018231', '$2,400.00', '$0.00', 'Entregado']
-                ]
+                rows: []
             },
             {
                 key: 'sheet4',
@@ -663,10 +638,7 @@
                 gid: '1559472166',
                 url: 'https://docs.google.com/spreadsheets/d/1HTflbeMnv8kmr9Z8mvGiV8iQzKTMjBLF95M1JB9LbrA/edit?gid=1559472166#gid=1559472166',
                 headers: ['FECHA', 'CONCEPTO', 'TIPO', 'RESPONSABLE', 'MÉTODO', 'MONTO', 'NOTAS'],
-                rows: [
-                    ['2025-02-22', 'Cierre Turno Matutino', 'Ingreso', 'Admin LEM', 'Mixto', '$14,800.00', 'Sin diferencias'],
-                    ['2025-02-23', 'Empaques de Lujo LEM', 'Egreso', 'Admin LEM', 'Transferencia', '$2,150.00', 'Proveedor GoldPack']
-                ]
+                rows: []
             },
             {
                 key: 'sheet5',
@@ -676,25 +648,11 @@
                 gid: '0',
                 url: 'https://docs.google.com/spreadsheets/d/1XC_vKZcGvcluTv6cBVCX3jSlWoYTONlRkTr8AVquqj4/edit?gid=0#gid=0',
                 headers: ['PERIODO', 'VENDEDORA', 'SUCURSAL', 'VENTAS REALIZADAS', 'META', 'COMISIÓN ($)', 'ESTADO PAGO'],
-                rows: [
-                    ['Febrero 2025', 'Laura Villalobos', 'Boutique Principal', '$48,500.00', '$45,000.00', '$2,425.00', 'Aprobado'],
-                    ['Febrero 2025', 'Sofía Mendoza', 'Showroom Online', '$39,200.00', '$40,000.00', '$1,960.00', 'En Curso']
-                ]
+                rows: []
             }
         ];
 
-        // Estado del Sistema con inicialización limpia
         let allSheets = GOOGLE_SHEETS_DATABASE;
-        try {
-            const savedSheets = localStorage.getItem('lem_all_sheets');
-            if (savedSheets) {
-                const parsed = JSON.parse(savedSheets);
-                if (Array.isArray(parsed) && parsed.length === 5) allSheets = parsed;
-            }
-        } catch(e) {
-            allSheets = GOOGLE_SHEETS_DATABASE;
-        }
-
         let currentSheetIdx = 0;
         let activeMasterView = 'dashboard';
         let currentUser = null;
@@ -704,7 +662,6 @@
         let salesChartInstance = null;
         let paymentChartInstance = null;
 
-        // Base de usuarios predeterminada
         const DEFAULT_USERS = [
             { id: 1, name: 'Dirección LEM MODA', pin: '1234', username: 'admin', role: 'admin', branch: 'Matriz Central', sheets: ['sheet1','sheet2','sheet3','sheet4','sheet5'] },
             { id: 2, name: 'Laura Villalobos', pin: '2025', username: '', role: 'vendedora', branch: 'Boutique Principal', sheets: ['sheet1','sheet2','sheet3'] },
@@ -716,42 +673,12 @@
             const savedUsers = localStorage.getItem('lem_users_db');
             if (savedUsers) {
                 const parsed = JSON.parse(savedUsers);
-                if (Array.isArray(parsed) && parsed.length > 0) {
-                    // Asegurar que siempre contenga username y propiedades correctas
-                    teamUsers = parsed.map(u => ({
-                        id: u.id || Date.now(),
-                        name: u.name || 'Personal LEM',
-                        pin: String(u.pin || '1234'),
-                        username: (u.username || (u.role === 'admin' ? 'admin' : '')).toLowerCase(),
-                        role: u.role || 'vendedora',
-                        branch: u.branch || 'Matriz Central',
-                        sheets: Array.isArray(u.sheets) ? u.sheets : ['sheet1','sheet2']
-                    }));
-                }
+                if (Array.isArray(parsed) && parsed.length > 0) teamUsers = parsed;
             }
-        } catch (e) {
-            teamUsers = DEFAULT_USERS;
-        }
-
-        // Catálogo para POS
-        const posProducts = [
-            { id: 101, name: 'Vestido Gala Satinado', price: 1850, category: 'Vestidos', colors: ['#E8C87A', '#13171F', '#5BB347'], sizes: ['XS', 'S', 'M', 'L'], img: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=500&auto=format&fit=crop&q=60' },
-            { id: 102, name: 'Blazer Imperial Gold', price: 2400, category: 'Blazers', colors: ['#13171F', '#C89D4B'], sizes: ['S', 'M', 'L'], img: 'https://images.unsplash.com/photo-1548883354-7622d03aca27?w=500&auto=format&fit=crop&q=60' },
-            { id: 103, name: 'Conjunto Lino Nude', price: 1620, category: 'Conjuntos', colors: ['#E3DAC9', '#FAF0E6'], sizes: ['S', 'M', 'L', 'XL'], img: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500&auto=format&fit=crop&q=60' },
-            { id: 104, name: 'Palazzo Corte Alto Silk', price: 1290, category: 'Pantalones', colors: ['#FFFFFF', '#13171F'], sizes: ['XS', 'S', 'M'], img: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=500&auto=format&fit=crop&q=60' }
-        ];
-
-        // Matriz de Inventario
-        const inventoryMatrixData = [
-            { color: 'Champagne Gold', size: '50 (S)', received: 100, storeSold: 35, onlineSold: 15, stock: 50, status: 'Disponible' },
-            { color: 'Champagne Gold', size: '52 (M)', received: 120, storeSold: 70, onlineSold: 30, stock: 20, status: 'Pocas Piezas' },
-            { color: 'Obsidian Black', size: '50 (S)', received: 80, storeSold: 20, onlineSold: 10, stock: 50, status: 'Disponible' },
-            { color: 'Obsidian Black', size: '54 (L)', received: 90, storeSold: 45, onlineSold: 25, stock: 20, status: 'Pocas Piezas' },
-            { color: 'Lino Nude', size: '52 (M)', received: 110, storeSold: 10, onlineSold: 5, stock: 95, status: 'Disponible' }
-        ];
+        } catch(e) {}
 
         // ============================================================================
-        // 2. SISTEMA DE BLOQUEO Y VALIDACIÓN POR PIN (ROBUSTO)
+        // 2. SISTEMA DE ACCESO POR PIN
         // ============================================================================
         function pressPin(digit) {
             if (enteredPin.length < 4) {
@@ -759,7 +686,7 @@
                 updatePinDots();
             }
             if (enteredPin.length === 4) {
-                setTimeout(validatePinAccess, 150);
+                setTimeout(validatePinAccess, 120);
             }
         }
 
@@ -772,11 +699,8 @@
             for (let i = 0; i < 4; i++) {
                 const dot = document.getElementById(`dot-${i}`);
                 if (dot) {
-                    if (i < enteredPin.length) {
-                        dot.classList.add('active');
-                    } else {
-                        dot.classList.remove('active');
-                    }
+                    if (i < enteredPin.length) dot.classList.add('active');
+                    else dot.classList.remove('active');
                 }
             }
         }
@@ -791,10 +715,7 @@
                 toggleBtn.classList.add('text-white', 'gold-gradient-bg');
                 prompt.textContent = 'Acceso Administrador (Usuario + PIN)';
                 const input = document.getElementById('admin-username-input');
-                if (input) {
-                    if (!input.value) input.value = 'admin';
-                    input.focus();
-                }
+                if (input) { if (!input.value) input.value = 'admin'; input.focus(); }
             } else {
                 field.classList.add('hidden');
                 toggleBtn.classList.remove('text-white', 'gold-gradient-bg');
@@ -805,31 +726,24 @@
 
         function validatePinAccess() {
             try {
-                let matchedUser = null;
+                let matched = null;
                 const userInputField = document.getElementById('admin-username-input');
                 const usernameVal = (userInputField ? userInputField.value : '').trim().toLowerCase();
 
                 if (isAdminLoginActive) {
-                    matchedUser = teamUsers.find(u => 
-                        u.role === 'admin' && 
-                        (u.username === usernameVal || usernameVal === 'admin' || usernameVal === '') && 
-                        u.pin === enteredPin
-                    );
-                    if (!matchedUser && enteredPin === '1234') {
-                        matchedUser = teamUsers.find(u => u.role === 'admin') || DEFAULT_USERS[0];
-                    }
+                    matched = teamUsers.find(u => u.role === 'admin' && (u.username === usernameVal || usernameVal === 'admin' || usernameVal === '') && u.pin === enteredPin);
+                    if (!matched && enteredPin === '1234') matched = teamUsers.find(u => u.role === 'admin') || DEFAULT_USERS[0];
                 } else {
-                    matchedUser = teamUsers.find(u => u.pin === enteredPin);
+                    matched = teamUsers.find(u => u.pin === enteredPin);
                 }
 
-                if (matchedUser) {
-                    loginSuccess(matchedUser);
+                if (matched) {
+                    loginSuccess(matched);
                 } else {
                     showPinError(isAdminLoginActive ? 'Usuario o PIN Admin Incorrecto' : 'PIN Inválido. Inténtalo de nuevo.');
                 }
             } catch (err) {
-                console.error("Error en validación:", err);
-                showPinError('Error de acceso. Reintente.');
+                showPinError('Error de acceso');
             }
         }
 
@@ -848,49 +762,28 @@
         }
 
         function loginSuccess(user) {
-            try {
-                currentUser = user;
-                
-                // Mostrar suite principal y ocultar login
-                document.getElementById('login-screen').classList.add('hidden');
-                document.getElementById('app-container').classList.remove('hidden');
+            currentUser = user;
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('app-container').classList.remove('hidden');
 
-                const nameDisplay = document.getElementById('user-name-display');
-                if (nameDisplay) nameDisplay.textContent = user.name || 'Usuario LEM';
+            document.getElementById('user-name-display').textContent = user.name;
+            document.getElementById('user-avatar-badge').textContent = user.name.substring(0, 2).toUpperCase();
+            document.getElementById('user-role-label').textContent = `${user.role.toUpperCase()} • ${user.branch}`;
 
-                const avatarBadge = document.getElementById('user-avatar-badge');
-                if (avatarBadge) avatarBadge.textContent = (user.name || 'LM').substring(0, 2).toUpperCase();
-
-                const roleLabel = document.getElementById('user-role-label');
-                if (roleLabel) roleLabel.textContent = `${(user.role || 'Vendedora').toUpperCase()} • ${user.branch || 'Matriz'}`;
-
-                const adminNav = document.getElementById('admin-sec-nav');
-                if (adminNav) {
-                    if (user.role === 'admin') {
-                        adminNav.classList.remove('hidden');
-                    } else {
-                        adminNav.classList.add('hidden');
-                    }
-                }
-
-                renderSheetsSidebar();
-                switchMasterView('dashboard');
-                renderDashboardData();
-                renderPOSProducts();
-                renderInventoryMatrix();
-                clearPin();
-
-                // Actualizar iconos
-                if (window.lucide && typeof lucide.createIcons === 'function') {
-                    lucide.createIcons();
-                }
-
-                // Sincronizar en segundo plano
-                syncCurrentLiveSheet(false);
-            } catch (e) {
-                console.error("Error al inicializar sesión:", e);
-                alert("Error al cargar la interfaz: " + e.message);
+            const adminNav = document.getElementById('admin-sec-nav');
+            if (adminNav) {
+                if (user.role === 'admin') adminNav.classList.remove('hidden');
+                else adminNav.classList.add('hidden');
             }
+
+            renderSheetsSidebar();
+            switchMasterView('dashboard');
+            clearPin();
+
+            if (window.lucide && typeof lucide.createIcons === 'function') lucide.createIcons();
+
+            // Sincronizar automáticamente todas las hojas con la data real
+            syncAllGoogleSheets(false);
         }
 
         function logout() {
@@ -901,10 +794,11 @@
         }
 
         // ============================================================================
-        // 3. SINCRONIZACIÓN DE GOOGLE SHEETS
+        // 3. MOTOR DE SINCRONIZACIÓN EN VIVO (CORS OPEN API GOOGLE)
         // ============================================================================
-        function parseCSVLine(text) {
+        function parseCSV(text) {
             let p = '', c = false, r = [];
+            const rows = [];
             for (let i = 0; i < text.length; i++) {
                 let cc = text[i], nc = text[i+1];
                 if (cc === '"') {
@@ -912,54 +806,400 @@
                     else { c = !c; }
                 } else if (cc === ',' && !c) {
                     r.push(p.trim()); p = '';
+                } else if ((cc === '\r' || cc === '\n') && !c) {
+                    if (cc === '\r' && nc === '\n') i++;
+                    r.push(p.trim());
+                    if (r.some(cell => cell.length > 0)) rows.push(r);
+                    r = []; p = '';
                 } else {
                     p += cc;
                 }
             }
-            r.push(p.trim());
-            return r;
+            if (p.length > 0 || r.length > 0) {
+                r.push(p.trim());
+                if (r.some(cell => cell.length > 0)) rows.push(r);
+            }
+            return rows;
         }
 
-        async function syncCurrentLiveSheet(showToast = true) {
-            const sheet = allSheets[currentSheetIdx];
-            const spin = document.getElementById('sync-spinner');
-            if (spin) spin.classList.add('animate-spin');
+        async function fetchSingleSheet(sheet) {
+            // URL con soporte abierto de Google Visualization API sin bloqueos CORS
+            const url = `https://docs.google.com/spreadsheets/d/${sheet.spreadsheetId}/gviz/tq?tqx=out:csv&gid=${sheet.gid}`;
+            const res = await fetch(url);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const text = await res.text();
+            const parsed = parseCSV(text);
+            if (parsed.length > 0) {
+                sheet.headers = parsed[0];
+                sheet.rows = parsed.slice(1);
+            }
+            return sheet;
+        }
 
-            const exportUrl = `https://docs.google.com/spreadsheets/d/${sheet.spreadsheetId}/export?format=csv&gid=${sheet.gid}`;
-            try {
-                const response = await fetch(exportUrl);
-                if (!response.ok) throw new Error('No se pudo leer el CSV');
-                const rawCsv = await response.text();
+        async function syncAllGoogleSheets(notify = true) {
+            const spin = document.getElementById('sync-spinner');
+            const dot = document.getElementById('sync-dot');
+            const statusInd = document.getElementById('sync-status-indicator');
+
+            if (spin) spin.classList.add('animate-spin');
+            if (statusInd) statusInd.textContent = 'Sincronizando...';
+
+            let successCount = 0;
+            const promises = allSheets.map(s => fetchSingleSheet(s).then(() => successCount++).catch(err => console.warn(`Sheet ${s.name} error:`, err)));
+
+            await Promise.allSettled(promises);
+
+            if (spin) spin.classList.remove('animate-spin');
+
+            if (successCount > 0) {
+                if (statusInd) statusInd.textContent = `En Vivo (${successCount}/5)`;
+                if (dot) { dot.className = "w-1.5 h-1.5 rounded-full bg-brand-leaf"; }
                 
-                const lines = rawCsv.split(/\r?\n/).filter(line => line.trim().length > 0);
-                if (lines.length > 0) {
-                    const parsedHeaders = parseCSVLine(lines[0]);
-                    const parsedRows = lines.slice(1).map(parseCSVLine);
-                    if (parsedHeaders.length > 0 && parsedRows.length > 0) {
-                        sheet.headers = parsedHeaders;
-                        sheet.rows = parsedRows;
-                        localStorage.setItem('lem_all_sheets', JSON.stringify(allSheets));
-                    }
-                }
-                const indicator = document.getElementById('sync-status-indicator');
-                if (indicator) indicator.textContent = 'Sincronizado';
-                if (showToast) alert(`Sincronización completada con "${sheet.name}".`);
-            } catch (err) {
-                console.warn('Nota de lectura Sheets:', err);
-                const indicator = document.getElementById('sync-status-indicator');
-                if (indicator) indicator.textContent = 'Modo Local';
-                if (showToast) {
-                    alert('Sincronizado localmente. Asegúrate de que tu Google Sheet tenga el acceso: "Cualquier persona con el enlace puede leer".');
-                }
-            } finally {
-                if (spin) spin.classList.remove('animate-spin');
-                if (activeMasterView === 'sheet') renderLiveSheetTable();
+                // Actualizar todas las secciones con la data fresca
+                updateDashboardWithRealData();
+                updatePOSCatalogWithRealData();
+                updateInventoryMatrixWithRealData();
+                updatePlanningWithRealData();
                 renderSheetsSidebar();
+                if (activeMasterView === 'sheet') renderLiveSheetTable();
+
+                if (notify) alert(`Sincronización exitosa: ${successCount} de 5 libros conectados en vivo.`);
+            } else {
+                if (statusInd) statusInd.textContent = 'Sin Permiso';
+                if (dot) { dot.className = "w-1.5 h-1.5 rounded-full bg-red-400"; }
+                if (notify) {
+                    alert('No se pudo descargar la información en vivo. Asegúrate de que las 5 hojas de Google Sheets tengan el acceso compartido como "Cualquier persona con el enlace puede leer".');
+                }
             }
         }
 
         // ============================================================================
-        // 4. VISTAS Y NAVEGACIÓN
+        // 4. COMPUTACIÓN DINÁMICA DE VISTAS CON DATA REAL
+        // ============================================================================
+        function cleanNumber(val) {
+            if (!val) return 0;
+            const num = parseFloat(String(val).replace(/[^0-9.-]+/g, ''));
+            return isNaN(num) ? 0 : num;
+        }
+
+        function updateDashboardWithRealData() {
+            const salesSheet = allSheets[0]; // Hoja 1: Ventas
+            const invSheet = allSheets[1];   // Hoja 2: Inventario
+            const cashSheet = allSheets[3];  // Hoja 4: Corte de Caja
+
+            // 1. Ingresos Netos de Ventas Reales
+            let totalSalesAmount = 0;
+            let salesCount = salesSheet.rows.length;
+            let paymentMethods = { cash: 0, card: 0, transfer: 0 };
+            let sellers = {};
+
+            salesSheet.rows.forEach(row => {
+                // Buscar columna de total (usualmente penúltima o columna con signo $)
+                let rowTotal = 0;
+                row.forEach(cell => {
+                    if (String(cell).includes('$')) rowTotal = cleanNumber(cell);
+                });
+                if (rowTotal === 0 && row[7]) rowTotal = cleanNumber(row[7]);
+                totalSalesAmount += rowTotal;
+
+                // Método de pago
+                const rowStr = row.join(' ').toLowerCase();
+                if (rowStr.includes('efectivo') || rowStr.includes('cash')) paymentMethods.cash++;
+                else if (rowStr.includes('tarjeta') || rowStr.includes('card') || rowStr.includes('terminal')) paymentMethods.card++;
+                else if (rowStr.includes('transfer') || rowStr.includes('spei') || rowStr.includes('depósito')) paymentMethods.transfer++;
+                else paymentMethods.card++;
+
+                // Vendedora
+                const sellerName = row[5] || row[2] || 'Venta General';
+                if (!sellers[sellerName]) sellers[sellerName] = { count: 0, total: 0 };
+                sellers[sellerName].count++;
+                sellers[sellerName].total += rowTotal;
+            });
+
+            // 2. Stock total en Inventario
+            let totalStockPzs = 0;
+            invSheet.rows.forEach(row => {
+                row.forEach(cell => {
+                    const n = parseInt(cell);
+                    if (!isNaN(n) && n > 0 && n < 1000) totalStockPzs += n;
+                });
+            });
+
+            // 3. Balance en Caja
+            let cashBalance = 0;
+            cashSheet.rows.forEach(row => {
+                const amt = cleanNumber(row[5] || row[4] || 0);
+                const str = row.join(' ').toLowerCase();
+                if (str.includes('egreso') || str.includes('gasto')) cashBalance -= amt;
+                else cashBalance += amt;
+            });
+            if (cashBalance === 0) cashBalance = totalSalesAmount;
+
+            // Actualizar KPIs en pantalla
+            document.getElementById('kpi-net-income').textContent = '$' + totalSalesAmount.toLocaleString('es-MX', { minimumFractionDigits: 2 });
+            document.getElementById('kpi-total-sales-count').textContent = `${salesCount} Registros`;
+            document.getElementById('kpi-cash-balance').textContent = '$' + cashBalance.toLocaleString('es-MX', { minimumFractionDigits: 2 });
+            document.getElementById('kpi-inventory-count').textContent = `${invSheet.rows.length} Modelos`;
+
+            // Top Products Table
+            const topTbody = document.getElementById('top-products-tbody');
+            if (topTbody) {
+                if (salesSheet.rows.length === 0) {
+                    topTbody.innerHTML = `<tr><td colspan="4" class="py-4 text-center text-gray-500">Sin registros en Hoja #1</td></tr>`;
+                } else {
+                    topTbody.innerHTML = salesSheet.rows.slice(0, 5).map(r => `
+                        <tr class="hover:bg-brand-darkInput/50 transition">
+                            <td class="py-3 font-semibold text-white">${r[3] || r[2] || 'Prenda LEM'}</td>
+                            <td class="py-3 text-gray-300 font-mono">${r[2] || 'Clienta'}</td>
+                            <td class="py-3 font-mono font-bold text-brand-gold">${r[7] || '$' + cleanNumber(r[6]||1200).toLocaleString('es-MX')}</td>
+                            <td class="py-3 text-right">
+                                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold text-brand-leaf bg-brand-leaf/10">${r[8] || 'Registrado'}</span>
+                            </td>
+                        </tr>
+                    `).join('');
+                }
+            }
+
+            // Employee performance list
+            const perfContainer = document.getElementById('sellers-perf-list');
+            if (perfContainer) {
+                const sellerKeys = Object.keys(sellers);
+                if (sellerKeys.length === 0) {
+                    perfContainer.innerHTML = teamUsers.map(u => `
+                        <div class="p-3 bg-brand-darkInput rounded-2xl border border-brand-cardBorder flex items-center justify-between">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-8 h-8 rounded-xl bg-brand-gold/15 text-brand-gold font-bold flex items-center justify-center text-xs">
+                                    ${u.name.substring(0, 2).toUpperCase()}
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-white">${u.name}</p>
+                                    <p class="text-[10px] text-gray-400">PIN: ${u.pin} • ${u.branch}</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-xs font-bold font-mono text-brand-gold">Activa</p>
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    perfContainer.innerHTML = sellerKeys.map(k => `
+                        <div class="p-3 bg-brand-darkInput rounded-2xl border border-brand-cardBorder flex items-center justify-between">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-8 h-8 rounded-xl bg-brand-gold/15 text-brand-gold font-bold flex items-center justify-center text-xs">
+                                    ${k.substring(0, 2).toUpperCase()}
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-white">${k}</p>
+                                    <p class="text-[10px] text-gray-400">${sellers[k].count} ventas registradas</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-xs font-bold font-mono text-brand-gold">$${sellers[k].total.toLocaleString('es-MX')}</p>
+                                <p class="text-[9px] text-brand-leaf font-semibold">En vivo</p>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            }
+
+            // Actualizar Donut de Métodos de Pago
+            const totalPM = paymentMethods.cash + paymentMethods.card + paymentMethods.transfer || 1;
+            const cashPct = Math.round((paymentMethods.cash / totalPM) * 100);
+            const cardPct = Math.round((paymentMethods.card / totalPM) * 100);
+            const transPct = 100 - cashPct - cardPct;
+            document.getElementById('donut-cash-pct').textContent = `${cashPct}%`;
+            document.getElementById('donut-card-pct').textContent = `${cardPct}%`;
+            document.getElementById('donut-transfer-pct').textContent = `${transPct}%`;
+
+            renderCharts(paymentMethods);
+        }
+
+        function updatePOSCatalogWithRealData() {
+            const invSheet = allSheets[1];
+            const grid = document.getElementById('pos-products-grid');
+            const countLabel = document.getElementById('pos-items-count');
+            if (!grid) return;
+
+            if (invSheet.rows.length === 0) {
+                grid.innerHTML = `<p class="col-span-3 text-center text-gray-500 py-10">Cargando inventario desde Google Sheets...</p>`;
+                return;
+            }
+
+            if (countLabel) countLabel.textContent = `${invSheet.rows.length} prendas disponibles`;
+
+            grid.innerHTML = invSheet.rows.map((row, idx) => {
+                const name = row[2] || row[1] || `Prenda LEM #${idx+1}`;
+                const category = row[1] || 'Colección LEM';
+                const priceVal = cleanNumber(row[6] || row[5] || 1500);
+                const sizesStr = row[4] || 'XS, S, M, L';
+                const sizes = sizesStr.split(',').map(s => s.trim());
+
+                return `
+                    <div class="lem-card rounded-2xl overflow-hidden border border-brand-cardBorder flex flex-col justify-between group hover:border-brand-gold/50 transition p-3.5 space-y-2">
+                        <div>
+                            <span class="px-2 py-0.5 rounded bg-brand-gold/10 text-brand-gold text-[10px] font-bold">${category}</span>
+                            <h4 class="font-bold text-xs text-white truncate mt-2">${name}</h4>
+                            <p class="font-mono font-bold text-brand-gold text-sm mt-1">$${priceVal.toLocaleString('es-MX', {minimumFractionDigits: 2})}</p>
+                        </div>
+                        <div class="flex items-center gap-1 pt-1 overflow-x-auto">
+                            ${sizes.map(s => `
+                                <button onclick="addToCartDirect('${name.replace(/'/g,"")}', ${priceVal}, '${s}')" class="flex-1 py-1 px-2 rounded-lg bg-brand-darkInput hover:gold-gradient-bg hover:text-black border border-brand-cardBorder text-[10px] font-bold text-gray-300 transition whitespace-nowrap">
+                                    ${s}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function addToCartDirect(name, price, size) {
+            const existing = cartItems.find(i => i.name === name && i.size === size);
+            if (existing) existing.qty++;
+            else cartItems.push({ name, price, size, qty: 1 });
+            renderCart();
+        }
+
+        function updateInventoryMatrixWithRealData() {
+            const invSheet = allSheets[1];
+            const thead = document.getElementById('matrix-table-head');
+            const tbody = document.getElementById('inventory-matrix-tbody');
+            const badge = document.getElementById('matrix-total-badge');
+
+            if (!thead || !tbody) return;
+
+            if (invSheet.headers.length > 0) {
+                thead.innerHTML = invSheet.headers.map(h => `<th class="py-3 px-4 whitespace-nowrap">${h}</th>`).join('');
+            }
+
+            if (badge) badge.textContent = `${invSheet.rows.length} Variantes Registradas`;
+
+            tbody.innerHTML = invSheet.rows.map(row => `
+                <tr class="hover:bg-brand-darkInput/40 transition">
+                    ${row.map((cell, cIdx) => {
+                        const isGold = String(cell).includes('$') || cIdx === 0;
+                        return `<td class="py-3 px-4 ${isGold ? 'font-mono font-bold text-brand-gold' : 'text-gray-200'} whitespace-nowrap">${cell}</td>`;
+                    }).join('')}
+                </tr>
+            `).join('');
+        }
+
+        function updatePlanningWithRealData() {
+            const ordersSheet = allSheets[2]; // Hoja 3: Pedidos & Envíos
+            const col1 = document.getElementById('planning-col-1');
+            const col2 = document.getElementById('planning-col-2');
+            const col3 = document.getElementById('planning-col-3');
+
+            let c1 = 0, c2 = 0, c3 = 0;
+            let html1 = '', html2 = '', html3 = '';
+
+            ordersSheet.rows.forEach(row => {
+                const client = row[1] || 'Clienta';
+                const id = row[0] || 'PED';
+                const status = (row[8] || row[row.length-1] || '').toLowerCase();
+                const city = row[3] || 'México';
+
+                const cardHtml = `
+                    <div class="p-3 bg-brand-card rounded-xl border border-brand-cardBorder">
+                        <p class="text-xs font-bold text-white">${id} - ${client}</p>
+                        <p class="text-[11px] text-gray-400 mt-1">${city} • ${row[4] || 'Paquetería'}</p>
+                        <span class="inline-block mt-2 px-2 py-0.5 rounded bg-brand-gold/15 text-brand-gold text-[9px] font-bold">${row[8] || 'Activo'}</span>
+                    </div>
+                `;
+
+                if (status.includes('tránsito') || status.includes('enviado') || status.includes('camino')) {
+                    html2 += cardHtml; c2++;
+                } else if (status.includes('entregado') || status.includes('liquidado') || status.includes('completado')) {
+                    html3 += cardHtml; c3++;
+                } else {
+                    html1 += cardHtml; c1++;
+                }
+            });
+
+            if (col1) col1.innerHTML = html1 || `<p class="text-[11px] text-gray-500 text-center py-4">Sin pedidos pendientes</p>`;
+            if (col2) col2.innerHTML = html2 || `<p class="text-[11px] text-gray-500 text-center py-4">Sin envíos en tránsito</p>`;
+            if (col3) col3.innerHTML = html3 || `<p class="text-[11px] text-gray-500 text-center py-4">Sin órdenes entregadas</p>`;
+
+            document.getElementById('planning-count-1').textContent = c1;
+            document.getElementById('planning-count-2').textContent = c2;
+            document.getElementById('planning-count-3').textContent = c3;
+        }
+
+        // ============================================================================
+        // 5. GRÁFICAS & RENDERING
+        // ============================================================================
+        function renderCharts(paymentMethods = { cash: 50, card: 30, transfer: 20 }) {
+            if (typeof Chart === 'undefined') return;
+
+            try {
+                if (salesChartInstance) { salesChartInstance.destroy(); salesChartInstance = null; }
+                if (paymentChartInstance) { paymentChartInstance.destroy(); paymentChartInstance = null; }
+
+                const canvasSales = document.getElementById('chart-sales-performance');
+                if (canvasSales) {
+                    const ctxSales = canvasSales.getContext('2d');
+                    const gradientGold = ctxSales.createLinearGradient(0, 0, 0, 300);
+                    gradientGold.addColorStop(0, 'rgba(200, 157, 75, 0.4)');
+                    gradientGold.addColorStop(1, 'rgba(200, 157, 75, 0.0)');
+
+                    const salesData = allSheets[0].rows.map(r => cleanNumber(r[7] || 1500)).slice(0, 12);
+                    const labels = salesData.map((_, i) => `Reg ${i+1}`);
+
+                    salesChartInstance = new Chart(ctxSales, {
+                        type: 'line',
+                        data: {
+                            labels: labels.length ? labels : ['1','2','3','4','5'],
+                            datasets: [{
+                                label: 'Ventas Reales ($)',
+                                data: salesData.length ? salesData : [1200, 2400, 1800, 3200, 2900],
+                                borderColor: '#C89D4B',
+                                backgroundColor: gradientGold,
+                                fill: true,
+                                tension: 0.35,
+                                borderWidth: 2.5,
+                                pointRadius: 3,
+                                pointBackgroundColor: '#E8C87A'
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: { legend: { display: false } },
+                            scales: {
+                                x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#8E9AA8', font: { size: 10 } } },
+                                y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#8E9AA8', font: { size: 10 } } }
+                            }
+                        }
+                    });
+                }
+
+                const canvasDonut = document.getElementById('chart-payments-donut');
+                if (canvasDonut) {
+                    const ctxDonut = canvasDonut.getContext('2d');
+                    paymentChartInstance = new Chart(ctxDonut, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Efectivo', 'Tarjeta', 'Transferencia'],
+                            datasets: [{
+                                data: [paymentMethods.cash || 1, paymentMethods.card || 1, paymentMethods.transfer || 1],
+                                backgroundColor: ['#5BB347', '#C89D4B', '#22D3EE'],
+                                borderColor: '#13171F',
+                                borderWidth: 4,
+                                cutout: '72%'
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: { legend: { display: false } }
+                        }
+                    });
+                }
+            } catch(e) {}
+        }
+
+        // ============================================================================
+        // 6. NAVEGACIÓN Y TABLA SHEET
         // ============================================================================
         function renderSheetsSidebar() {
             const container = document.getElementById('sheets-nav-container');
@@ -983,9 +1223,7 @@
                 container.appendChild(btn);
             });
 
-            if (window.lucide && typeof lucide.createIcons === 'function') {
-                lucide.createIcons();
-            }
+            if (window.lucide && typeof lucide.createIcons === 'function') lucide.createIcons();
         }
 
         function switchMasterView(viewName) {
@@ -1023,9 +1261,7 @@
                 document.getElementById('view-sub').textContent = titles[viewName][1];
             }
 
-            if (viewName === 'dashboard') {
-                setTimeout(initCharts, 80);
-            }
+            if (viewName === 'dashboard') setTimeout(() => renderCharts(), 80);
             if (viewName === 'users') renderUsersAdmin();
             if (window.innerWidth < 1024) {
                 const sb = document.getElementById('sidebar');
@@ -1042,272 +1278,8 @@
             const link = document.getElementById('external-sheet-link');
             if (link) link.href = sheet.url;
             renderLiveSheetTable();
-            syncCurrentLiveSheet(false);
         }
 
-        // ============================================================================
-        // 5. GRÁFICAS & RENDIMIENTO
-        // ============================================================================
-        function initCharts() {
-            if (typeof Chart === 'undefined') return;
-
-            try {
-                if (salesChartInstance) { salesChartInstance.destroy(); salesChartInstance = null; }
-                if (paymentChartInstance) { paymentChartInstance.destroy(); paymentChartInstance = null; }
-
-                const canvasSales = document.getElementById('chart-sales-performance');
-                if (canvasSales) {
-                    const ctxSales = canvasSales.getContext('2d');
-                    const gradientGold = ctxSales.createLinearGradient(0, 0, 0, 300);
-                    gradientGold.addColorStop(0, 'rgba(200, 157, 75, 0.4)');
-                    gradientGold.addColorStop(1, 'rgba(200, 157, 75, 0.0)');
-                    const gradientLeaf = ctxSales.createLinearGradient(0, 0, 0, 300);
-                    gradientLeaf.addColorStop(0, 'rgba(91, 179, 71, 0.4)');
-                    gradientLeaf.addColorStop(1, 'rgba(91, 179, 71, 0.0)');
-
-                    salesChartInstance = new Chart(ctxSales, {
-                        type: 'line',
-                        data: {
-                            labels: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
-                            datasets: [
-                                {
-                                    label: 'Net Income',
-                                    data: [18, 22, 19, 28, 24, 35, 42, 38, 45, 52, 48, 60],
-                                    borderColor: '#5BB347',
-                                    backgroundColor: gradientLeaf,
-                                    fill: true,
-                                    tension: 0.4,
-                                    borderWidth: 2.5,
-                                    pointRadius: 0
-                                },
-                                {
-                                    label: 'Total Sales',
-                                    data: [30, 34, 32, 40, 38, 48, 55, 51, 58, 65, 62, 77],
-                                    borderColor: '#C89D4B',
-                                    backgroundColor: gradientGold,
-                                    fill: true,
-                                    tension: 0.4,
-                                    borderWidth: 2.5,
-                                    pointRadius: 0
-                                }
-                            ]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            plugins: { legend: { display: false } },
-                            scales: {
-                                x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#8E9AA8', font: { size: 10 } } },
-                                y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#8E9AA8', font: { size: 10 } } }
-                            }
-                        }
-                    });
-                }
-
-                const canvasDonut = document.getElementById('chart-payments-donut');
-                if (canvasDonut) {
-                    const ctxDonut = canvasDonut.getContext('2d');
-                    paymentChartInstance = new Chart(ctxDonut, {
-                        type: 'doughnut',
-                        data: {
-                            labels: ['Efectivo (Cash)', 'Tarjeta (Card)', 'Transferencia'],
-                            datasets: [{
-                                data: [50, 30, 20],
-                                backgroundColor: ['#5BB347', '#C89D4B', '#22D3EE'],
-                                borderColor: '#13171F',
-                                borderWidth: 4,
-                                cutout: '72%'
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            plugins: { legend: { display: false } }
-                        }
-                    });
-                }
-            } catch (err) {
-                console.warn("Chart render info:", err);
-            }
-        }
-
-        function renderDashboardData() {
-            const topTbody = document.getElementById('top-products-tbody');
-            if (topTbody) {
-                topTbody.innerHTML = [
-                    { name: 'Vestido Gala Silk #8801', qty: '48 pzs', amount: '$88,800.00', status: 'In stock', color: 'text-brand-leaf' },
-                    { name: 'Blazer Imperial Gold #8802', qty: '32 pzs', amount: '$76,800.00', status: 'In stock', color: 'text-brand-leaf' },
-                    { name: 'Conjunto Lino Nude #8803', qty: '26 pzs', amount: '$42,120.00', status: 'In stock', color: 'text-brand-leaf' },
-                    { name: 'Palazzo Corte Alto #8804', qty: '14 pzs', amount: '$18,060.00', status: 'Pocas piezas', color: 'text-brand-gold' }
-                ].map(p => `
-                    <tr class="hover:bg-brand-darkInput/50 transition">
-                        <td class="py-3 font-semibold text-white">${p.name}</td>
-                        <td class="py-3 text-gray-300 font-mono">${p.qty}</td>
-                        <td class="py-3 font-mono font-bold text-brand-gold">${p.amount}</td>
-                        <td class="py-3 text-right">
-                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${p.color} bg-white/5">${p.status}</span>
-                        </td>
-                    </tr>
-                `).join('');
-            }
-
-            const perfContainer = document.getElementById('sellers-perf-list');
-            if (perfContainer) {
-                perfContainer.innerHTML = teamUsers.map(u => `
-                    <div class="p-3 bg-brand-darkInput rounded-2xl border border-brand-cardBorder flex items-center justify-between">
-                        <div class="flex items-center gap-2.5">
-                            <div class="w-8 h-8 rounded-xl bg-brand-gold/15 text-brand-gold font-bold flex items-center justify-center text-xs">
-                                ${(u.name || 'LM').substring(0, 2).toUpperCase()}
-                            </div>
-                            <div>
-                                <p class="text-xs font-bold text-white">${u.name}</p>
-                                <p class="text-[10px] text-gray-400">PIN: ${u.pin} • ${u.branch}</p>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <p class="text-xs font-bold font-mono text-brand-gold">$34,200.00</p>
-                            <p class="text-[9px] text-brand-leaf font-semibold">Meta 92%</p>
-                        </div>
-                    </div>
-                `).join('');
-            }
-        }
-
-        // ============================================================================
-        // 6. POS & MATRIZ DE INVENTARIO
-        // ============================================================================
-        function renderPOSProducts() {
-            const grid = document.getElementById('pos-products-grid');
-            if (!grid) return;
-            grid.innerHTML = posProducts.map(p => `
-                <div class="lem-card rounded-2xl overflow-hidden border border-brand-cardBorder flex flex-col justify-between group hover:border-brand-gold/50 transition">
-                    <div class="h-36 bg-cover bg-center relative" style="background-image: url('${p.img}');">
-                        <span class="absolute top-2 left-2 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md text-brand-gold text-[10px] font-bold">${p.category}</span>
-                    </div>
-                    <div class="p-3.5 space-y-2">
-                        <h4 class="font-bold text-xs text-white truncate">${p.name}</h4>
-                        <div class="flex items-center justify-between">
-                            <span class="font-mono font-bold text-brand-gold text-sm">$${p.price.toLocaleString('es-MX', {minimumFractionDigits: 2})}</span>
-                            <div class="flex gap-1">
-                                ${p.colors.map(c => `<span class="w-3 h-3 rounded-full border border-gray-600" style="background-color: ${c}"></span>`).join('')}
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-1 pt-1">
-                            ${p.sizes.map(s => `
-                                <button onclick="addToCart(${p.id}, '${s}')" class="flex-1 py-1 rounded-lg bg-brand-darkInput hover:gold-gradient-bg hover:text-black border border-brand-cardBorder text-[10px] font-bold text-gray-300 transition">
-                                    ${s}
-                                </button>
-                            `).join('')}
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function addToCart(productId, size) {
-            const product = posProducts.find(p => p.id === productId);
-            if (!product) return;
-            const existing = cartItems.find(i => i.id === productId && i.size === size);
-            if (existing) {
-                existing.qty++;
-            } else {
-                cartItems.push({ ...product, size, qty: 1 });
-            }
-            renderCart();
-        }
-
-        function renderCart() {
-            const container = document.getElementById('pos-cart-items');
-            if (!container) return;
-
-            if (cartItems.length === 0) {
-                container.innerHTML = '<p class="text-center text-xs text-brand-textMuted py-8">No hay prendas seleccionadas</p>';
-                document.getElementById('pos-subtotal').textContent = '$0.00';
-                document.getElementById('pos-tax').textContent = '$0.00';
-                document.getElementById('pos-total').textContent = '$0.00';
-                return;
-            }
-
-            container.innerHTML = cartItems.map((item, idx) => `
-                <div class="p-2.5 bg-brand-darkInput rounded-xl border border-brand-cardBorder flex items-center justify-between text-xs">
-                    <div>
-                        <p class="font-bold text-white truncate max-w-[140px]">${item.name}</p>
-                        <p class="text-[10px] text-brand-gold">Talla: ${item.size} • Cant: ${item.qty}</p>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span class="font-mono font-bold text-white">$${(item.price * item.qty).toLocaleString('es-MX')}</span>
-                        <button onclick="removeFromCart(${idx})" class="text-gray-400 hover:text-red-400">
-                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-
-            const subtotal = cartItems.reduce((acc, i) => acc + (i.price * i.qty), 0);
-            const tax = subtotal * 0.16;
-            const total = subtotal + tax;
-            document.getElementById('pos-subtotal').textContent = '$' + subtotal.toLocaleString('es-MX', { minimumFractionDigits: 2 });
-            document.getElementById('pos-tax').textContent = '$' + tax.toLocaleString('es-MX', { minimumFractionDigits: 2 });
-            document.getElementById('pos-total').textContent = '$' + total.toLocaleString('es-MX', { minimumFractionDigits: 2 });
-
-            if (window.lucide && typeof lucide.createIcons === 'function') {
-                lucide.createIcons();
-            }
-        }
-
-        function removeFromCart(idx) {
-            cartItems.splice(idx, 1);
-            renderCart();
-        }
-
-        function clearCart() {
-            cartItems = [];
-            renderCart();
-        }
-
-        function checkoutSale() {
-            if (cartItems.length === 0) {
-                alert('Agrega al menos una prenda para procesar el cobro.');
-                return;
-            }
-            const folio = 'LM-' + (1000 + (allSheets[0].rows || []).length + 1);
-            const date = new Date().toISOString().split('T')[0];
-            const itemsSummary = cartItems.map(i => `${i.name} (${i.size})`).join(', ');
-            const totalFormatted = document.getElementById('pos-total').textContent;
-
-            allSheets[0].rows.unshift([
-                folio, date, 'Venta en Tienda POS', itemsSummary, 'Varios', (currentUser ? currentUser.name : 'Personal LEM'), 'Tarjeta', totalFormatted, 'Pagado'
-            ]);
-            localStorage.setItem('lem_all_sheets', JSON.stringify(allSheets));
-            exportSingleTicketPDF(folio, itemsSummary, totalFormatted);
-            clearCart();
-            alert(`Venta registrada con éxito. Folio generado: ${folio}`);
-            renderSheetsSidebar();
-        }
-
-        function renderInventoryMatrix() {
-            const tbody = document.getElementById('inventory-matrix-tbody');
-            if (!tbody) return;
-            tbody.innerHTML = inventoryMatrixData.map(row => `
-                <tr class="hover:bg-brand-darkInput/40 transition">
-                    <td class="py-3 px-4 font-bold text-white">${row.color}</td>
-                    <td class="py-3 px-4 text-brand-gold font-mono">${row.size}</td>
-                    <td class="py-3 px-4 font-mono">${row.received}</td>
-                    <td class="py-3 px-4 font-mono text-gray-300">${row.storeSold}</td>
-                    <td class="py-3 px-4 font-mono text-gray-300">${row.onlineSold}</td>
-                    <td class="py-3 px-4 font-mono font-bold text-brand-leaf text-sm">${row.stock}</td>
-                    <td class="py-3 px-4 text-right">
-                        <span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${row.stock < 30 ? 'bg-amber-500/10 text-amber-400' : 'bg-brand-leaf/10 text-brand-leaf'}">
-                            ${row.status}
-                        </span>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        // ============================================================================
-        // 7. TABLAS DE GOOGLE SHEETS EN VIVO
-        // ============================================================================
         function renderLiveSheetTable() {
             const sheet = allSheets[currentSheetIdx];
             if (!sheet) return;
@@ -1345,21 +1317,78 @@
                 tbody.appendChild(tr);
             });
 
-            if (window.lucide && typeof lucide.createIcons === 'function') {
-                lucide.createIcons();
-            }
+            if (window.lucide && typeof lucide.createIcons === 'function') lucide.createIcons();
         }
 
         function deleteRow(idx) {
             if (!confirm('¿Deseas eliminar este registro de la base de datos?')) return;
             allSheets[currentSheetIdx].rows.splice(idx, 1);
-            localStorage.setItem('lem_all_sheets', JSON.stringify(allSheets));
             renderLiveSheetTable();
             renderSheetsSidebar();
         }
 
         // ============================================================================
-        // 8. MODAL DE CREACIÓN DINÁMICA
+        // 7. CARRITO & TICKET
+        // ============================================================================
+        function renderCart() {
+            const container = document.getElementById('pos-cart-items');
+            if (!container) return;
+
+            if (cartItems.length === 0) {
+                container.innerHTML = '<p class="text-center text-xs text-brand-textMuted py-8">No hay prendas seleccionadas</p>';
+                document.getElementById('pos-subtotal').textContent = '$0.00';
+                document.getElementById('pos-tax').textContent = '$0.00';
+                document.getElementById('pos-total').textContent = '$0.00';
+                return;
+            }
+
+            container.innerHTML = cartItems.map((item, idx) => `
+                <div class="p-2.5 bg-brand-darkInput rounded-xl border border-brand-cardBorder flex items-center justify-between text-xs">
+                    <div>
+                        <p class="font-bold text-white truncate max-w-[140px]">${item.name}</p>
+                        <p class="text-[10px] text-brand-gold">Talla: ${item.size} • Cant: ${item.qty}</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="font-mono font-bold text-white">$${(item.price * item.qty).toLocaleString('es-MX')}</span>
+                        <button onclick="removeFromCart(${idx})" class="text-gray-400 hover:text-red-400">
+                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            const subtotal = cartItems.reduce((acc, i) => acc + (i.price * i.qty), 0);
+            const tax = subtotal * 0.16;
+            const total = subtotal + tax;
+            document.getElementById('pos-subtotal').textContent = '$' + subtotal.toLocaleString('es-MX', { minimumFractionDigits: 2 });
+            document.getElementById('pos-tax').textContent = '$' + tax.toLocaleString('es-MX', { minimumFractionDigits: 2 });
+            document.getElementById('pos-total').textContent = '$' + total.toLocaleString('es-MX', { minimumFractionDigits: 2 });
+
+            if (window.lucide && typeof lucide.createIcons === 'function') lucide.createIcons();
+        }
+
+        function removeFromCart(idx) { cartItems.splice(idx, 1); renderCart(); }
+        function clearCart() { cartItems = []; renderCart(); }
+
+        function checkoutSale() {
+            if (cartItems.length === 0) { alert('Agrega al menos una prenda para procesar el cobro.'); return; }
+            const folio = 'LM-' + (1000 + (allSheets[0].rows || []).length + 1);
+            const date = new Date().toISOString().split('T')[0];
+            const itemsSummary = cartItems.map(i => `${i.name} (${i.size})`).join(', ');
+            const totalFormatted = document.getElementById('pos-total').textContent;
+
+            allSheets[0].rows.unshift([
+                folio, date, 'Venta Tienda POS', itemsSummary, 'Varios', (currentUser ? currentUser.name : 'Personal LEM'), 'Tarjeta', totalFormatted, 'Pagado'
+            ]);
+            exportSingleTicketPDF(folio, itemsSummary, totalFormatted);
+            clearCart();
+            updateDashboardWithRealData();
+            renderSheetsSidebar();
+            alert(`Venta procesada. Folio: ${folio}`);
+        }
+
+        // ============================================================================
+        // 8. MODALES
         // ============================================================================
         function openCreateModal() {
             const sheet = allSheets[currentSheetIdx];
@@ -1374,9 +1403,7 @@
             document.getElementById('form-modal').classList.remove('hidden');
         }
 
-        function closeCreateModal() {
-            document.getElementById('form-modal').classList.add('hidden');
-        }
+        function closeCreateModal() { document.getElementById('form-modal').classList.add('hidden'); }
 
         function submitRecord(e) {
             e.preventDefault();
@@ -1384,15 +1411,12 @@
             const formData = new FormData(e.target);
             const newRow = (sheet.headers || []).map((_, i) => formData.get(`field_${i}`));
             sheet.rows.unshift(newRow);
-            localStorage.setItem('lem_all_sheets', JSON.stringify(allSheets));
             closeCreateModal();
             renderLiveSheetTable();
             renderSheetsSidebar();
+            updateDashboardWithRealData();
         }
 
-        // ============================================================================
-        // 9. GESTIÓN DE EQUIPO CON PIN (ADMIN)
-        // ============================================================================
         function renderUsersAdmin() {
             const grid = document.getElementById('team-cards-grid');
             if (!grid) return;
@@ -1433,9 +1457,7 @@
             document.getElementById('user-modal').classList.remove('hidden');
         }
 
-        function closeUserModal() {
-            document.getElementById('user-modal').classList.add('hidden');
-        }
+        function closeUserModal() { document.getElementById('user-modal').classList.add('hidden'); }
 
         function submitNewUser(e) {
             e.preventDefault();
@@ -1459,7 +1481,7 @@
         }
 
         // ============================================================================
-        // 10. GENERADOR DE PLANTILLAS PDF OFICIALES "LEM MODA"
+        // 9. EXPORTADOR PDF OFICIAL LEM MODA
         // ============================================================================
         function generateLuxuryPDF() {
             if (!window.jspdf) return;
@@ -1480,7 +1502,7 @@
             doc.setFont('helvetica', 'normal');
             doc.setFontSize(9);
             doc.setTextColor(232, 200, 122);
-            doc.text(`REPORTE EJECUTIVO • ${sheet.name.toUpperCase()}`, 14, 25);
+            doc.text(`REPORTE EJECUTIVO EN VIVO • ${sheet.name.toUpperCase()}`, 14, 25);
 
             doc.setTextColor(255, 255, 255);
             doc.text(`Fecha: ${new Date().toLocaleDateString('es-MX')} | Operador: ${currentUser ? currentUser.name : 'Personal LEM'}`, 283, 20, { align: 'right' });
@@ -1573,7 +1595,7 @@
         }
 
         // ============================================================================
-        // 11. PWA & UTILIDADES
+        // 10. UTILIDADES & PWA
         // ============================================================================
         let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => {
@@ -1582,11 +1604,8 @@
         });
 
         function installPWA() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-            } else {
-                alert('Para instalar LEM MODA en iPhone: Pulsa "Compartir" en Safari y selecciona "Agregar al inicio". En PC/Android pulsa el icono de instalar en la barra del navegador.');
-            }
+            if (deferredPrompt) deferredPrompt.prompt();
+            else alert('Para instalar LEM MODA en iPhone: Pulsa "Compartir" en Safari y selecciona "Agregar al inicio". En PC/Android pulsa el icono de instalar en la barra del navegador.');
         }
 
         function toggleSidebar() {
@@ -1594,14 +1613,9 @@
             if (sb) sb.classList.toggle('-translate-x-full');
         }
 
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js').catch(() => {});
-        }
-
+        if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
         window.addEventListener('DOMContentLoaded', () => {
-            if (window.lucide && typeof lucide.createIcons === 'function') {
-                lucide.createIcons();
-            }
+            if (window.lucide && typeof lucide.createIcons === 'function') lucide.createIcons();
         });
     </script>
 </body>
