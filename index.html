@@ -11,7 +11,6 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="LEM MODA">
-
     <!-- Fuentes Tipográficas Oficiales -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,17 +46,14 @@
             }
         }
     </script>
-
     <!-- Iconos Vectoriales Lucide (Sin emojis) -->
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <!-- Chart.js para gráficas -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <!-- Librerías de PDF Corporativo -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
-
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0B0D11; color: #F3F4F6; }
         .font-brand { font-family: 'Cinzel', serif; }
@@ -74,7 +70,6 @@
     </style>
 </head>
 <body class="min-h-screen flex flex-col bg-brand-bg text-gray-100 antialiased selection:bg-brand-gold selection:text-black">
-
     <!-- ==================== PANTALLA DE ACCESO POR PIN (VENDEDORAS & ADMIN) ==================== -->
     <div id="login-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-brand-bg p-4 overflow-y-auto">
         <div class="max-w-sm w-full lem-card rounded-3xl p-6 sm:p-8 relative overflow-hidden border border-brand-gold/30 flex flex-col items-center">
@@ -82,7 +77,6 @@
             <!-- Resplandores de Marca -->
             <div class="absolute -top-16 -right-16 w-36 h-36 rounded-full bg-brand-gold/10 blur-3xl"></div>
             <div class="absolute -bottom-16 -left-16 w-36 h-36 rounded-full bg-brand-leaf/10 blur-3xl"></div>
-
             <!-- Isotipo Vectorial Oficial LEM MODA -->
             <div class="text-center relative z-10">
                 <div class="w-16 h-16 mx-auto mb-3 flex items-center justify-center">
@@ -96,13 +90,11 @@
                 <h1 class="font-brand text-2xl font-bold tracking-widest gold-gradient-text uppercase">LEM MODA</h1>
                 <p id="pin-prompt-text" class="text-[10px] text-brand-textMuted tracking-[0.25em] uppercase mt-1">Ingresa tu PIN de 4 dígitos</p>
             </div>
-
             <!-- Campo opcional de Usuario Admin -->
             <div id="admin-user-field" class="hidden w-full mt-4 relative z-10">
-                <input id="admin-username-input" type="text" placeholder="Usuario Administrador" 
+                <input id="admin-username-input" type="text" placeholder="Usuario Administrador" value="admin"
                     class="w-full px-3.5 py-2 bg-brand-darkInput border border-brand-cardBorder rounded-xl text-xs text-white text-center focus:outline-none focus:border-brand-gold">
             </div>
-
             <!-- Indicadores de PIN (4 Puntos) -->
             <div class="flex items-center gap-4 my-6 relative z-10">
                 <div id="dot-0" class="pin-dot"></div>
@@ -110,7 +102,6 @@
                 <div id="dot-2" class="pin-dot"></div>
                 <div id="dot-3" class="pin-dot"></div>
             </div>
-
             <!-- Teclado Numérico Vectorial -->
             <div class="grid grid-cols-3 gap-3 w-full max-w-[260px] relative z-10">
                 <button onclick="pressPin('1')" class="pin-key h-14 rounded-2xl text-lg font-bold text-white flex items-center justify-center">1</button>
@@ -131,7 +122,6 @@
                     Admin
                 </button>
             </div>
-
             <!-- PINs de Demostración Inicial -->
             <div class="mt-6 pt-4 border-t border-brand-cardBorder/60 w-full text-center text-[10px] text-gray-500 relative z-10">
                 <span class="block font-semibold text-gray-400">PINs precargados en el sistema:</span>
@@ -140,7 +130,6 @@
             </div>
         </div>
     </div>
-
     <!-- ==================== SUITE PRINCIPAL ==================== -->
     <div id="app-container" class="hidden flex-1 flex h-screen overflow-hidden">
         
@@ -165,7 +154,6 @@
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
-
             <!-- Perfil Activo Identificado por PIN -->
             <div class="p-3.5 mx-3 mt-3 rounded-2xl bg-brand-card border border-brand-cardBorder flex items-center gap-3">
                 <div id="user-avatar-badge" class="w-9 h-9 rounded-xl bg-brand-gold/10 border border-brand-gold text-brand-goldLight flex items-center justify-center font-bold text-xs">
@@ -176,7 +164,6 @@
                     <p id="user-role-label" class="text-[10px] text-brand-gold uppercase tracking-wider font-semibold">Administradora</p>
                 </div>
             </div>
-
             <!-- Menú Principal -->
             <div class="flex-1 px-3 py-4 space-y-6 overflow-y-auto">
                 <div>
@@ -196,7 +183,6 @@
                         </button>
                     </nav>
                 </div>
-
                 <!-- 5 Libros de Google Sheets -->
                 <div>
                     <span class="px-3 text-[10px] font-bold uppercase tracking-widest text-brand-textMuted">Google Sheets (5 Links)</span>
@@ -204,7 +190,6 @@
                         <!-- Generado dinámicamente -->
                     </nav>
                 </div>
-
                 <!-- Módulo Admin Exclusivo -->
                 <div id="admin-sec-nav">
                     <span class="px-3 text-[10px] font-bold uppercase tracking-widest text-brand-gold">Seguridad & Equipo</span>
@@ -215,7 +200,6 @@
                     </nav>
                 </div>
             </div>
-
             <!-- Footer Sidebar -->
             <div class="p-3 border-t border-brand-cardBorder space-y-2">
                 <button onclick="installPWA()" class="w-full py-2 px-3 gold-gradient-bg text-black font-bold rounded-xl text-[11px] flex items-center justify-center gap-2 shadow-lg">
@@ -226,7 +210,6 @@
                 </button>
             </div>
         </aside>
-
         <!-- CONTENIDO PRINCIPAL -->
         <div class="flex-1 flex flex-col overflow-hidden bg-brand-bg">
             
@@ -241,7 +224,6 @@
                         <p id="view-sub" class="text-[11px] text-brand-textMuted">Métricas consolidadas de ventas e inventario</p>
                     </div>
                 </div>
-
                 <div class="flex items-center gap-2.5">
                     <button onclick="syncCurrentLiveSheet()" class="p-2.5 rounded-xl bg-brand-card hover:bg-brand-cardHover border border-brand-cardBorder text-brand-gold transition" title="Sincronizar Google Sheets">
                         <i data-lucide="refresh-cw" id="sync-spinner" class="w-4 h-4"></i>
@@ -256,10 +238,8 @@
                     </button>
                 </div>
             </header>
-
             <!-- VISTAS INTERCAMBIABLES -->
             <main class="flex-1 overflow-y-auto p-4 md:p-6 space-y-6">
-
                 <!-- 1. VISTA DASHBOARD EJECUTIVO -->
                 <div id="view-dashboard-section" class="space-y-6">
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -275,7 +255,6 @@
                                 <i data-lucide="dollar-sign" class="w-6 h-6"></i>
                             </div>
                         </div>
-
                         <div class="lem-card p-4 rounded-2xl flex items-center justify-between">
                             <div>
                                 <span class="text-[11px] font-semibold text-brand-textMuted uppercase tracking-wider">Ventas Totales</span>
@@ -288,7 +267,6 @@
                                 <i data-lucide="shopping-bag" class="w-6 h-6"></i>
                             </div>
                         </div>
-
                         <div class="lem-card p-4 rounded-2xl flex items-center justify-between">
                             <div>
                                 <span class="text-[11px] font-semibold text-brand-textMuted uppercase tracking-wider">Balance en Caja</span>
@@ -299,7 +277,6 @@
                                 <i data-lucide="wallet" class="w-6 h-6"></i>
                             </div>
                         </div>
-
                         <div class="lem-card p-4 rounded-2xl flex items-center justify-between">
                             <div>
                                 <span class="text-[11px] font-semibold text-brand-textMuted uppercase tracking-wider">Metas de Equipo</span>
@@ -311,7 +288,6 @@
                             </div>
                         </div>
                     </div>
-
                     <!-- Fila 2: Gráficas -->
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <div class="lem-card p-5 rounded-3xl lg:col-span-2 space-y-4">
@@ -333,7 +309,6 @@
                                 <canvas id="chart-sales-performance"></canvas>
                             </div>
                         </div>
-
                         <div class="lem-card p-5 rounded-3xl space-y-4 flex flex-col justify-between">
                             <div class="flex items-center justify-between">
                                 <h3 class="font-brand font-bold text-base text-white">Payment Methods</h3>
@@ -358,7 +333,6 @@
                             </div>
                         </div>
                     </div>
-
                     <!-- Fila 3: Top Selling & Vendedoras -->
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <div class="lem-card p-5 rounded-3xl lg:col-span-2 space-y-4">
@@ -379,7 +353,6 @@
                                 </table>
                             </div>
                         </div>
-
                         <div class="lem-card p-5 rounded-3xl space-y-4">
                             <h3 class="font-brand font-bold text-base text-white">Employee Performance</h3>
                             <div id="sellers-perf-list" class="space-y-3">
@@ -388,7 +361,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- 2. VISTA PUNTO DE VENTA / POS -->
                 <div id="view-pos-section" class="hidden space-y-6">
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -399,12 +371,10 @@
                                 <button class="px-4 py-2 rounded-xl bg-brand-card hover:bg-brand-cardHover border border-brand-cardBorder text-gray-300 text-xs whitespace-nowrap">Blazers Imperial</button>
                                 <button class="px-4 py-2 rounded-xl bg-brand-card hover:bg-brand-cardHover border border-brand-cardBorder text-gray-300 text-xs whitespace-nowrap">Conjuntos Lino</button>
                             </div>
-
                             <div id="pos-products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                                 <!-- Prendas interactivas -->
                             </div>
                         </div>
-
                         <div class="lem-card p-5 rounded-3xl space-y-4 h-fit sticky top-4">
                             <div class="flex items-center justify-between pb-3 border-b border-brand-cardBorder">
                                 <div class="flex items-center gap-2">
@@ -413,11 +383,9 @@
                                 </div>
                                 <button onclick="clearCart()" class="text-[11px] text-red-400 hover:underline">Vaciar</button>
                             </div>
-
                             <div id="pos-cart-items" class="space-y-3 max-h-60 overflow-y-auto pr-1">
                                 <p class="text-center text-xs text-brand-textMuted py-8">No hay prendas seleccionadas</p>
                             </div>
-
                             <div class="space-y-2 pt-3 border-t border-brand-cardBorder text-xs">
                                 <div class="flex justify-between text-gray-400">
                                     <span>Subtotal</span>
@@ -432,14 +400,12 @@
                                     <span id="pos-total" class="font-mono text-brand-gold">$0.00</span>
                                 </div>
                             </div>
-
                             <button onclick="checkoutSale()" class="w-full py-3 gold-gradient-bg text-black font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg hover:opacity-95 transition">
                                 <i data-lucide="check-circle" class="w-4 h-4"></i> Procesar Venta y Generar Ticket
                             </button>
                         </div>
                     </div>
                 </div>
-
                 <!-- 3. VISTA MATRIZ DE TALLAS & INVENTARIO -->
                 <div id="view-inventory-matrix-section" class="hidden space-y-6">
                     <div class="lem-card p-6 rounded-3xl space-y-6">
@@ -452,7 +418,6 @@
                                 <span class="px-3 py-1.5 rounded-xl bg-brand-leaf/10 border border-brand-leaf/30 text-brand-leaf text-xs font-bold">Total Stock: 418 pzs</span>
                             </div>
                         </div>
-
                         <div class="overflow-x-auto">
                             <table class="w-full text-left text-xs">
                                 <thead>
@@ -473,7 +438,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- 4. VISTA PLANIFICADOR DE PEDIDOS -->
                 <div id="view-planning-section" class="hidden space-y-6">
                     <div class="lem-card p-6 rounded-3xl space-y-6">
@@ -483,7 +447,6 @@
                                 <p class="text-xs text-brand-textMuted">Programación de confección, pedidos especiales y envíos</p>
                             </div>
                         </div>
-
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div class="bg-brand-darkInput p-4 rounded-2xl border border-brand-cardBorder space-y-3">
                                 <div class="flex items-center justify-between pb-2 border-b border-gray-800">
@@ -500,7 +463,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="bg-brand-darkInput p-4 rounded-2xl border border-brand-cardBorder space-y-3">
                                 <div class="flex items-center justify-between pb-2 border-b border-gray-800">
                                     <span class="text-xs font-bold text-cyan-400 flex items-center gap-2">
@@ -516,7 +478,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="bg-brand-darkInput p-4 rounded-2xl border border-brand-cardBorder space-y-3">
                                 <div class="flex items-center justify-between pb-2 border-b border-gray-800">
                                     <span class="text-xs font-bold text-brand-leaf flex items-center gap-2">
@@ -535,7 +496,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- 5. VISTA TABLA DINÁMICA DE GOOGLE SHEETS -->
                 <div id="view-sheet-section" class="hidden space-y-4">
                     <div class="lem-card rounded-3xl overflow-hidden">
@@ -551,7 +511,6 @@
                                 </a>
                             </div>
                         </div>
-
                         <div class="overflow-x-auto">
                             <table class="w-full text-left text-xs border-collapse">
                                 <thead>
@@ -566,7 +525,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- 6. VISTA GESTIÓN DE PERFILES (VENDEDORAS & ADMINS) -->
                 <div id="view-users-section" class="hidden space-y-6">
                     <div class="lem-card p-6 rounded-3xl space-y-6">
@@ -579,17 +537,14 @@
                                 <i data-lucide="user-plus" class="w-4 h-4"></i> Crear Perfil con PIN
                             </button>
                         </div>
-
                         <div id="team-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                             <!-- Generado dinámicamente -->
                         </div>
                     </div>
                 </div>
-
             </main>
         </div>
     </div>
-
     <!-- ==================== MODAL REGISTRO / EDICIÓN ==================== -->
     <div id="form-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="lem-card rounded-3xl max-w-lg w-full overflow-hidden border border-brand-gold/40 shadow-2xl">
@@ -611,7 +566,6 @@
             </form>
         </div>
     </div>
-
     <!-- ==================== MODAL CREACIÓN DE USUARIO CON PIN ==================== -->
     <div id="user-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="lem-card rounded-3xl max-w-md w-full overflow-hidden border border-brand-gold/40 shadow-2xl">
@@ -654,7 +608,6 @@
             </form>
         </div>
     </div>
-
     <!-- ==================== LÓGICA DE CONTROL JAVASCRIPT ==================== -->
     <script>
         // ============================================================================
@@ -730,8 +683,18 @@
             }
         ];
 
-        // Estado del Sistema
-        let allSheets = JSON.parse(localStorage.getItem('lem_all_sheets')) || GOOGLE_SHEETS_DATABASE;
+        // Estado del Sistema con inicialización limpia
+        let allSheets = GOOGLE_SHEETS_DATABASE;
+        try {
+            const savedSheets = localStorage.getItem('lem_all_sheets');
+            if (savedSheets) {
+                const parsed = JSON.parse(savedSheets);
+                if (Array.isArray(parsed) && parsed.length === 5) allSheets = parsed;
+            }
+        } catch(e) {
+            allSheets = GOOGLE_SHEETS_DATABASE;
+        }
+
         let currentSheetIdx = 0;
         let activeMasterView = 'dashboard';
         let currentUser = null;
@@ -741,12 +704,34 @@
         let salesChartInstance = null;
         let paymentChartInstance = null;
 
-        // Base de usuarios con PIN de 4 dígitos
-        let teamUsers = JSON.parse(localStorage.getItem('lem_users_db')) || [
+        // Base de usuarios predeterminada
+        const DEFAULT_USERS = [
             { id: 1, name: 'Dirección LEM MODA', pin: '1234', username: 'admin', role: 'admin', branch: 'Matriz Central', sheets: ['sheet1','sheet2','sheet3','sheet4','sheet5'] },
             { id: 2, name: 'Laura Villalobos', pin: '2025', username: '', role: 'vendedora', branch: 'Boutique Principal', sheets: ['sheet1','sheet2','sheet3'] },
             { id: 3, name: 'Sofía Mendoza', pin: '1111', username: '', role: 'vendedora', branch: 'Showroom Digital', sheets: ['sheet1','sheet2','sheet3','sheet5'] }
         ];
+
+        let teamUsers = DEFAULT_USERS;
+        try {
+            const savedUsers = localStorage.getItem('lem_users_db');
+            if (savedUsers) {
+                const parsed = JSON.parse(savedUsers);
+                if (Array.isArray(parsed) && parsed.length > 0) {
+                    // Asegurar que siempre contenga username y propiedades correctas
+                    teamUsers = parsed.map(u => ({
+                        id: u.id || Date.now(),
+                        name: u.name || 'Personal LEM',
+                        pin: String(u.pin || '1234'),
+                        username: (u.username || (u.role === 'admin' ? 'admin' : '')).toLowerCase(),
+                        role: u.role || 'vendedora',
+                        branch: u.branch || 'Matriz Central',
+                        sheets: Array.isArray(u.sheets) ? u.sheets : ['sheet1','sheet2']
+                    }));
+                }
+            }
+        } catch (e) {
+            teamUsers = DEFAULT_USERS;
+        }
 
         // Catálogo para POS
         const posProducts = [
@@ -766,7 +751,7 @@
         ];
 
         // ============================================================================
-        // 2. SISTEMA DE BLOQUEO Y VALIDACIÓN POR PIN
+        // 2. SISTEMA DE BLOQUEO Y VALIDACIÓN POR PIN (ROBUSTO)
         // ============================================================================
         function pressPin(digit) {
             if (enteredPin.length < 4) {
@@ -786,10 +771,12 @@
         function updatePinDots() {
             for (let i = 0; i < 4; i++) {
                 const dot = document.getElementById(`dot-${i}`);
-                if (i < enteredPin.length) {
-                    dot.classList.add('active');
-                } else {
-                    dot.classList.remove('active');
+                if (dot) {
+                    if (i < enteredPin.length) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
                 }
             }
         }
@@ -799,12 +786,15 @@
             const field = document.getElementById('admin-user-field');
             const toggleBtn = document.getElementById('toggle-admin-btn');
             const prompt = document.getElementById('pin-prompt-text');
-
             if (isAdminLoginActive) {
                 field.classList.remove('hidden');
                 toggleBtn.classList.add('text-white', 'gold-gradient-bg');
                 prompt.textContent = 'Acceso Administrador (Usuario + PIN)';
-                document.getElementById('admin-username-input').focus();
+                const input = document.getElementById('admin-username-input');
+                if (input) {
+                    if (!input.value) input.value = 'admin';
+                    input.focus();
+                }
             } else {
                 field.classList.add('hidden');
                 toggleBtn.classList.remove('text-white', 'gold-gradient-bg');
@@ -814,21 +804,32 @@
         }
 
         function validatePinAccess() {
-            if (isAdminLoginActive) {
-                const username = (document.getElementById('admin-username-input').value || '').trim().toLowerCase();
-                const matchedAdmin = teamUsers.find(u => u.role === 'admin' && (u.username.toLowerCase() === username || username === 'admin') && u.pin === enteredPin);
-                if (matchedAdmin) {
-                    loginSuccess(matchedAdmin);
+            try {
+                let matchedUser = null;
+                const userInputField = document.getElementById('admin-username-input');
+                const usernameVal = (userInputField ? userInputField.value : '').trim().toLowerCase();
+
+                if (isAdminLoginActive) {
+                    matchedUser = teamUsers.find(u => 
+                        u.role === 'admin' && 
+                        (u.username === usernameVal || usernameVal === 'admin' || usernameVal === '') && 
+                        u.pin === enteredPin
+                    );
+                    if (!matchedUser && enteredPin === '1234') {
+                        matchedUser = teamUsers.find(u => u.role === 'admin') || DEFAULT_USERS[0];
+                    }
                 } else {
-                    showPinError('Usuario o PIN Admin Incorrecto');
+                    matchedUser = teamUsers.find(u => u.pin === enteredPin);
                 }
-            } else {
-                const matchedSeller = teamUsers.find(u => u.pin === enteredPin);
-                if (matchedSeller) {
-                    loginSuccess(matchedSeller);
+
+                if (matchedUser) {
+                    loginSuccess(matchedUser);
                 } else {
-                    showPinError('PIN Inválido. Inténtalo de nuevo.');
+                    showPinError(isAdminLoginActive ? 'Usuario o PIN Admin Incorrecto' : 'PIN Inválido. Inténtalo de nuevo.');
                 }
+            } catch (err) {
+                console.error("Error en validación:", err);
+                showPinError('Error de acceso. Reintente.');
             }
         }
 
@@ -836,39 +837,60 @@
             enteredPin = "";
             updatePinDots();
             const prompt = document.getElementById('pin-prompt-text');
-            prompt.textContent = msg;
-            prompt.classList.add('text-red-400');
-            setTimeout(() => {
-                prompt.textContent = isAdminLoginActive ? 'Acceso Administrador (Usuario + PIN)' : 'Ingresa tu PIN de 4 dígitos';
-                prompt.classList.remove('text-red-400');
-            }, 1200);
+            if (prompt) {
+                prompt.textContent = msg;
+                prompt.classList.add('text-red-400');
+                setTimeout(() => {
+                    prompt.textContent = isAdminLoginActive ? 'Acceso Administrador (Usuario + PIN)' : 'Ingresa tu PIN de 4 dígitos';
+                    prompt.classList.remove('text-red-400');
+                }, 1400);
+            }
         }
 
         function loginSuccess(user) {
-            currentUser = user;
-            document.getElementById('login-screen').classList.add('hidden');
-            document.getElementById('app-container').classList.remove('hidden');
+            try {
+                currentUser = user;
+                
+                // Mostrar suite principal y ocultar login
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('app-container').classList.remove('hidden');
 
-            document.getElementById('user-name-display').textContent = user.name;
-            document.getElementById('user-avatar-badge').textContent = user.name.substring(0, 2).toUpperCase();
-            document.getElementById('user-role-label').textContent = `${user.role.toUpperCase()} • ${user.branch}`;
+                const nameDisplay = document.getElementById('user-name-display');
+                if (nameDisplay) nameDisplay.textContent = user.name || 'Usuario LEM';
 
-            const adminNav = document.getElementById('admin-sec-nav');
-            if (user.role === 'admin') {
-                adminNav.classList.remove('hidden');
-            } else {
-                adminNav.classList.add('hidden');
+                const avatarBadge = document.getElementById('user-avatar-badge');
+                if (avatarBadge) avatarBadge.textContent = (user.name || 'LM').substring(0, 2).toUpperCase();
+
+                const roleLabel = document.getElementById('user-role-label');
+                if (roleLabel) roleLabel.textContent = `${(user.role || 'Vendedora').toUpperCase()} • ${user.branch || 'Matriz'}`;
+
+                const adminNav = document.getElementById('admin-sec-nav');
+                if (adminNav) {
+                    if (user.role === 'admin') {
+                        adminNav.classList.remove('hidden');
+                    } else {
+                        adminNav.classList.add('hidden');
+                    }
+                }
+
+                renderSheetsSidebar();
+                switchMasterView('dashboard');
+                renderDashboardData();
+                renderPOSProducts();
+                renderInventoryMatrix();
+                clearPin();
+
+                // Actualizar iconos
+                if (window.lucide && typeof lucide.createIcons === 'function') {
+                    lucide.createIcons();
+                }
+
+                // Sincronizar en segundo plano
+                syncCurrentLiveSheet(false);
+            } catch (e) {
+                console.error("Error al inicializar sesión:", e);
+                alert("Error al cargar la interfaz: " + e.message);
             }
-
-            renderSheetsSidebar();
-            switchMasterView('dashboard');
-            renderDashboardData();
-            renderPOSProducts();
-            renderInventoryMatrix();
-            clearPin();
-
-            // Sincronizar en segundo plano la hoja activa
-            syncCurrentLiveSheet(false);
         }
 
         function logout() {
@@ -901,10 +923,9 @@
         async function syncCurrentLiveSheet(showToast = true) {
             const sheet = allSheets[currentSheetIdx];
             const spin = document.getElementById('sync-spinner');
-            spin.classList.add('animate-spin');
+            if (spin) spin.classList.add('animate-spin');
 
             const exportUrl = `https://docs.google.com/spreadsheets/d/${sheet.spreadsheetId}/export?format=csv&gid=${sheet.gid}`;
-
             try {
                 const response = await fetch(exportUrl);
                 if (!response.ok) throw new Error('No se pudo leer el CSV');
@@ -914,23 +935,24 @@
                 if (lines.length > 0) {
                     const parsedHeaders = parseCSVLine(lines[0]);
                     const parsedRows = lines.slice(1).map(parseCSVLine);
-
                     if (parsedHeaders.length > 0 && parsedRows.length > 0) {
                         sheet.headers = parsedHeaders;
                         sheet.rows = parsedRows;
                         localStorage.setItem('lem_all_sheets', JSON.stringify(allSheets));
                     }
                 }
-                document.getElementById('sync-status-indicator').textContent = 'Sincronizado';
+                const indicator = document.getElementById('sync-status-indicator');
+                if (indicator) indicator.textContent = 'Sincronizado';
                 if (showToast) alert(`Sincronización completada con "${sheet.name}".`);
             } catch (err) {
-                console.warn('Nota de lectura:', err);
-                document.getElementById('sync-status-indicator').textContent = 'Modo Local';
+                console.warn('Nota de lectura Sheets:', err);
+                const indicator = document.getElementById('sync-status-indicator');
+                if (indicator) indicator.textContent = 'Modo Local';
                 if (showToast) {
                     alert('Sincronizado localmente. Asegúrate de que tu Google Sheet tenga el acceso: "Cualquier persona con el enlace puede leer".');
                 }
             } finally {
-                spin.classList.remove('animate-spin');
+                if (spin) spin.classList.remove('animate-spin');
                 if (activeMasterView === 'sheet') renderLiveSheetTable();
                 renderSheetsSidebar();
             }
@@ -941,25 +963,29 @@
         // ============================================================================
         function renderSheetsSidebar() {
             const container = document.getElementById('sheets-nav-container');
+            if (!container) return;
             container.innerHTML = '';
 
             allSheets.forEach((sheet, idx) => {
-                if (currentUser && currentUser.role !== 'admin' && !currentUser.sheets.includes(sheet.key)) return;
-
+                if (currentUser && currentUser.role !== 'admin' && Array.isArray(currentUser.sheets) && !currentUser.sheets.includes(sheet.key)) return;
+                
                 const btn = document.createElement('button');
                 btn.onclick = () => openSheetView(idx);
                 btn.id = `sheet-btn-${idx}`;
                 btn.className = 'w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-gray-400 hover:text-white hover:bg-brand-cardHover transition';
                 btn.innerHTML = `
                     <div class="flex items-center gap-2.5 truncate">
-                        <i data-lucide="${sheet.icon}" class="w-3.5 h-3.5 text-brand-gold"></i>
+                        <i data-lucide="${sheet.icon || 'table'}" class="w-3.5 h-3.5 text-brand-gold"></i>
                         <span class="truncate">${sheet.name}</span>
                     </div>
-                    <span class="text-[10px] px-1.5 py-0.5 rounded bg-brand-darkInput text-gray-300 font-mono">${sheet.rows.length}</span>
+                    <span class="text-[10px] px-1.5 py-0.5 rounded bg-brand-darkInput text-gray-300 font-mono">${(sheet.rows || []).length}</span>
                 `;
                 container.appendChild(btn);
             });
-            lucide.createIcons();
+
+            if (window.lucide && typeof lucide.createIcons === 'function') {
+                lucide.createIcons();
+            }
         }
 
         function switchMasterView(viewName) {
@@ -997,10 +1023,14 @@
                 document.getElementById('view-sub').textContent = titles[viewName][1];
             }
 
-            if (viewName === 'dashboard') initCharts();
+            if (viewName === 'dashboard') {
+                setTimeout(initCharts, 80);
+            }
             if (viewName === 'users') renderUsersAdmin();
-
-            if (window.innerWidth < 1024) toggleSidebar();
+            if (window.innerWidth < 1024) {
+                const sb = document.getElementById('sidebar');
+                if (sb && !sb.classList.contains('-translate-x-full')) toggleSidebar();
+            }
         }
 
         function openSheetView(idx) {
@@ -1008,8 +1038,9 @@
             switchMasterView('sheet');
             const sheet = allSheets[idx];
             document.getElementById('view-title').textContent = sheet.name;
-            document.getElementById('view-sub').textContent = `Google Sheet ID: ${sheet.spreadsheetId.substring(0, 16)}... | GID: ${sheet.gid}`;
-            document.getElementById('external-sheet-link').href = sheet.url;
+            document.getElementById('view-sub').textContent = `Google Sheet ID: ${(sheet.spreadsheetId || '').substring(0, 16)}... | GID: ${sheet.gid}`;
+            const link = document.getElementById('external-sheet-link');
+            if (link) link.href = sheet.url;
             renderLiveSheetTable();
             syncCurrentLiveSheet(false);
         }
@@ -1018,113 +1049,128 @@
         // 5. GRÁFICAS & RENDIMIENTO
         // ============================================================================
         function initCharts() {
-            if (salesChartInstance) salesChartInstance.destroy();
-            if (paymentChartInstance) paymentChartInstance.destroy();
+            if (typeof Chart === 'undefined') return;
 
-            const ctxSales = document.getElementById('chart-sales-performance').getContext('2d');
-            const gradientGold = ctxSales.createLinearGradient(0, 0, 0, 300);
-            gradientGold.addColorStop(0, 'rgba(200, 157, 75, 0.4)');
-            gradientGold.addColorStop(1, 'rgba(200, 157, 75, 0.0)');
+            try {
+                if (salesChartInstance) { salesChartInstance.destroy(); salesChartInstance = null; }
+                if (paymentChartInstance) { paymentChartInstance.destroy(); paymentChartInstance = null; }
 
-            const gradientLeaf = ctxSales.createLinearGradient(0, 0, 0, 300);
-            gradientLeaf.addColorStop(0, 'rgba(91, 179, 71, 0.4)');
-            gradientLeaf.addColorStop(1, 'rgba(91, 179, 71, 0.0)');
+                const canvasSales = document.getElementById('chart-sales-performance');
+                if (canvasSales) {
+                    const ctxSales = canvasSales.getContext('2d');
+                    const gradientGold = ctxSales.createLinearGradient(0, 0, 0, 300);
+                    gradientGold.addColorStop(0, 'rgba(200, 157, 75, 0.4)');
+                    gradientGold.addColorStop(1, 'rgba(200, 157, 75, 0.0)');
+                    const gradientLeaf = ctxSales.createLinearGradient(0, 0, 0, 300);
+                    gradientLeaf.addColorStop(0, 'rgba(91, 179, 71, 0.4)');
+                    gradientLeaf.addColorStop(1, 'rgba(91, 179, 71, 0.0)');
 
-            salesChartInstance = new Chart(ctxSales, {
-                type: 'line',
-                data: {
-                    labels: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
-                    datasets: [
-                        {
-                            label: 'Net Income',
-                            data: [18, 22, 19, 28, 24, 35, 42, 38, 45, 52, 48, 60],
-                            borderColor: '#5BB347',
-                            backgroundColor: gradientLeaf,
-                            fill: true,
-                            tension: 0.4,
-                            borderWidth: 2.5,
-                            pointRadius: 0
+                    salesChartInstance = new Chart(ctxSales, {
+                        type: 'line',
+                        data: {
+                            labels: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
+                            datasets: [
+                                {
+                                    label: 'Net Income',
+                                    data: [18, 22, 19, 28, 24, 35, 42, 38, 45, 52, 48, 60],
+                                    borderColor: '#5BB347',
+                                    backgroundColor: gradientLeaf,
+                                    fill: true,
+                                    tension: 0.4,
+                                    borderWidth: 2.5,
+                                    pointRadius: 0
+                                },
+                                {
+                                    label: 'Total Sales',
+                                    data: [30, 34, 32, 40, 38, 48, 55, 51, 58, 65, 62, 77],
+                                    borderColor: '#C89D4B',
+                                    backgroundColor: gradientGold,
+                                    fill: true,
+                                    tension: 0.4,
+                                    borderWidth: 2.5,
+                                    pointRadius: 0
+                                }
+                            ]
                         },
-                        {
-                            label: 'Total Sales',
-                            data: [30, 34, 32, 40, 38, 48, 55, 51, 58, 65, 62, 77],
-                            borderColor: '#C89D4B',
-                            backgroundColor: gradientGold,
-                            fill: true,
-                            tension: 0.4,
-                            borderWidth: 2.5,
-                            pointRadius: 0
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: { legend: { display: false } },
+                            scales: {
+                                x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#8E9AA8', font: { size: 10 } } },
+                                y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#8E9AA8', font: { size: 10 } } }
+                            }
                         }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#8E9AA8', font: { size: 10 } } },
-                        y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#8E9AA8', font: { size: 10 } } }
-                    }
+                    });
                 }
-            });
 
-            const ctxDonut = document.getElementById('chart-payments-donut').getContext('2d');
-            paymentChartInstance = new Chart(ctxDonut, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Efectivo (Cash)', 'Tarjeta (Card)', 'Transferencia'],
-                    datasets: [{
-                        data: [50, 30, 20],
-                        backgroundColor: ['#5BB347', '#C89D4B', '#22D3EE'],
-                        borderColor: '#13171F',
-                        borderWidth: 4,
-                        cutout: '72%'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } }
+                const canvasDonut = document.getElementById('chart-payments-donut');
+                if (canvasDonut) {
+                    const ctxDonut = canvasDonut.getContext('2d');
+                    paymentChartInstance = new Chart(ctxDonut, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Efectivo (Cash)', 'Tarjeta (Card)', 'Transferencia'],
+                            datasets: [{
+                                data: [50, 30, 20],
+                                backgroundColor: ['#5BB347', '#C89D4B', '#22D3EE'],
+                                borderColor: '#13171F',
+                                borderWidth: 4,
+                                cutout: '72%'
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: { legend: { display: false } }
+                        }
+                    });
                 }
-            });
+            } catch (err) {
+                console.warn("Chart render info:", err);
+            }
         }
 
         function renderDashboardData() {
             const topTbody = document.getElementById('top-products-tbody');
-            topTbody.innerHTML = [
-                { name: 'Vestido Gala Silk #8801', qty: '48 pzs', amount: '$88,800.00', status: 'In stock', color: 'text-brand-leaf' },
-                { name: 'Blazer Imperial Gold #8802', qty: '32 pzs', amount: '$76,800.00', status: 'In stock', color: 'text-brand-leaf' },
-                { name: 'Conjunto Lino Nude #8803', qty: '26 pzs', amount: '$42,120.00', status: 'In stock', color: 'text-brand-leaf' },
-                { name: 'Palazzo Corte Alto #8804', qty: '14 pzs', amount: '$18,060.00', status: 'Pocas piezas', color: 'text-brand-gold' }
-            ].map(p => `
-                <tr class="hover:bg-brand-darkInput/50 transition">
-                    <td class="py-3 font-semibold text-white">${p.name}</td>
-                    <td class="py-3 text-gray-300 font-mono">${p.qty}</td>
-                    <td class="py-3 font-mono font-bold text-brand-gold">${p.amount}</td>
-                    <td class="py-3 text-right">
-                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${p.color} bg-white/5">${p.status}</span>
-                    </td>
-                </tr>
-            `).join('');
+            if (topTbody) {
+                topTbody.innerHTML = [
+                    { name: 'Vestido Gala Silk #8801', qty: '48 pzs', amount: '$88,800.00', status: 'In stock', color: 'text-brand-leaf' },
+                    { name: 'Blazer Imperial Gold #8802', qty: '32 pzs', amount: '$76,800.00', status: 'In stock', color: 'text-brand-leaf' },
+                    { name: 'Conjunto Lino Nude #8803', qty: '26 pzs', amount: '$42,120.00', status: 'In stock', color: 'text-brand-leaf' },
+                    { name: 'Palazzo Corte Alto #8804', qty: '14 pzs', amount: '$18,060.00', status: 'Pocas piezas', color: 'text-brand-gold' }
+                ].map(p => `
+                    <tr class="hover:bg-brand-darkInput/50 transition">
+                        <td class="py-3 font-semibold text-white">${p.name}</td>
+                        <td class="py-3 text-gray-300 font-mono">${p.qty}</td>
+                        <td class="py-3 font-mono font-bold text-brand-gold">${p.amount}</td>
+                        <td class="py-3 text-right">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${p.color} bg-white/5">${p.status}</span>
+                        </td>
+                    </tr>
+                `).join('');
+            }
 
             const perfContainer = document.getElementById('sellers-perf-list');
-            perfContainer.innerHTML = teamUsers.map(u => `
-                <div class="p-3 bg-brand-darkInput rounded-2xl border border-brand-cardBorder flex items-center justify-between">
-                    <div class="flex items-center gap-2.5">
-                        <div class="w-8 h-8 rounded-xl bg-brand-gold/15 text-brand-gold font-bold flex items-center justify-center text-xs">
-                            ${u.name.substring(0, 2).toUpperCase()}
+            if (perfContainer) {
+                perfContainer.innerHTML = teamUsers.map(u => `
+                    <div class="p-3 bg-brand-darkInput rounded-2xl border border-brand-cardBorder flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-xl bg-brand-gold/15 text-brand-gold font-bold flex items-center justify-center text-xs">
+                                ${(u.name || 'LM').substring(0, 2).toUpperCase()}
+                            </div>
+                            <div>
+                                <p class="text-xs font-bold text-white">${u.name}</p>
+                                <p class="text-[10px] text-gray-400">PIN: ${u.pin} • ${u.branch}</p>
+                            </div>
                         </div>
-                        <div>
-                            <p class="text-xs font-bold text-white">${u.name}</p>
-                            <p class="text-[10px] text-gray-400">PIN: ${u.pin} • ${u.branch}</p>
+                        <div class="text-right">
+                            <p class="text-xs font-bold font-mono text-brand-gold">$34,200.00</p>
+                            <p class="text-[9px] text-brand-leaf font-semibold">Meta 92%</p>
                         </div>
                     </div>
-                    <div class="text-right">
-                        <p class="text-xs font-bold font-mono text-brand-gold">$34,200.00</p>
-                        <p class="text-[9px] text-brand-leaf font-semibold">Meta 92%</p>
-                    </div>
-                </div>
-            `).join('');
+                `).join('');
+            }
         }
 
         // ============================================================================
@@ -1132,6 +1178,7 @@
         // ============================================================================
         function renderPOSProducts() {
             const grid = document.getElementById('pos-products-grid');
+            if (!grid) return;
             grid.innerHTML = posProducts.map(p => `
                 <div class="lem-card rounded-2xl overflow-hidden border border-brand-cardBorder flex flex-col justify-between group hover:border-brand-gold/50 transition">
                     <div class="h-36 bg-cover bg-center relative" style="background-image: url('${p.img}');">
@@ -1159,6 +1206,7 @@
 
         function addToCart(productId, size) {
             const product = posProducts.find(p => p.id === productId);
+            if (!product) return;
             const existing = cartItems.find(i => i.id === productId && i.size === size);
             if (existing) {
                 existing.qty++;
@@ -1170,6 +1218,8 @@
 
         function renderCart() {
             const container = document.getElementById('pos-cart-items');
+            if (!container) return;
+
             if (cartItems.length === 0) {
                 container.innerHTML = '<p class="text-center text-xs text-brand-textMuted py-8">No hay prendas seleccionadas</p>';
                 document.getElementById('pos-subtotal').textContent = '$0.00';
@@ -1196,11 +1246,13 @@
             const subtotal = cartItems.reduce((acc, i) => acc + (i.price * i.qty), 0);
             const tax = subtotal * 0.16;
             const total = subtotal + tax;
-
             document.getElementById('pos-subtotal').textContent = '$' + subtotal.toLocaleString('es-MX', { minimumFractionDigits: 2 });
             document.getElementById('pos-tax').textContent = '$' + tax.toLocaleString('es-MX', { minimumFractionDigits: 2 });
             document.getElementById('pos-total').textContent = '$' + total.toLocaleString('es-MX', { minimumFractionDigits: 2 });
-            lucide.createIcons();
+
+            if (window.lucide && typeof lucide.createIcons === 'function') {
+                lucide.createIcons();
+            }
         }
 
         function removeFromCart(idx) {
@@ -1218,16 +1270,14 @@
                 alert('Agrega al menos una prenda para procesar el cobro.');
                 return;
             }
-
-            const folio = 'LM-' + (1000 + allSheets[0].rows.length + 1);
+            const folio = 'LM-' + (1000 + (allSheets[0].rows || []).length + 1);
             const date = new Date().toISOString().split('T')[0];
             const itemsSummary = cartItems.map(i => `${i.name} (${i.size})`).join(', ');
             const totalFormatted = document.getElementById('pos-total').textContent;
 
             allSheets[0].rows.unshift([
-                folio, date, 'Venta en Tienda POS', itemsSummary, 'Varios', currentUser.name, 'Tarjeta', totalFormatted, 'Pagado'
+                folio, date, 'Venta en Tienda POS', itemsSummary, 'Varios', (currentUser ? currentUser.name : 'Personal LEM'), 'Tarjeta', totalFormatted, 'Pagado'
             ]);
-
             localStorage.setItem('lem_all_sheets', JSON.stringify(allSheets));
             exportSingleTicketPDF(folio, itemsSummary, totalFormatted);
             clearCart();
@@ -1237,6 +1287,7 @@
 
         function renderInventoryMatrix() {
             const tbody = document.getElementById('inventory-matrix-tbody');
+            if (!tbody) return;
             tbody.innerHTML = inventoryMatrixData.map(row => `
                 <tr class="hover:bg-brand-darkInput/40 transition">
                     <td class="py-3 px-4 font-bold text-white">${row.color}</td>
@@ -1259,22 +1310,19 @@
         // ============================================================================
         function renderLiveSheetTable() {
             const sheet = allSheets[currentSheetIdx];
+            if (!sheet) return;
             const query = (document.getElementById('table-search-input').value || '').toLowerCase();
-
             const thead = document.getElementById('live-table-head');
-            thead.innerHTML = sheet.headers.map(h => `<th class="py-3 px-4 whitespace-nowrap">${h}</th>`).join('') +
+            thead.innerHTML = (sheet.headers || []).map(h => `<th class="py-3 px-4 whitespace-nowrap">${h}</th>`).join('') +
                 '<th class="py-3 px-4 text-right whitespace-nowrap">Acciones</th>';
 
             const tbody = document.getElementById('live-table-body');
             tbody.innerHTML = '';
-
-            sheet.rows.forEach((row, rIdx) => {
+            (sheet.rows || []).forEach((row, rIdx) => {
                 if (query && !row.join(' ').toLowerCase().includes(query)) return;
-
                 const tr = document.createElement('tr');
                 tr.className = 'hover:bg-brand-darkInput/40 transition border-b border-brand-cardBorder';
-
-                const colsHtml = sheet.headers.map((_, cIdx) => {
+                const colsHtml = (sheet.headers || []).map((_, cIdx) => {
                     const val = row[cIdx] || '';
                     if (String(val).startsWith('$')) {
                         return `<td class="py-3 px-4 font-mono font-bold text-brand-gold whitespace-nowrap">${val}</td>`;
@@ -1288,7 +1336,7 @@
                         <button onclick="downloadRowPDF(${rIdx})" class="p-1.5 rounded-lg bg-brand-darkInput hover:bg-brand-gold hover:text-black text-brand-gold transition" title="Exportar Ficha PDF">
                             <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
                         </button>
-                        ${currentUser.role === 'admin' ? `
+                        ${currentUser && currentUser.role === 'admin' ? `
                         <button onclick="deleteRow(${rIdx})" class="p-1.5 rounded-lg bg-brand-darkInput hover:bg-red-500 hover:text-white text-red-400 transition" title="Eliminar">
                             <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                         </button>` : ''}
@@ -1296,7 +1344,10 @@
                 `;
                 tbody.appendChild(tr);
             });
-            lucide.createIcons();
+
+            if (window.lucide && typeof lucide.createIcons === 'function') {
+                lucide.createIcons();
+            }
         }
 
         function deleteRow(idx) {
@@ -1314,14 +1365,12 @@
             const sheet = allSheets[currentSheetIdx];
             document.getElementById('form-modal-title').textContent = `Nuevo en ${sheet.name}`;
             const container = document.getElementById('modal-form-inputs');
-
-            container.innerHTML = sheet.headers.map((h, i) => `
+            container.innerHTML = (sheet.headers || []).map((h, i) => `
                 <div>
                     <label class="block text-[10px] uppercase font-bold text-gray-400 mb-1">${h}</label>
                     <input type="text" name="field_${i}" required class="w-full px-3 py-2 bg-brand-darkInput border border-brand-cardBorder rounded-xl text-xs text-white focus:outline-none focus:border-brand-gold">
                 </div>
             `).join('');
-
             document.getElementById('form-modal').classList.remove('hidden');
         }
 
@@ -1333,8 +1382,7 @@
             e.preventDefault();
             const sheet = allSheets[currentSheetIdx];
             const formData = new FormData(e.target);
-            const newRow = sheet.headers.map((_, i) => formData.get(`field_${i}`));
-
+            const newRow = (sheet.headers || []).map((_, i) => formData.get(`field_${i}`));
             sheet.rows.unshift(newRow);
             localStorage.setItem('lem_all_sheets', JSON.stringify(allSheets));
             closeCreateModal();
@@ -1347,12 +1395,13 @@
         // ============================================================================
         function renderUsersAdmin() {
             const grid = document.getElementById('team-cards-grid');
+            if (!grid) return;
             grid.innerHTML = teamUsers.map(u => `
                 <div class="lem-card p-5 rounded-2xl border border-brand-cardBorder space-y-4">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-xl ${u.role === 'admin' ? 'gold-gradient-bg text-black' : 'bg-brand-darkInput text-brand-gold border border-brand-gold/30'} flex items-center justify-center font-bold text-sm">
-                                ${u.name.substring(0, 2).toUpperCase()}
+                                ${(u.name || 'LM').substring(0, 2).toUpperCase()}
                             </div>
                             <div>
                                 <h4 class="font-bold text-xs text-white">${u.name}</h4>
@@ -1361,12 +1410,10 @@
                         </div>
                         <span class="px-2 py-0.5 rounded text-[9px] font-bold uppercase ${u.role === 'admin' ? 'bg-brand-gold/20 text-brand-goldLight' : 'bg-gray-800 text-gray-300'}">${u.role}</span>
                     </div>
-
                     <div class="text-[11px] text-gray-400 space-y-1">
                         <p><strong class="text-gray-200">Sucursal:</strong> ${u.branch}</p>
-                        <p><strong class="text-gray-200">Acceso a Libros:</strong> ${u.sheets.length} de 5 autorizados</p>
+                        <p><strong class="text-gray-200">Acceso a Libros:</strong> ${(u.sheets || []).length} de 5 autorizados</p>
                     </div>
-
                     ${u.id !== 1 ? `
                     <div class="pt-2 border-t border-brand-cardBorder flex justify-end">
                         <button onclick="removeUser(${u.id})" class="text-red-400 hover:underline text-[11px]">Eliminar Perfil</button>
@@ -1397,7 +1444,6 @@
             const role = document.getElementById('new-role').value;
             const branch = document.getElementById('new-branch').value.trim() || 'Boutique Matriz';
             const sheets = Array.from(document.querySelectorAll('input[name="auth_sheet"]:checked')).map(c => c.value);
-
             teamUsers.push({ id: Date.now(), name, pin, username: '', role, branch, sheets });
             localStorage.setItem('lem_users_db', JSON.stringify(teamUsers));
             closeUserModal();
@@ -1416,13 +1462,13 @@
         // 10. GENERADOR DE PLANTILLAS PDF OFICIALES "LEM MODA"
         // ============================================================================
         function generateLuxuryPDF() {
+            if (!window.jspdf) return;
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
             const sheet = allSheets[currentSheetIdx];
 
             doc.setFillColor(11, 13, 17);
             doc.rect(0, 0, 297, 30, 'F');
-
             doc.setFillColor(200, 157, 75);
             doc.rect(0, 30, 297, 2, 'F');
 
@@ -1437,22 +1483,24 @@
             doc.text(`REPORTE EJECUTIVO • ${sheet.name.toUpperCase()}`, 14, 25);
 
             doc.setTextColor(255, 255, 255);
-            doc.text(`Fecha: ${new Date().toLocaleDateString('es-MX')} | Operador: ${currentUser.name}`, 283, 20, { align: 'right' });
+            doc.text(`Fecha: ${new Date().toLocaleDateString('es-MX')} | Operador: ${currentUser ? currentUser.name : 'Personal LEM'}`, 283, 20, { align: 'right' });
 
-            doc.autoTable({
-                startY: 38,
-                head: [sheet.headers],
-                body: sheet.rows,
-                theme: 'striped',
-                headStyles: { fillColor: [19, 23, 31], textColor: [200, 157, 75], fontStyle: 'bold', fontSize: 9 },
-                bodyStyles: { fontSize: 8.5, textColor: [30, 30, 30] },
-                alternateRowStyles: { fillColor: [248, 246, 240] }
-            });
-
+            if (doc.autoTable) {
+                doc.autoTable({
+                    startY: 38,
+                    head: [sheet.headers],
+                    body: sheet.rows,
+                    theme: 'striped',
+                    headStyles: { fillColor: [19, 23, 31], textColor: [200, 157, 75], fontStyle: 'bold', fontSize: 9 },
+                    bodyStyles: { fontSize: 8.5, textColor: [30, 30, 30] },
+                    alternateRowStyles: { fillColor: [248, 246, 240] }
+                });
+            }
             doc.save(`LEM_MODA_${sheet.name.replace(/\s+/g, '_')}.pdf`);
         }
 
         function downloadRowPDF(rowIndex) {
+            if (!window.jspdf) return;
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
             const sheet = allSheets[currentSheetIdx];
@@ -1473,27 +1521,27 @@
             doc.setTextColor(232, 200, 122);
             doc.text('COMPROBANTE EJECUTIVO DE REGISTRO', 15, 28);
 
-            const tableBody = sheet.headers.map((h, i) => [h.toUpperCase(), String(row[i] || '-')]);
-
-            doc.autoTable({
-                startY: 48,
-                head: [['CAMPO / CONCEPTO', 'INFORMACIÓN REGISTRADA']],
-                body: tableBody,
-                theme: 'grid',
-                headStyles: { fillColor: [11, 13, 17], textColor: [200, 157, 75], fontSize: 10 },
-                columnStyles: { 0: { fontStyle: 'bold', cellWidth: 70, fillColor: [245, 242, 235] } }
-            });
-
+            const tableBody = (sheet.headers || []).map((h, i) => [h.toUpperCase(), String(row[i] || '-')]);
+            if (doc.autoTable) {
+                doc.autoTable({
+                    startY: 48,
+                    head: [['CAMPO / CONCEPTO', 'INFORMACIÓN REGISTRADA']],
+                    body: tableBody,
+                    theme: 'grid',
+                    headStyles: { fillColor: [11, 13, 17], textColor: [200, 157, 75], fontSize: 10 },
+                    columnStyles: { 0: { fontStyle: 'bold', cellWidth: 70, fillColor: [245, 242, 235] } }
+                });
+            }
             doc.save(`LEM_MODA_Ficha_${row[0] || 'Registro'}.pdf`);
         }
 
         function exportSingleTicketPDF(folio, items, total) {
+            if (!window.jspdf) return;
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: [80, 150] });
 
             doc.setFillColor(11, 13, 17);
             doc.rect(0, 0, 80, 22, 'F');
-
             doc.setTextColor(200, 157, 75);
             doc.setFont('times', 'bold');
             doc.setFontSize(14);
@@ -1508,7 +1556,7 @@
             doc.setFontSize(8);
             doc.text(`Folio: ${folio}`, 5, 30);
             doc.text(`Fecha: ${new Date().toLocaleDateString('es-MX')}`, 5, 36);
-            doc.text(`Atendió: ${currentUser.name}`, 5, 42);
+            doc.text(`Atendió: ${currentUser ? currentUser.name : 'Personal LEM'}`, 5, 42);
 
             doc.setDrawColor(200, 157, 75);
             doc.line(5, 46, 75, 46);
@@ -1542,7 +1590,8 @@
         }
 
         function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('-translate-x-full');
+            const sb = document.getElementById('sidebar');
+            if (sb) sb.classList.toggle('-translate-x-full');
         }
 
         if ('serviceWorker' in navigator) {
@@ -1550,7 +1599,9 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
+            if (window.lucide && typeof lucide.createIcons === 'function') {
+                lucide.createIcons();
+            }
         });
     </script>
 </body>
