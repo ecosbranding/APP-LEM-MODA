@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LEM MODA | Executive Management Suite</title>
+    <title>LEM MODA | Executive Suite</title>
     
     <!-- PWA Settings -->
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0B0D11">
+    <meta name="theme-color" content="#000000">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="LEM MODA">
-    <!-- Fuentes Tipográficas Oficiales -->
+    
+    <!-- Tipografías Oficiales -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -24,18 +25,18 @@
             theme: {
                 extend: {
                     colors: {
-                        brand: {
-                            bg: '#0B0D11',
-                            card: '#13171F',
-                            cardBorder: 'rgba(200, 157, 75, 0.18)',
-                            cardHover: '#181E29',
-                            gold: '#C89D4B',
-                            goldLight: '#E8C87A',
-                            goldDark: '#8F6B28',
-                            leaf: '#5BB347',
-                            leafDark: '#3D822D',
-                            textMuted: '#8E9AA8',
-                            darkInput: '#0E1117'
+                        lem: {
+                            black: '#000000',
+                            card: '#0D0D0E',
+                            cardHover: '#141416',
+                            border: 'rgba(197, 155, 83, 0.22)',
+                            gold: '#C59B53',
+                            goldLight: '#DFB76C',
+                            goldDark: '#8F6527',
+                            leaf: '#62B33C',
+                            leafDark: '#458527',
+                            muted: '#8A8A93',
+                            input: '#070708'
                         }
                     },
                     fontFamily: {
@@ -46,87 +47,71 @@
             }
         }
     </script>
-    <!-- Iconos Vectoriales Lucide (Sin emojis) -->
+    <!-- Iconos Vectoriales Lucide -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    
-    <!-- Chart.js para gráficas -->
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Librerías de PDF Corporativo -->
+    <!-- jsPDF & AutoTable -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0B0D11; color: #F3F4F6; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #000000; color: #FFFFFF; }
         .font-brand { font-family: 'Cinzel', serif; }
-        ::-webkit-scrollbar { width: 5px; height: 5px; }
-        ::-webkit-scrollbar-track { background: #0B0D11; }
-        ::-webkit-scrollbar-thumb { background: #8F6B28; border-radius: 4px; }
-        .gold-gradient-bg { background: linear-gradient(135deg, #C89D4B 0%, #8F6B28 100%); }
-        .gold-gradient-text { background: linear-gradient(135deg, #E8C87A 0%, #C89D4B 60%, #8F6B28 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .lem-card { background: #13171F; border: 1px solid rgba(200, 157, 75, 0.16); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35); }
-        .pin-key { background: #13171F; border: 1px solid rgba(200, 157, 75, 0.22); transition: all 0.15s ease-in-out; }
-        .pin-key:active { background: #C89D4B; color: #0B0D11; transform: scale(0.94); }
-        .pin-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid #C89D4B; transition: all 0.2s ease; }
-        .pin-dot.active { background: #C89D4B; box-shadow: 0 0 12px #C89D4B; transform: scale(1.15); }
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: #000000; }
+        ::-webkit-scrollbar-thumb { background: #8F6527; border-radius: 4px; }
+        .gold-gradient { background: linear-gradient(135deg, #DFB76C 0%, #C59B53 50%, #8F6527 100%); }
+        .gold-gradient-text { background: linear-gradient(135deg, #DFB76C 0%, #C59B53 60%, #8F6527 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .lem-box { background: #0D0D0E; border: 1px solid rgba(197, 155, 83, 0.2); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8); }
+        .pin-btn { background: #0D0D0E; border: 1px solid rgba(197, 155, 83, 0.25); transition: all 0.15s ease; }
+        .pin-btn:active { background: #C59B53; color: #000000; transform: scale(0.95); }
+        .dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid #C59B53; transition: all 0.2s; }
+        .dot.active { background: #C59B53; box-shadow: 0 0 10px #C59B53; transform: scale(1.15); }
     </style>
 </head>
-<body class="min-h-screen flex flex-col bg-brand-bg text-gray-100 antialiased selection:bg-brand-gold selection:text-black">
-    <!-- ==================== PANTALLA DE ACCESO POR PIN (VENDEDORAS & ADMIN) ==================== -->
-    <div id="login-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-brand-bg p-4 overflow-y-auto">
-        <div class="max-w-sm w-full lem-card rounded-3xl p-6 sm:p-8 relative overflow-hidden border border-brand-gold/30 flex flex-col items-center">
+<body class="min-h-screen bg-lem-black text-white antialiased selection:bg-lem-gold selection:text-black flex flex-col">
+
+    <!-- ==================== PANTALLA LOGIN CON PIN PAD ==================== -->
+    <div id="login-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-black p-4">
+        <div class="max-w-xs w-full lem-box rounded-3xl p-6 sm:p-7 relative border border-lem-gold/30 flex flex-col items-center text-center">
             
-            <!-- Resplandores de Marca -->
-            <div class="absolute -top-16 -right-16 w-36 h-36 rounded-full bg-brand-gold/10 blur-3xl"></div>
-            <div class="absolute -bottom-16 -left-16 w-36 h-36 rounded-full bg-brand-leaf/10 blur-3xl"></div>
-            <!-- Isotipo Vectorial Oficial LEM MODA -->
-            <div class="text-center relative z-10">
-                <div class="w-16 h-16 mx-auto mb-3 flex items-center justify-center">
-                    <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-[0_4px_12px_rgba(200,157,75,0.3)]">
-                        <path d="M42 12 C 48 8, 62 10, 60 28 C 58 40, 48 48, 38 46 C 30 45, 34 32, 38 28 C 42 24, 38 18, 42 12 Z" fill="#5BB347" />
-                        <path d="M45 42 Q 52 45 56 40 Q 64 48 68 56 Q 74 62 70 70 Q 56 68 54 58 Q 50 56 46 54 Z" fill="#C89D4B" />
-                        <circle cx="43" cy="40" r="4" fill="#C89D4B"/>
-                        <path d="M48 48 L 40 62 M 54 52 L 48 70 M 60 56 L 62 72 M 58 50 L 72 44 M 64 54 L 78 52 M 66 60 L 80 66" stroke="#C89D4B" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                </div>
-                <h1 class="font-brand text-2xl font-bold tracking-widest gold-gradient-text uppercase">LEM MODA</h1>
-                <p id="pin-prompt-text" class="text-[10px] text-brand-textMuted tracking-[0.25em] uppercase mt-1">Ingresa tu PIN de 4 dígitos</p>
+            <!-- Logo Oficial de la Hormiga LEM MODA -->
+            <div class="w-16 h-16 mx-auto mb-2 flex items-center justify-center">
+                <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-[0_4px_14px_rgba(197,155,83,0.35)]">
+                    <path d="M42 12 C 48 8, 62 10, 60 28 C 58 40, 48 48, 38 46 C 30 45, 34 32, 38 28 C 42 24, 38 18, 42 12 Z" fill="#62B33C" />
+                    <path d="M45 42 Q 52 45 56 40 Q 64 48 68 56 Q 74 62 70 70 Q 56 68 54 58 Q 50 56 46 54 Z" fill="#C59B53" />
+                    <circle cx="43" cy="40" r="4" fill="#C59B53"/>
+                    <path d="M48 48 L 40 62 M 54 52 L 48 70 M 60 56 L 62 72 M 58 50 L 72 44 M 64 54 L 78 52 M 66 60 L 80 66" stroke="#C59B53" stroke-width="2.2" stroke-linecap="round"/>
+                </svg>
             </div>
-            <!-- Campo opcional de Usuario Admin -->
-            <div id="admin-user-field" class="hidden w-full mt-4 relative z-10">
-                <input id="admin-username-input" type="text" placeholder="Usuario Administrador" value="admin"
-                    class="w-full px-3.5 py-2 bg-brand-darkInput border border-brand-cardBorder rounded-xl text-xs text-white text-center focus:outline-none focus:border-brand-gold">
+            <h1 class="font-brand text-2xl font-bold tracking-widest gold-gradient-text">LEM MODA</h1>
+            <p id="pin-subtext" class="text-[9px] text-lem-muted tracking-[0.25em] uppercase mt-0.5">Ingresa tu PIN de 4 dígitos</p>
+
+            <div id="admin-user-input-box" class="hidden w-full mt-3">
+                <input id="admin-user-val" type="text" value="admin" placeholder="Usuario Administrador" class="w-full px-3 py-1.5 bg-lem-input border border-lem-gold/40 rounded-xl text-xs text-center text-white focus:outline-none">
             </div>
-            <!-- Indicadores de PIN (4 Puntos) -->
-            <div class="flex items-center gap-4 my-6 relative z-10">
-                <div id="dot-0" class="pin-dot"></div>
-                <div id="dot-1" class="pin-dot"></div>
-                <div id="dot-2" class="pin-dot"></div>
-                <div id="dot-3" class="pin-dot"></div>
+
+            <div class="flex items-center gap-3.5 my-5">
+                <div id="dot-0" class="dot"></div>
+                <div id="dot-1" class="dot"></div>
+                <div id="dot-2" class="dot"></div>
+                <div id="dot-3" class="dot"></div>
             </div>
-            <!-- Teclado Numérico Vectorial -->
-            <div class="grid grid-cols-3 gap-3 w-full max-w-[260px] relative z-10">
-                <button onclick="pressPin('1')" class="pin-key h-14 rounded-2xl text-lg font-bold text-white flex items-center justify-center">1</button>
-                <button onclick="pressPin('2')" class="pin-key h-14 rounded-2xl text-lg font-bold text-white flex items-center justify-center">2</button>
-                <button onclick="pressPin('3')" class="pin-key h-14 rounded-2xl text-lg font-bold text-white flex items-center justify-center">3</button>
-                <button onclick="pressPin('4')" class="pin-key h-14 rounded-2xl text-lg font-bold text-white flex items-center justify-center">4</button>
-                <button onclick="pressPin('5')" class="pin-key h-14 rounded-2xl text-lg font-bold text-white flex items-center justify-center">5</button>
-                <button onclick="pressPin('6')" class="pin-key h-14 rounded-2xl text-lg font-bold text-white flex items-center justify-center">6</button>
-                <button onclick="pressPin('7')" class="pin-key h-14 rounded-2xl text-lg font-bold text-white flex items-center justify-center">7</button>
-                <button onclick="pressPin('8')" class="pin-key h-14 rounded-2xl text-lg font-bold text-white flex items-center justify-center">8</button>
-                <button onclick="pressPin('9')" class="pin-key h-14 rounded-2xl text-lg font-bold text-white flex items-center justify-center">9</button>
-                
-                <button onclick="clearPin()" class="h-14 rounded-2xl text-[10px] font-bold text-red-400 hover:bg-red-500/10 transition uppercase tracking-wider flex items-center justify-center">
-                    Borrar
-                </button>
-                <button onclick="pressPin('0')" class="pin-key h-14 rounded-2xl text-lg font-bold text-white flex items-center justify-center">0</button>
-                <button onclick="toggleAdminMode()" id="toggle-admin-btn" class="h-14 rounded-2xl text-[10px] font-bold text-brand-gold hover:bg-brand-gold/10 transition uppercase tracking-wider flex items-center justify-center">
-                    Admin
-                </button>
-            </div>
-            <!-- PINs de Demostración Inicial -->
-            <div class="mt-6 pt-4 border-t border-brand-cardBorder/60 w-full text-center text-[10px] text-gray-500 relative z-10">
-                <span class="block font-semibold text-gray-400">PINs precargados en el sistema:</span>
-                <span class="block mt-0.5 text-brand-gold">Vendedoras: PIN 2025 o 1111</span>
-                <span class="block text-gray-400">Admin: Usuario "admin" + PIN 1234</span>
+
+            <div class="grid grid-cols-3 gap-2.5 w-full max-w-[240px]">
+                <button onclick="inputPin('1')" class="pin-btn h-12 rounded-2xl text-lg font-bold">1</button>
+                <button onclick="inputPin('2')" class="pin-btn h-12 rounded-2xl text-lg font-bold">2</button>
+                <button onclick="inputPin('3')" class="pin-btn h-12 rounded-2xl text-lg font-bold">3</button>
+                <button onclick="inputPin('4')" class="pin-btn h-12 rounded-2xl text-lg font-bold">4</button>
+                <button onclick="inputPin('5')" class="pin-btn h-12 rounded-2xl text-lg font-bold">5</button>
+                <button onclick="inputPin('6')" class="pin-btn h-12 rounded-2xl text-lg font-bold">6</button>
+                <button onclick="inputPin('7')" class="pin-btn h-12 rounded-2xl text-lg font-bold">7</button>
+                <button onclick="inputPin('8')" class="pin-btn h-12 rounded-2xl text-lg font-bold">8</button>
+                <button onclick="inputPin('9')" class="pin-btn h-12 rounded-2xl text-lg font-bold">9</button>
+                <button onclick="clearPin()" class="h-12 rounded-2xl text-[10px] font-bold text-red-400 uppercase">Borrar</button>
+                <button onclick="inputPin('0')" class="pin-btn h-12 rounded-2xl text-lg font-bold">0</button>
+                <button onclick="toggleAdminLogin()" id="btn-admin-mode" class="h-12 rounded-2xl text-[10px] font-bold text-lem-gold uppercase">Admin</button>
             </div>
         </div>
     </div>
@@ -135,655 +120,474 @@
     <div id="app-container" class="hidden flex-1 flex h-screen overflow-hidden">
         
         <!-- SIDEBAR DE NAVEGACIÓN -->
-        <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-[#0E1117] border-r border-brand-cardBorder flex flex-col transition-transform duration-300 -translate-x-full lg:translate-x-0 lg:static">
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-black border-r border-lem-border flex flex-col transition-transform duration-300 -translate-x-full lg:translate-x-0 lg:static">
             
-            <!-- Header Marca -->
-            <div class="p-5 flex items-center justify-between border-b border-brand-cardBorder">
-                <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-xl gold-gradient-bg flex items-center justify-center shadow-lg">
-                        <span class="font-brand font-bold text-black text-sm">LM</span>
-                    </div>
+            <div class="p-4 flex items-center justify-between border-b border-lem-border">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-xl gold-gradient flex items-center justify-center font-brand font-bold text-black text-xs">LM</div>
                     <div>
-                        <h2 class="font-brand text-sm tracking-widest gold-gradient-text font-bold">LEM MODA</h2>
-                        <div class="flex items-center gap-1.5 mt-0.5">
-                            <span id="sync-dot" class="w-1.5 h-1.5 rounded-full bg-brand-leaf animate-pulse"></span>
-                            <span id="sync-status-indicator" class="text-[9px] text-gray-400 font-mono uppercase tracking-wider">Online v4.2</span>
+                        <h2 class="font-brand text-xs tracking-widest gold-gradient-text font-bold">LEM MODA</h2>
+                        <div class="flex items-center gap-1 mt-0.5">
+                            <span id="sync-dot" class="w-1.5 h-1.5 rounded-full bg-lem-leaf animate-pulse"></span>
+                            <span id="sync-status-indicator" class="text-[9px] text-lem-muted font-mono uppercase">En Línea</span>
                         </div>
                     </div>
                 </div>
-                <button onclick="toggleSidebar()" class="lg:hidden text-gray-400 hover:text-white">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
+                <button onclick="toggleSidebar()" class="lg:hidden text-gray-400"><i data-lucide="x" class="w-4 h-4"></i></button>
             </div>
-            <!-- Perfil Activo Identificado por PIN -->
-            <div class="p-3.5 mx-3 mt-3 rounded-2xl bg-brand-card border border-brand-cardBorder flex items-center gap-3">
-                <div id="user-avatar-badge" class="w-9 h-9 rounded-xl bg-brand-gold/10 border border-brand-gold text-brand-goldLight flex items-center justify-center font-bold text-xs">
-                    AD
-                </div>
+
+            <!-- Perfil Activo -->
+            <div class="p-3 mx-3 mt-3 rounded-2xl bg-lem-card border border-lem-border flex items-center gap-2.5">
+                <div id="user-badge" class="w-8 h-8 rounded-xl bg-lem-gold/15 text-lem-gold font-bold flex items-center justify-center text-xs">AD</div>
                 <div class="truncate">
-                    <p id="user-name-display" class="text-xs font-bold text-white truncate">Dirección LEM</p>
-                    <p id="user-role-label" class="text-[10px] text-brand-gold uppercase tracking-wider font-semibold">Administradora</p>
+                    <p id="user-name" class="text-xs font-bold text-white truncate">Dirección LEM</p>
+                    <p id="user-role" class="text-[9px] text-lem-gold uppercase tracking-wider font-semibold">Administradora</p>
                 </div>
             </div>
-            <!-- Menú Principal -->
-            <div class="flex-1 px-3 py-4 space-y-6 overflow-y-auto">
+
+            <!-- Menú Navegación -->
+            <div class="flex-1 px-3 py-4 space-y-5 overflow-y-auto">
                 <div>
-                    <span class="px-3 text-[10px] font-bold uppercase tracking-widest text-brand-textMuted">Vistas Principales</span>
+                    <span class="px-2 text-[9px] font-bold uppercase tracking-widest text-lem-muted">Operaciones Boutique</span>
                     <nav class="mt-2 space-y-1">
-                        <button onclick="switchMasterView('dashboard')" id="nav-btn-dashboard" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold bg-brand-card text-brand-gold border border-brand-cardBorder">
+                        <button onclick="showView('dashboard')" id="nav-dashboard" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold bg-lem-card text-lem-gold border border-lem-border">
                             <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard Ejecutivo
                         </button>
-                        <button onclick="switchMasterView('pos')" id="nav-btn-pos" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium text-gray-400 hover:text-white hover:bg-brand-cardHover transition">
+                        <button onclick="showView('pos')" id="nav-pos" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-gray-400 hover:text-white hover:bg-lem-cardHover transition">
                             <i data-lucide="shopping-cart" class="w-4 h-4"></i> Punto de Venta (POS)
                         </button>
-                        <button onclick="switchMasterView('inventory-matrix')" id="nav-btn-matrix" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium text-gray-400 hover:text-white hover:bg-brand-cardHover transition">
-                            <i data-lucide="grid-3x3" class="w-4 h-4"></i> Matriz de Tallas & Stock
+                        <button onclick="showView('caja')" id="nav-caja" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-gray-400 hover:text-white hover:bg-lem-cardHover transition">
+                            <i data-lucide="wallet" class="w-4 h-4 text-lem-gold"></i> Control de Caja & Gastos
                         </button>
-                        <button onclick="switchMasterView('planning')" id="nav-btn-planning" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium text-gray-400 hover:text-white hover:bg-brand-cardHover transition">
-                            <i data-lucide="calendar-range" class="w-4 h-4"></i> Planificador de Pedidos
+                        <button onclick="showView('attendance')" id="nav-attendance" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-gray-400 hover:text-white hover:bg-lem-cardHover transition">
+                            <i data-lucide="calendar" class="w-4 h-4"></i> Asistencia & Descansos
+                        </button>
+                        <button onclick="showView('inventory-matrix')" id="nav-inventory-matrix" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-gray-400 hover:text-white hover:bg-lem-cardHover transition">
+                            <i data-lucide="grid-3x3" class="w-4 h-4"></i> Matriz de Inventario
                         </button>
                     </nav>
                 </div>
-                <!-- 5 Libros de Google Sheets -->
+
                 <div>
-                    <span class="px-3 text-[10px] font-bold uppercase tracking-widest text-brand-textMuted">Google Sheets en Vivo</span>
-                    <nav id="sheets-nav-container" class="mt-2 space-y-1">
+                    <span class="px-2 text-[9px] font-bold uppercase tracking-widest text-lem-muted">Hojas de Google (En Vivo)</span>
+                    <nav id="sheets-menu" class="mt-2 space-y-1">
                         <!-- Generado dinámicamente -->
                     </nav>
                 </div>
-                <!-- Módulo Admin Exclusivo -->
-                <div id="admin-sec-nav">
-                    <span class="px-3 text-[10px] font-bold uppercase tracking-widest text-brand-gold">Seguridad & Equipo</span>
-                    <nav class="mt-2 space-y-1">
-                        <button onclick="switchMasterView('users')" id="nav-btn-users" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium text-gray-400 hover:text-white hover:bg-brand-cardHover transition">
-                            <i data-lucide="users" class="w-4 h-4 text-brand-gold"></i> Vendedoras y Accesos
-                        </button>
-                    </nav>
-                </div>
             </div>
-            <!-- Footer Sidebar -->
-            <div class="p-3 border-t border-brand-cardBorder space-y-2">
-                <button onclick="installPWA()" class="w-full py-2 px-3 gold-gradient-bg text-black font-bold rounded-xl text-[11px] flex items-center justify-center gap-2 shadow-lg">
-                    <i data-lucide="download" class="w-3.5 h-3.5"></i> Instalar App en Celular / PC
-                </button>
-                <button onclick="logout()" class="w-full py-1.5 px-3 bg-brand-darkInput text-gray-400 hover:text-red-400 rounded-xl text-[11px] flex items-center justify-center gap-2">
-                    <i data-lucide="log-out" class="w-3.5 h-3.5"></i> Bloquear Pantalla (Cerrar)
+
+            <div class="p-3 border-t border-lem-border space-y-2">
+                <button onclick="logout()" class="w-full py-2 bg-lem-input text-gray-400 hover:text-red-400 rounded-xl text-[11px] flex items-center justify-center gap-2">
+                    <i data-lucide="lock" class="w-3.5 h-3.5"></i> Bloquear Pantalla
                 </button>
             </div>
         </aside>
 
-        <!-- CONTENIDO PRINCIPAL -->
-        <div class="flex-1 flex flex-col overflow-hidden bg-brand-bg">
+        <!-- CONTENEDOR CENTRAL -->
+        <div class="flex-1 flex flex-col overflow-hidden bg-lem-black">
             
-            <!-- HEADER SUPERIOR -->
-            <header class="h-16 bg-[#0E1117] border-b border-brand-cardBorder px-6 flex items-center justify-between z-20">
+            <header class="h-14 bg-black border-b border-lem-border px-5 flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                    <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-xl bg-brand-card border border-brand-cardBorder text-gray-300">
-                        <i data-lucide="menu" class="w-5 h-5"></i>
-                    </button>
+                    <button onclick="toggleSidebar()" class="lg:hidden p-1.5 rounded-lg bg-lem-card text-gray-300"><i data-lucide="menu" class="w-4 h-4"></i></button>
                     <div>
-                        <h1 id="view-title" class="font-brand text-lg font-bold text-white tracking-wide">Dashboard Ejecutivo</h1>
-                        <p id="view-sub" class="text-[11px] text-brand-textMuted">Métricas consolidadas de ventas e inventario</p>
+                        <h1 id="header-title" class="font-brand text-sm font-bold text-white tracking-wide">Dashboard Ejecutivo</h1>
                     </div>
                 </div>
-                <div class="flex items-center gap-2.5">
-                    <button onclick="syncAllGoogleSheets(true)" class="p-2.5 rounded-xl bg-brand-card hover:bg-brand-cardHover border border-brand-cardBorder text-brand-gold transition" title="Sincronizar Todas las Hojas de Google">
-                        <i data-lucide="refresh-cw" id="sync-spinner" class="w-4 h-4"></i>
+                <div class="flex items-center gap-2">
+                    <button onclick="syncAllSheets(true)" class="p-2 rounded-xl bg-lem-card hover:bg-lem-cardHover border border-lem-border text-lem-gold transition" title="Sincronizar Sheets">
+                        <i data-lucide="refresh-cw" id="sync-icon" class="w-3.5 h-3.5"></i>
                     </button>
-                    <button onclick="generateLuxuryPDF()" class="py-2 px-3.5 bg-brand-card hover:bg-brand-cardHover border border-brand-gold/40 text-brand-goldLight rounded-xl text-xs font-semibold flex items-center gap-2 transition">
-                        <i data-lucide="file-text" class="w-3.5 h-3.5 text-brand-gold"></i>
-                        <span class="hidden sm:inline">Exportar Reporte PDF</span>
-                    </button>
-                    <button onclick="openCreateModal()" id="btn-quick-create" class="py-2 px-3.5 gold-gradient-bg text-black rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-md hover:opacity-95 transition">
-                        <i data-lucide="plus" class="w-4 h-4"></i>
-                        <span>Nuevo Registro</span>
+                    <button onclick="exportLuxuryPDF()" class="py-1.5 px-3 bg-lem-card border border-lem-gold/40 text-lem-goldLight rounded-xl text-xs font-semibold flex items-center gap-1.5">
+                        <i data-lucide="file-text" class="w-3.5 h-3.5 text-lem-gold"></i> Exportar PDF
                     </button>
                 </div>
             </header>
 
-            <!-- VISTAS INTERCAMBIABLES -->
             <main class="flex-1 overflow-y-auto p-4 md:p-6 space-y-6">
-                <!-- 1. VISTA DASHBOARD EJECUTIVO -->
-                <div id="view-dashboard-section" class="space-y-6">
+                
+                <!-- ==================== 1. DASHBOARD ==================== -->
+                <div id="view-dashboard" class="space-y-6">
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div class="lem-card p-4 rounded-2xl flex items-center justify-between">
+                        <div class="lem-box p-4 rounded-2xl flex items-center justify-between">
                             <div>
-                                <span class="text-[11px] font-semibold text-brand-textMuted uppercase tracking-wider">Ingreso Neto (Ventas)</span>
-                                <h3 id="kpi-net-income" class="text-2xl font-bold text-white mt-1">$0.00</h3>
-                                <span class="inline-flex items-center gap-1 text-[11px] text-brand-leaf font-bold mt-1">
-                                    <i data-lucide="trending-up" class="w-3 h-3"></i> En tiempo real
-                                </span>
+                                <span class="text-[10px] text-lem-muted uppercase font-bold tracking-wider">Ingreso Total Ventas</span>
+                                <h3 id="dash-total-sales" class="text-xl font-bold text-white mt-0.5">$0.00</h3>
+                                <span class="text-[10px] text-lem-leaf font-bold">Calculado en vivo</span>
                             </div>
-                            <div class="w-12 h-12 rounded-2xl bg-brand-leaf/10 border border-brand-leaf/30 flex items-center justify-center text-brand-leaf">
-                                <i data-lucide="dollar-sign" class="w-6 h-6"></i>
-                            </div>
+                            <div class="w-10 h-10 rounded-xl bg-lem-leaf/10 border border-lem-leaf/30 flex items-center justify-center text-lem-leaf"><i data-lucide="dollar-sign" class="w-5 h-5"></i></div>
                         </div>
-                        <div class="lem-card p-4 rounded-2xl flex items-center justify-between">
+                        <div class="lem-box p-4 rounded-2xl flex items-center justify-between">
                             <div>
-                                <span class="text-[11px] font-semibold text-brand-textMuted uppercase tracking-wider">Registros de Ventas</span>
-                                <h3 id="kpi-total-sales-count" class="text-2xl font-bold text-white mt-1">0 Prendas</h3>
-                                <span class="inline-flex items-center gap-1 text-[11px] text-brand-leaf font-bold mt-1">
-                                    <i data-lucide="shopping-bag" class="w-3 h-3"></i> Google Sheet #1
-                                </span>
+                                <span class="text-[10px] text-lem-muted uppercase font-bold tracking-wider">Efectivo en Caja</span>
+                                <h3 id="dash-cash-in-box" class="text-xl font-bold text-lem-gold mt-0.5">$0.00</h3>
+                                <span class="text-[10px] text-lem-muted">Fondo + Ventas - Gastos</span>
                             </div>
-                            <div class="w-12 h-12 rounded-2xl bg-brand-gold/10 border border-brand-gold/30 flex items-center justify-center text-brand-gold">
-                                <i data-lucide="shopping-bag" class="w-6 h-6"></i>
-                            </div>
+                            <div class="w-10 h-10 rounded-xl bg-lem-gold/10 border border-lem-gold/30 flex items-center justify-center text-lem-gold"><i data-lucide="wallet" class="w-5 h-5"></i></div>
                         </div>
-                        <div class="lem-card p-4 rounded-2xl flex items-center justify-between">
+                        <div class="lem-box p-4 rounded-2xl flex items-center justify-between">
                             <div>
-                                <span class="text-[11px] font-semibold text-brand-textMuted uppercase tracking-wider">Balance en Caja</span>
-                                <h3 id="kpi-cash-balance" class="text-2xl font-bold text-white mt-1">$0.00</h3>
-                                <span class="text-[11px] text-brand-goldLight font-medium mt-1">Google Sheet #4</span>
+                                <span class="text-[10px] text-lem-muted uppercase font-bold tracking-wider">Gastos / Retiros</span>
+                                <h3 id="dash-total-expenses" class="text-xl font-bold text-red-400 mt-0.5">$0.00</h3>
+                                <span class="text-[10px] text-red-400 font-semibold">Salidas del día</span>
                             </div>
-                            <div class="w-12 h-12 rounded-2xl bg-brand-gold/10 border border-brand-gold/30 flex items-center justify-center text-brand-gold">
-                                <i data-lucide="wallet" class="w-6 h-6"></i>
-                            </div>
+                            <div class="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400"><i data-lucide="arrow-down-right" class="w-5 h-5"></i></div>
                         </div>
-                        <div class="lem-card p-4 rounded-2xl flex items-center justify-between">
+                        <div class="lem-box p-4 rounded-2xl flex items-center justify-between">
                             <div>
-                                <span class="text-[11px] font-semibold text-brand-textMuted uppercase tracking-wider">Stock Registrado</span>
-                                <h3 id="kpi-inventory-count" class="text-2xl font-bold text-white mt-1">0 pzs</h3>
-                                <span class="text-[11px] text-brand-leaf font-medium mt-1">Google Sheet #2</span>
+                                <span class="text-[10px] text-lem-muted uppercase font-bold tracking-wider">Prendas en Stock</span>
+                                <h3 id="dash-total-stock" class="text-xl font-bold text-white mt-0.5">0 pzs</h3>
+                                <span class="text-[10px] text-lem-goldLight font-semibold">Hoja Inventario</span>
                             </div>
-                            <div class="w-12 h-12 rounded-2xl bg-brand-leaf/10 border border-brand-leaf/30 flex items-center justify-center text-brand-leaf">
-                                <i data-lucide="award" class="w-6 h-6"></i>
-                            </div>
+                            <div class="w-10 h-10 rounded-xl bg-lem-gold/10 border border-lem-gold/30 flex items-center justify-center text-lem-gold"><i data-lucide="shirt" class="w-5 h-5"></i></div>
                         </div>
                     </div>
-                    <!-- Fila 2: Gráficas -->
+
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <div class="lem-card p-5 rounded-3xl lg:col-span-2 space-y-4">
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <h3 class="font-brand font-bold text-base text-white">Sales Performance</h3>
-                                    <div class="flex items-center gap-4 text-xs mt-1">
-                                        <span class="flex items-center gap-1.5 text-gray-400"><span class="w-2.5 h-2.5 rounded-full bg-brand-leaf"></span> Ingresos Reales</span>
-                                        <span class="flex items-center gap-1.5 text-gray-400"><span class="w-2.5 h-2.5 rounded-full bg-brand-gold"></span> Tendencia Ventas</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="h-64">
-                                <canvas id="chart-sales-performance"></canvas>
-                            </div>
+                        <div class="lem-box p-5 rounded-3xl lg:col-span-2 space-y-3">
+                            <h3 class="font-brand font-bold text-sm text-white">Comportamiento de Ventas ($)</h3>
+                            <div class="h-60"><canvas id="chart-sales"></canvas></div>
                         </div>
-                        <div class="lem-card p-5 rounded-3xl space-y-4 flex flex-col justify-between">
-                            <div class="flex items-center justify-between">
-                                <h3 class="font-brand font-bold text-base text-white">Payment Methods</h3>
-                                <span class="text-xs text-brand-goldLight font-mono">100% Real</span>
-                            </div>
-                            <div class="h-48 relative flex items-center justify-center">
-                                <canvas id="chart-payments-donut"></canvas>
-                            </div>
-                            <div id="payment-methods-breakdown" class="grid grid-cols-3 gap-2 pt-2 border-t border-brand-cardBorder text-center">
-                                <div class="p-2 bg-brand-darkInput rounded-xl">
-                                    <p class="text-[10px] text-gray-400">Efectivo</p>
-                                    <p id="donut-cash-pct" class="text-xs font-bold text-brand-leaf">0%</p>
-                                </div>
-                                <div class="p-2 bg-brand-darkInput rounded-xl">
-                                    <p class="text-[10px] text-gray-400">Tarjeta</p>
-                                    <p id="donut-card-pct" class="text-xs font-bold text-brand-gold">0%</p>
-                                </div>
-                                <div class="p-2 bg-brand-darkInput rounded-xl">
-                                    <p class="text-[10px] text-gray-400">Transf.</p>
-                                    <p id="donut-transfer-pct" class="text-xs font-bold text-cyan-400">0%</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Fila 3: Top Selling & Vendedoras -->
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <div class="lem-card p-5 rounded-3xl lg:col-span-2 space-y-4">
-                            <h3 class="font-brand font-bold text-base text-white">Top Selling Products (Hoja de Ventas)</h3>
-                            <div class="overflow-x-auto">
-                                <table class="w-full text-left text-xs">
-                                    <thead>
-                                        <tr class="text-brand-textMuted border-b border-brand-cardBorder pb-2 uppercase text-[10px] tracking-wider">
-                                            <th class="py-2.5">Prenda / Modelo</th>
-                                            <th class="py-2.5">Clienta</th>
-                                            <th class="py-2.5">Monto ($)</th>
-                                            <th class="py-2.5 text-right">Estatus</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="top-products-tbody" class="divide-y divide-brand-cardBorder">
-                                        <!-- Generado dinámicamente -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="lem-card p-5 rounded-3xl space-y-4">
-                            <h3 class="font-brand font-bold text-base text-white">Employee Performance</h3>
-                            <div id="sellers-perf-list" class="space-y-3">
-                                <!-- Generado por JS -->
+                        <div class="lem-box p-5 rounded-3xl space-y-3">
+                            <h3 class="font-brand font-bold text-sm text-white">Desglose por Métodos de Pago</h3>
+                            <div class="h-44 relative flex items-center justify-center"><canvas id="chart-payments"></canvas></div>
+                            <div class="grid grid-cols-3 gap-2 pt-2 border-t border-lem-border text-center text-xs">
+                                <div><p class="text-[9px] text-lem-muted">Efectivo</p><p id="pct-cash" class="font-bold text-lem-leaf">0%</p></div>
+                                <div><p class="text-[9px] text-lem-muted">Tarjeta</p><p id="pct-card" class="font-bold text-lem-gold">0%</p></div>
+                                <div><p class="text-[9px] text-lem-muted">Transf.</p><p id="pct-trans" class="font-bold text-cyan-400">0%</p></div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 2. VISTA PUNTO DE VENTA / POS -->
-                <div id="view-pos-section" class="hidden space-y-6">
+                <!-- ==================== 2. PUNTO DE VENTA (POS) CON DESCUENTOS ==================== -->
+                <div id="view-pos" class="hidden space-y-6">
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <div class="lg:col-span-2 space-y-4">
-                            <div class="flex items-center justify-between pb-2">
-                                <h3 class="font-brand font-bold text-sm text-white">Catálogo en Vivo (Hoja #2 - Inventario)</h3>
-                                <span class="text-xs text-brand-gold" id="pos-items-count">0 modelos</span>
+                            <div class="flex items-center gap-3">
+                                <div class="relative flex-1">
+                                    <i data-lucide="search" class="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+                                    <input id="pos-search" oninput="filterPOSCatalog()" type="text" placeholder="Buscar prenda por nombre o código..." class="w-full pl-9 pr-3 py-2 bg-lem-input border border-lem-border rounded-xl text-xs text-white focus:outline-none focus:border-lem-gold">
+                                </div>
                             </div>
-                            <div id="pos-products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                                <!-- Prendas generadas dinámicamente del Inventario Real -->
+                            <div id="pos-catalog-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-3.5">
+                                <!-- Prendas del inventario -->
                             </div>
                         </div>
-                        <div class="lem-card p-5 rounded-3xl space-y-4 h-fit sticky top-4">
-                            <div class="flex items-center justify-between pb-3 border-b border-brand-cardBorder">
-                                <div class="flex items-center gap-2">
-                                    <i data-lucide="receipt" class="w-4 h-4 text-brand-gold"></i>
-                                    <h3 class="font-brand font-bold text-sm text-white">Orden Actual</h3>
-                                </div>
-                                <button onclick="clearCart()" class="text-[11px] text-red-400 hover:underline">Vaciar</button>
+
+                        <!-- Ticket / Carrito -->
+                        <div class="lem-box p-5 rounded-3xl space-y-4 h-fit sticky top-4">
+                            <div class="flex items-center justify-between pb-3 border-b border-lem-border">
+                                <h3 class="font-brand font-bold text-xs text-white flex items-center gap-2">
+                                    <i data-lucide="receipt" class="w-4 h-4 text-lem-gold"></i> Venta Actual
+                                </h3>
+                                <button onclick="clearCart()" class="text-[10px] text-red-400 hover:underline">Vaciar</button>
                             </div>
-                            <div id="pos-cart-items" class="space-y-3 max-h-60 overflow-y-auto pr-1">
-                                <p class="text-center text-xs text-brand-textMuted py-8">No hay prendas seleccionadas</p>
+
+                            <div id="pos-cart-list" class="space-y-2.5 max-h-52 overflow-y-auto pr-1">
+                                <p class="text-center text-xs text-lem-muted py-6">Sin prendas seleccionadas</p>
                             </div>
-                            <div class="space-y-2 pt-3 border-t border-brand-cardBorder text-xs">
-                                <div class="flex justify-between text-gray-400">
-                                    <span>Subtotal</span>
-                                    <span id="pos-subtotal" class="font-mono text-white">$0.00</span>
+
+                            <!-- Cupón de Descuento -->
+                            <div class="pt-2 border-t border-lem-border">
+                                <label class="block text-[10px] text-lem-muted uppercase font-bold mb-1">Cupón o Descuento</label>
+                                <div class="flex gap-2">
+                                    <input id="coupon-code" type="text" placeholder="Código (LEM10, VIP20) o %" class="flex-1 px-3 py-1.5 bg-lem-input border border-lem-border rounded-xl text-xs text-white focus:outline-none uppercase">
+                                    <button onclick="applyDiscount()" class="px-3 py-1.5 gold-gradient text-black font-bold text-xs rounded-xl">Aplicar</button>
                                 </div>
-                                <div class="flex justify-between text-gray-400">
-                                    <span>IVA (16%)</span>
-                                    <span id="pos-tax" class="font-mono text-white">$0.00</span>
-                                </div>
-                                <div class="flex justify-between text-sm font-bold text-white pt-2 border-t border-brand-cardBorder">
-                                    <span class="gold-gradient-text font-brand">TOTAL A COBRAR</span>
-                                    <span id="pos-total" class="font-mono text-brand-gold">$0.00</span>
+                                <p id="discount-applied-label" class="text-[10px] text-lem-leaf mt-1 hidden"></p>
+                            </div>
+
+                            <!-- Método de Pago -->
+                            <div class="space-y-1.5 pt-2 border-t border-lem-border text-xs">
+                                <label class="block text-[10px] text-lem-muted uppercase font-bold">Forma de Pago</label>
+                                <select id="pos-pay-method" class="w-full px-3 py-2 bg-lem-input border border-lem-border rounded-xl text-xs text-white focus:outline-none">
+                                    <option value="Efectivo">Efectivo (Cash)</option>
+                                    <option value="Tarjeta Débito">Tarjeta Débito</option>
+                                    <option value="Tarjeta Crédito">Tarjeta Crédito</option>
+                                    <option value="Transferencia">Transferencia Bancaria</option>
+                                </select>
+                            </div>
+
+                            <!-- Resumen Totales -->
+                            <div class="space-y-1.5 pt-2 border-t border-lem-border text-xs">
+                                <div class="flex justify-between text-gray-400"><span>Subtotal:</span><span id="pos-subtotal" class="font-mono text-white">$0.00</span></div>
+                                <div class="flex justify-between text-lem-leaf"><span>Descuento:</span><span id="pos-discount" class="font-mono">-$0.00</span></div>
+                                <div class="flex justify-between text-sm font-bold text-white pt-1 border-t border-lem-border">
+                                    <span class="gold-gradient-text font-brand">TOTAL:</span>
+                                    <span id="pos-total" class="font-mono text-lem-gold">$0.00</span>
                                 </div>
                             </div>
-                            <button onclick="checkoutSale()" class="w-full py-3 gold-gradient-bg text-black font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg hover:opacity-95 transition">
-                                <i data-lucide="check-circle" class="w-4 h-4"></i> Procesar Venta y Generar Ticket
+
+                            <button onclick="completeSale()" class="w-full py-2.5 gold-gradient text-black font-bold rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-lg">
+                                <i data-lucide="check-circle" class="w-4 h-4"></i> Cobrar e Imprimir Ticket
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- 3. VISTA MATRIZ DE TALLAS & INVENTARIO -->
-                <div id="view-inventory-matrix-section" class="hidden space-y-6">
-                    <div class="lem-card p-6 rounded-3xl space-y-6">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-brand-cardBorder">
-                            <div>
-                                <h2 class="font-brand text-xl font-bold text-white">Matriz de Existencias por Talla y Color</h2>
-                                <p class="text-xs text-brand-textMuted">Datos directos de Google Sheet #2 (Inventario & Catálogo)</p>
+                <!-- ==================== 3. CONTROL INTEGRAL DE CAJA ==================== -->
+                <div id="view-caja" class="hidden space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="lem-box p-4 rounded-2xl">
+                            <span class="text-[10px] text-lem-muted uppercase font-bold">1. Apertura de Caja (Base)</span>
+                            <div class="flex items-center gap-2 mt-2">
+                                <input id="caja-base-input" type="number" placeholder="Ej. 100.00" class="flex-1 px-3 py-2 bg-lem-input border border-lem-border rounded-xl text-xs text-white focus:outline-none">
+                                <button onclick="setBaseCaja()" class="px-4 py-2 gold-gradient text-black font-bold text-xs rounded-xl">Fijar Base</button>
                             </div>
-                            <div class="flex items-center gap-3">
-                                <span id="matrix-total-badge" class="px-3 py-1.5 rounded-xl bg-brand-leaf/10 border border-brand-leaf/30 text-brand-leaf text-xs font-bold">Total Stock: Conectando...</span>
+                            <p id="caja-base-label" class="text-[11px] text-lem-gold mt-1.5 font-mono">Base actual: $0.00</p>
+                        </div>
+
+                        <div class="lem-box p-4 rounded-2xl">
+                            <span class="text-[10px] text-lem-muted uppercase font-bold">2. Registrar Egreso / Gasto</span>
+                            <div class="space-y-2 mt-2">
+                                <input id="gasto-concepto" type="text" placeholder="Concepto (Empaques, Taxi, etc.)" class="w-full px-3 py-1.5 bg-lem-input border border-lem-border rounded-xl text-xs text-white focus:outline-none">
+                                <div class="flex gap-2">
+                                    <input id="gasto-monto" type="number" placeholder="Monto $" class="w-1/2 px-3 py-1.5 bg-lem-input border border-lem-border rounded-xl text-xs text-white focus:outline-none">
+                                    <button onclick="addGasto('Gasto Operativo')" class="w-1/2 py-1.5 bg-red-500/20 text-red-400 border border-red-500/40 font-bold text-xs rounded-xl hover:bg-red-500 hover:text-white transition">Registrar</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="lem-box p-4 rounded-2xl">
+                            <span class="text-[10px] text-lem-muted uppercase font-bold">3. Retiro o Adelanto a Personal</span>
+                            <div class="space-y-2 mt-2">
+                                <input id="retiro-responsable" type="text" placeholder="Colaboradora / Dueño" class="w-full px-3 py-1.5 bg-lem-input border border-lem-border rounded-xl text-xs text-white focus:outline-none">
+                                <div class="flex gap-2">
+                                    <input id="retiro-monto" type="number" placeholder="Monto $" class="w-1/2 px-3 py-1.5 bg-lem-input border border-lem-border rounded-xl text-xs text-white focus:outline-none">
+                                    <button onclick="addGasto('Adelanto / Retiro')" class="w-1/2 py-1.5 bg-amber-500/20 text-amber-300 border border-amber-500/40 font-bold text-xs rounded-xl hover:bg-amber-500 hover:text-black transition">Adelanto</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Arqueo y Cierre de Turno -->
+                    <div class="lem-box p-5 rounded-3xl space-y-4">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-lem-border">
+                            <div>
+                                <h3 class="font-brand font-bold text-base text-white">Arqueo y Cierre de Caja (Corte Z)</h3>
+                                <p class="text-xs text-lem-muted">Cuadre de caja en tiempo real por cada método de pago</p>
+                            </div>
+                            <button onclick="generateCortePDF()" class="py-2 px-4 gold-gradient text-black font-bold text-xs rounded-xl flex items-center gap-2">
+                                <i data-lucide="printer" class="w-4 h-4"></i> Imprimir Corte de Caja en PDF
+                            </button>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs">
+                                <thead>
+                                    <tr class="bg-lem-input text-lem-gold uppercase text-[10px] tracking-wider border-b border-lem-border">
+                                        <th class="py-2.5 px-3">Hora / Registro</th>
+                                        <th class="py-2.5 px-3">Concepto</th>
+                                        <th class="py-2.5 px-3">Tipo</th>
+                                        <th class="py-2.5 px-3">Método</th>
+                                        <th class="py-2.5 px-3 text-right">Monto</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="caja-movements-tbody" class="divide-y divide-lem-border">
+                                    <!-- Movimientos de caja -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==================== 4. ASISTENCIA & DÍAS DE DESCANSO ==================== -->
+                <div id="view-attendance" class="hidden space-y-6">
+                    <div class="lem-box p-5 rounded-3xl space-y-4">
+                        <div class="flex items-center justify-between pb-3 border-b border-lem-border">
+                            <div>
+                                <h3 class="font-brand font-bold text-base text-white">Control de Personal & Días de Descanso</h3>
+                                <p class="text-xs text-lem-muted">Registro de turnos, faltas justificadas, descansos y adelantos</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="lem-box p-4 rounded-2xl space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <h4 class="font-bold text-xs text-white">Laura Villalobos</h4>
+                                    <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-lem-leaf/20 text-lem-leaf">Activa</span>
+                                </div>
+                                <p class="text-[11px] text-gray-400">Sucursal: Boutique Principal</p>
+                                <p class="text-[11px] text-lem-gold font-semibold">Día de Descanso: Domingo</p>
+                                <div class="pt-2 border-t border-lem-border flex gap-2">
+                                    <button class="flex-1 py-1 bg-lem-input rounded-lg text-[10px] text-gray-300">Marcar Asistencia</button>
+                                    <button class="flex-1 py-1 bg-lem-input rounded-lg text-[10px] text-amber-400">Registrar Descanso</button>
+                                </div>
+                            </div>
+
+                            <div class="lem-box p-4 rounded-2xl space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <h4 class="font-bold text-xs text-white">Sofía Mendoza</h4>
+                                    <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-lem-leaf/20 text-lem-leaf">Activa</span>
+                                </div>
+                                <p class="text-[11px] text-gray-400">Sucursal: Showroom Digital</p>
+                                <p class="text-[11px] text-lem-gold font-semibold">Día de Descanso: Lunes</p>
+                                <div class="pt-2 border-t border-lem-border flex gap-2">
+                                    <button class="flex-1 py-1 bg-lem-input rounded-lg text-[10px] text-gray-300">Marcar Asistencia</button>
+                                    <button class="flex-1 py-1 bg-lem-input rounded-lg text-[10px] text-amber-400">Registrar Descanso</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==================== 5. MATRIZ DE INVENTARIO ==================== -->
+                <div id="view-inventory-matrix" class="hidden space-y-6">
+                    <div class="lem-box p-5 rounded-3xl space-y-4">
+                        <div class="flex items-center justify-between pb-3 border-b border-lem-border">
+                            <div>
+                                <h3 class="font-brand font-bold text-base text-white">Matriz de Inventario en Tiempo Real</h3>
+                                <p class="text-xs text-lem-muted">Filtra automáticamente los membretes y toma las columnas reales</p>
                             </div>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="w-full text-left text-xs">
                                 <thead>
-                                    <tr id="matrix-table-head" class="bg-brand-darkInput text-brand-goldLight uppercase text-[10px] tracking-wider border-b border-brand-cardBorder">
-                                        <!-- Encabezados dinámicos del Sheet -->
-                                    </tr>
+                                    <tr id="matrix-head" class="bg-lem-input text-lem-gold uppercase text-[10px] tracking-wider border-b border-lem-border"></tr>
                                 </thead>
-                                <tbody id="inventory-matrix-tbody" class="divide-y divide-brand-cardBorder">
-                                    <!-- Generado por JS -->
-                                </tbody>
+                                <tbody id="matrix-body" class="divide-y divide-lem-border"></tbody>
                             </table>
                         </div>
                     </div>
                 </div>
 
-                <!-- 4. VISTA PLANIFICADOR DE PEDIDOS -->
-                <div id="view-planning-section" class="hidden space-y-6">
-                    <div class="lem-card p-6 rounded-3xl space-y-6">
-                        <div class="flex items-center justify-between pb-4 border-b border-brand-cardBorder">
-                            <div>
-                                <h2 class="font-brand text-xl font-bold text-white">Planning Board • Taller & Entregas</h2>
-                                <p class="text-xs text-brand-textMuted">Sincronizado con Google Sheet #3 (Pedidos & Envíos)</p>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div class="bg-brand-darkInput p-4 rounded-2xl border border-brand-cardBorder space-y-3">
-                                <div class="flex items-center justify-between pb-2 border-b border-gray-800">
-                                    <span class="text-xs font-bold text-brand-gold flex items-center gap-2">
-                                        <i data-lucide="scissors" class="w-3.5 h-3.5"></i> Confección & Pendientes
-                                    </span>
-                                    <span id="planning-count-1" class="text-[10px] px-2 py-0.5 rounded-full bg-brand-gold/20 text-brand-goldLight">0</span>
-                                </div>
-                                <div id="planning-col-1" class="space-y-2">
-                                    <!-- Pedidos pendientes -->
-                                </div>
-                            </div>
-                            <div class="bg-brand-darkInput p-4 rounded-2xl border border-brand-cardBorder space-y-3">
-                                <div class="flex items-center justify-between pb-2 border-b border-gray-800">
-                                    <span class="text-xs font-bold text-cyan-400 flex items-center gap-2">
-                                        <i data-lucide="package" class="w-3.5 h-3.5"></i> En Tránsito / Paquetería
-                                    </span>
-                                    <span id="planning-count-2" class="text-[10px] px-2 py-0.5 rounded-full bg-cyan-400/20 text-cyan-300">0</span>
-                                </div>
-                                <div id="planning-col-2" class="space-y-2">
-                                    <!-- Pedidos en tránsito -->
-                                </div>
-                            </div>
-                            <div class="bg-brand-darkInput p-4 rounded-2xl border border-brand-cardBorder space-y-3">
-                                <div class="flex items-center justify-between pb-2 border-b border-gray-800">
-                                    <span class="text-xs font-bold text-brand-leaf flex items-center gap-2">
-                                        <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Entregados & Liquidados
-                                    </span>
-                                    <span id="planning-count-3" class="text-[10px] px-2 py-0.5 rounded-full bg-brand-leaf/20 text-brand-leaf">0</span>
-                                </div>
-                                <div id="planning-col-3" class="space-y-2">
-                                    <!-- Pedidos entregados -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 5. VISTA TABLA DINÁMICA DE GOOGLE SHEETS -->
-                <div id="view-sheet-section" class="hidden space-y-4">
-                    <div class="lem-card rounded-3xl overflow-hidden">
-                        <div class="p-4 border-b border-brand-cardBorder flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-[#0E1117]">
-                            <div class="relative flex-1 max-w-md">
-                                <i data-lucide="search" class="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
-                                <input id="table-search-input" oninput="renderLiveSheetTable()" type="text" placeholder="Filtrar datos en tiempo real..." 
-                                    class="w-full pl-10 pr-4 py-2 bg-brand-darkInput border border-brand-cardBorder rounded-xl text-xs text-white focus:outline-none focus:border-brand-gold">
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <a id="external-sheet-link" href="#" target="_blank" class="px-3 py-2 rounded-xl bg-brand-darkInput border border-brand-cardBorder text-brand-goldLight text-xs font-semibold inline-flex items-center gap-1.5 hover:bg-brand-cardHover">
-                                    <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Abrir en Google Sheets
-                                </a>
-                            </div>
+                <!-- ==================== 6. TABLA EN VIVO DE GOOGLE SHEETS ==================== -->
+                <div id="view-sheets" class="hidden space-y-4">
+                    <div class="lem-box rounded-3xl overflow-hidden">
+                        <div class="p-4 border-b border-lem-border flex flex-col sm:flex-row items-center justify-between gap-3 bg-black">
+                            <input id="sheet-search-input" oninput="renderCurrentSheetTable()" type="text" placeholder="Filtrar en tiempo real..." class="w-full sm:w-80 px-3 py-2 bg-lem-input border border-lem-border rounded-xl text-xs text-white focus:outline-none">
+                            <a id="external-sheet-btn" href="#" target="_blank" class="px-3 py-2 rounded-xl bg-lem-input border border-lem-border text-lem-gold text-xs font-semibold inline-flex items-center gap-1.5">
+                                <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Abrir en Google Sheets
+                            </a>
                         </div>
                         <div class="overflow-x-auto">
-                            <table class="w-full text-left text-xs border-collapse">
-                                <thead>
-                                    <tr id="live-table-head" class="bg-brand-darkInput text-brand-goldLight uppercase text-[10px] tracking-wider border-b border-brand-cardBorder">
-                                        <!-- Generado dinámicamente -->
-                                    </tr>
-                                </thead>
-                                <tbody id="live-table-body" class="divide-y divide-brand-cardBorder bg-brand-card">
-                                    <!-- Filas del Sheet -->
-                                </tbody>
+                            <table class="w-full text-left text-xs">
+                                <thead><tr id="sheet-table-head" class="bg-lem-input text-lem-gold uppercase text-[10px] tracking-wider border-b border-lem-border"></tr></thead>
+                                <tbody id="sheet-table-body" class="divide-y divide-lem-border"></tbody>
                             </table>
                         </div>
                     </div>
                 </div>
 
-                <!-- 6. VISTA GESTIÓN DE PERFILES (VENDEDORAS & ADMINS) -->
-                <div id="view-users-section" class="hidden space-y-6">
-                    <div class="lem-card p-6 rounded-3xl space-y-6">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-brand-cardBorder">
-                            <div>
-                                <h2 class="font-brand text-xl font-bold text-white">Equipo de Trabajo & Permisos</h2>
-                                <p class="text-xs text-brand-textMuted">Crea perfiles con PIN de 4 dígitos para tus vendedoras y define qué libros pueden consultar</p>
-                            </div>
-                            <button onclick="openCreateUserModal()" class="py-2.5 px-4 gold-gradient-bg text-black font-bold rounded-xl text-xs flex items-center gap-2 shadow-md">
-                                <i data-lucide="user-plus" class="w-4 h-4"></i> Crear Perfil con PIN
-                            </button>
-                        </div>
-                        <div id="team-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            <!-- Generado dinámicamente -->
-                        </div>
-                    </div>
-                </div>
             </main>
         </div>
     </div>
 
-    <!-- ==================== MODAL REGISTRO / EDICIÓN ==================== -->
-    <div id="form-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="lem-card rounded-3xl max-w-lg w-full overflow-hidden border border-brand-gold/40 shadow-2xl">
-            <div class="bg-[#0E1117] px-6 py-4 flex items-center justify-between border-b border-brand-cardBorder">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-7 h-7 rounded-lg gold-gradient-bg flex items-center justify-center font-brand font-bold text-black text-xs">LM</div>
-                    <h3 id="form-modal-title" class="font-brand text-sm font-bold text-white">Nuevo Registro</h3>
-                </div>
-                <button onclick="closeCreateModal()" class="text-gray-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
-            </div>
-            <form id="generic-sheet-form" onsubmit="submitRecord(event)" class="p-6 space-y-4 max-h-[75vh] overflow-y-auto">
-                <div id="modal-form-inputs" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <!-- Inputs según columnas -->
-                </div>
-                <div class="pt-4 border-t border-brand-cardBorder flex justify-end gap-2">
-                    <button type="button" onclick="closeCreateModal()" class="px-4 py-2 bg-brand-darkInput text-gray-300 rounded-xl text-xs font-semibold">Cancelar</button>
-                    <button type="submit" class="px-5 py-2 gold-gradient-bg text-black rounded-xl text-xs font-bold shadow-lg">Guardar Registro</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- ==================== MODAL CREACIÓN DE USUARIO CON PIN ==================== -->
-    <div id="user-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="lem-card rounded-3xl max-w-md w-full overflow-hidden border border-brand-gold/40 shadow-2xl">
-            <div class="bg-[#0E1117] px-6 py-4 flex items-center justify-between border-b border-brand-cardBorder">
-                <h3 class="font-brand text-sm font-bold text-white">Nuevo Perfil con PIN</h3>
-                <button onclick="closeUserModal()" class="text-gray-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
-            </div>
-            <form onsubmit="submitNewUser(event)" class="p-6 space-y-4">
-                <div>
-                    <label class="block text-[11px] font-semibold text-gray-300 mb-1">Nombre Completo</label>
-                    <input id="new-name" required type="text" placeholder="Ej. Valentina Gómez" class="w-full px-3 py-2 bg-brand-darkInput border border-brand-cardBorder rounded-xl text-xs text-white focus:outline-none focus:border-brand-gold">
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-[11px] font-semibold text-gray-300 mb-1">PIN de Acceso (4 dígitos)</label>
-                        <input id="new-pin" required type="text" maxlength="4" pattern="\d{4}" placeholder="4321" class="w-full px-3 py-2 bg-brand-darkInput border border-brand-cardBorder rounded-xl text-xs text-white font-mono text-center focus:outline-none focus:border-brand-gold">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] font-semibold text-gray-300 mb-1">Rol</label>
-                        <select id="new-role" class="w-full px-3 py-2 bg-brand-darkInput border border-brand-cardBorder rounded-xl text-xs text-white focus:outline-none">
-                            <option value="vendedora">Vendedora</option>
-                            <option value="admin">Administrador</option>
-                        </select>
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-[11px] font-semibold text-gray-300 mb-1">Sucursal / Boutique</label>
-                    <input id="new-branch" type="text" placeholder="Boutique Matriz" class="w-full px-3 py-2 bg-brand-darkInput border border-brand-cardBorder rounded-xl text-xs text-white focus:outline-none">
-                </div>
-                <div>
-                    <label class="block text-[11px] font-semibold text-gray-300 mb-1.5">Hojas autorizadas (Google Sheets):</label>
-                    <div id="sheets-checkbox-list" class="space-y-1.5 bg-brand-darkInput p-3 rounded-xl border border-brand-cardBorder text-xs text-gray-300">
-                        <!-- Checkboxes generados dinámicamente -->
-                    </div>
-                </div>
-                <div class="pt-3 border-t border-brand-cardBorder flex justify-end gap-2">
-                    <button type="button" onclick="closeUserModal()" class="px-4 py-2 bg-brand-darkInput text-gray-300 rounded-xl text-xs">Cancelar</button>
-                    <button type="submit" class="px-5 py-2 gold-gradient-bg text-black rounded-xl text-xs font-bold">Crear Perfil</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- ==================== LÓGICA DE CONTROL JAVASCRIPT ==================== -->
+    <!-- ==================== CONTROLADOR JAVASCRIPT ==================== -->
     <script>
-        // ============================================================================
-        // 1. CONFIGURACIÓN EXACTA DE TUS 5 GOOGLE SHEETS
-        // ============================================================================
-        const GOOGLE_SHEETS_DATABASE = [
-            {
-                key: 'sheet1',
-                name: '1. Control de Ventas',
-                icon: 'receipt',
-                spreadsheetId: '1mcc-wKBkGBQSbSqkTUZB7EViu58vKVJ0UI5xeyUzbFk',
-                gid: '1491476596',
-                url: 'https://docs.google.com/spreadsheets/d/1mcc-wKBkGBQSbSqkTUZB7EViu58vKVJ0UI5xeyUzbFk/edit?gid=1491476596#gid=1491476596',
-                headers: ['FOLIO', 'FECHA', 'CLIENTA', 'PRENDA / MODELO', 'TALLA', 'VENDEDORA', 'MÉTODO PAGO', 'TOTAL', 'ESTADO'],
-                rows: []
-            },
-            {
-                key: 'sheet2',
-                name: '2. Inventario & Catálogo',
-                icon: 'shirt',
-                spreadsheetId: '1u1QzOdFqvSh9wdMAdJSQohumy4FpR5wkuwfLcYDQFrQ',
-                gid: '818455834',
-                url: 'https://docs.google.com/spreadsheets/d/1u1QzOdFqvSh9wdMAdJSQohumy4FpR5wkuwfLcYDQFrQ/edit?gid=818455834#gid=818455834',
-                headers: ['SKU', 'COLECCIÓN', 'PRENDA', 'COLOR', 'TALLAS', 'STOCK', 'PRECIO', 'ESTATUS'],
-                rows: []
-            },
-            {
-                key: 'sheet3',
-                name: '3. Pedidos & Envíos',
-                icon: 'truck',
-                spreadsheetId: '1UjuObEZB9c_TPQlsNwDUl02w96pEZh4Mzf_nHIkI9Ys',
-                gid: '1483315145',
-                url: 'https://docs.google.com/spreadsheets/d/1UjuObEZB9c_TPQlsNwDUl02w96pEZh4Mzf_nHIkI9Ys/edit?gid=1483315145#gid=1483315145',
-                headers: ['ID PEDIDO', 'CLIENTA', 'TELÉFONO', 'CIUDAD', 'PAQUETERÍA', 'GUÍA', 'ANTICIPO', 'RESTANTE', 'ESTADO'],
-                rows: []
-            },
-            {
-                key: 'sheet4',
-                name: '4. Corte de Caja & Gastos',
-                icon: 'wallet',
-                spreadsheetId: '1HTflbeMnv8kmr9Z8mvGiV8iQzKTMjBLF95M1JB9LbrA',
-                gid: '1559472166',
-                url: 'https://docs.google.com/spreadsheets/d/1HTflbeMnv8kmr9Z8mvGiV8iQzKTMjBLF95M1JB9LbrA/edit?gid=1559472166#gid=1559472166',
-                headers: ['FECHA', 'CONCEPTO', 'TIPO', 'RESPONSABLE', 'MÉTODO', 'MONTO', 'NOTAS'],
-                rows: []
-            },
-            {
-                key: 'sheet5',
-                name: '5. Comisiones & Metas',
-                icon: 'award',
-                spreadsheetId: '1XC_vKZcGvcluTv6cBVCX3jSlWoYTONlRkTr8AVquqj4',
-                gid: '0',
-                url: 'https://docs.google.com/spreadsheets/d/1XC_vKZcGvcluTv6cBVCX3jSlWoYTONlRkTr8AVquqj4/edit?gid=0#gid=0',
-                headers: ['PERIODO', 'VENDEDORA', 'SUCURSAL', 'VENTAS REALIZADAS', 'META', 'COMISIÓN ($)', 'ESTADO PAGO'],
-                rows: []
-            }
+        // CONFIGURACIÓN DE TUS 5 GOOGLE SHEETS
+        const GOOGLE_SHEETS = [
+            { key: 'sheet1', name: '1. Control de Ventas', icon: 'receipt', id: '1mcc-wKBkGBQSbSqkTUZB7EViu58vKVJ0UI5xeyUzbFk', gid: '1491476596', headers: [], rows: [] },
+            { key: 'sheet2', name: '2. Inventario & Catálogo', icon: 'shirt', id: '1u1QzOdFqvSh9wdMAdJSQohumy4FpR5wkuwfLcYDQFrQ', gid: '818455834', headers: [], rows: [] },
+            { key: 'sheet3', name: '3. Pedidos & Envíos', icon: 'truck', id: '1UjuObEZB9c_TPQlsNwDUl02w96pEZh4Mzf_nHIkI9Ys', gid: '1483315145', headers: [], rows: [] },
+            { key: 'sheet4', name: '4. Corte de Caja & Gastos', icon: 'wallet', id: '1HTflbeMnv8kmr9Z8mvGiV8iQzKTMjBLF95M1JB9LbrA', gid: '1559472166', headers: [], rows: [] },
+            { key: 'sheet5', name: '5. Comisiones & Metas', icon: 'award', id: '1XC_vKZcGvcluTv6cBVCX3jSlWoYTONlRkTr8AVquqj4', gid: '0', headers: [], rows: [] }
         ];
 
-        let allSheets = GOOGLE_SHEETS_DATABASE;
-        let currentSheetIdx = 0;
-        let activeMasterView = 'dashboard';
+        // USUARIOS & PIN
+        const USERS = [
+            { pin: '1234', username: 'admin', name: 'Dirección LEM MODA', role: 'admin', branch: 'Matriz Central' },
+            { pin: '2025', username: '', name: 'Laura Villalobos', role: 'vendedora', branch: 'Boutique Principal' },
+            { pin: '1111', username: '', name: 'Sofía Mendoza', role: 'vendedora', branch: 'Showroom Digital' }
+        ];
+
+        let pinValue = "";
+        let isAdminLogin = false;
         let currentUser = null;
-        let enteredPin = "";
-        let isAdminLoginActive = false;
-        let cartItems = [];
-        let salesChartInstance = null;
-        let paymentChartInstance = null;
+        let currentSheetIdx = 0;
+        let activeView = 'dashboard';
 
-        const DEFAULT_USERS = [
-            { id: 1, name: 'Dirección LEM MODA', pin: '1234', username: 'admin', role: 'admin', branch: 'Matriz Central', sheets: ['sheet1','sheet2','sheet3','sheet4','sheet5'] },
-            { id: 2, name: 'Laura Villalobos', pin: '2025', username: '', role: 'vendedora', branch: 'Boutique Principal', sheets: ['sheet1','sheet2','sheet3'] },
-            { id: 3, name: 'Sofía Mendoza', pin: '1111', username: '', role: 'vendedora', branch: 'Showroom Digital', sheets: ['sheet1','sheet2','sheet3','sheet5'] }
+        // ESTADO DE OPERACIONES LOCALES (CAJA Y POS)
+        let cajaBase = 150.00;
+        let cajaMovements = [
+            { hora: '09:00', concepto: 'Fondo Inicial de Apertura', tipo: 'Ingreso', metodo: 'Efectivo', monto: 150.00 }
         ];
+        let posCatalog = [];
+        let cart = [];
+        let appliedDiscountPercent = 0;
 
-        let teamUsers = DEFAULT_USERS;
-        try {
-            const savedUsers = localStorage.getItem('lem_users_db');
-            if (savedUsers) {
-                const parsed = JSON.parse(savedUsers);
-                if (Array.isArray(parsed) && parsed.length > 0) teamUsers = parsed;
-            }
-        } catch(e) {}
+        let salesChart = null;
+        let paymentsChart = null;
 
-        // ============================================================================
-        // 2. SISTEMA DE ACCESO POR PIN
-        // ============================================================================
-        function pressPin(digit) {
-            if (enteredPin.length < 4) {
-                enteredPin += digit;
-                updatePinDots();
-            }
-            if (enteredPin.length === 4) {
-                setTimeout(validatePinAccess, 120);
+        // ==========================================
+        // PIN PAD & LOGIN
+        // ==========================================
+        function inputPin(d) {
+            if (pinValue.length < 4) {
+                pinValue += d;
+                renderDots();
+                if (pinValue.length === 4) setTimeout(validateAccess, 120);
             }
         }
 
         function clearPin() {
-            enteredPin = "";
-            updatePinDots();
+            pinValue = "";
+            renderDots();
         }
 
-        function updatePinDots() {
+        function renderDots() {
             for (let i = 0; i < 4; i++) {
-                const dot = document.getElementById(`dot-${i}`);
-                if (dot) {
-                    if (i < enteredPin.length) dot.classList.add('active');
-                    else dot.classList.remove('active');
+                const el = document.getElementById(`dot-${i}`);
+                if (el) {
+                    if (i < pinValue.length) el.classList.add('active');
+                    else el.classList.remove('active');
                 }
             }
         }
 
-        function toggleAdminMode() {
-            isAdminLoginActive = !isAdminLoginActive;
-            const field = document.getElementById('admin-user-field');
-            const toggleBtn = document.getElementById('toggle-admin-btn');
-            const prompt = document.getElementById('pin-prompt-text');
-            if (isAdminLoginActive) {
-                field.classList.remove('hidden');
-                toggleBtn.classList.add('text-white', 'gold-gradient-bg');
-                prompt.textContent = 'Acceso Administrador (Usuario + PIN)';
-                const input = document.getElementById('admin-username-input');
-                if (input) { if (!input.value) input.value = 'admin'; input.focus(); }
+        function toggleAdminLogin() {
+            isAdminLogin = !isAdminLogin;
+            const box = document.getElementById('admin-user-input-box');
+            const sub = document.getElementById('pin-subtext');
+            const btn = document.getElementById('btn-admin-mode');
+            if (isAdminLogin) {
+                box.classList.remove('hidden');
+                sub.textContent = "Acceso Administrador (Usuario + PIN)";
+                btn.classList.add('text-white', 'gold-gradient');
             } else {
-                field.classList.add('hidden');
-                toggleBtn.classList.remove('text-white', 'gold-gradient-bg');
-                prompt.textContent = 'Ingresa tu PIN de 4 dígitos';
+                box.classList.add('hidden');
+                sub.textContent = "Ingresa tu PIN de 4 dígitos";
+                btn.classList.remove('text-white', 'gold-gradient');
             }
             clearPin();
         }
 
-        function validatePinAccess() {
-            try {
-                let matched = null;
-                const userInputField = document.getElementById('admin-username-input');
-                const usernameVal = (userInputField ? userInputField.value : '').trim().toLowerCase();
-
-                if (isAdminLoginActive) {
-                    matched = teamUsers.find(u => u.role === 'admin' && (u.username === usernameVal || usernameVal === 'admin' || usernameVal === '') && u.pin === enteredPin);
-                    if (!matched && enteredPin === '1234') matched = teamUsers.find(u => u.role === 'admin') || DEFAULT_USERS[0];
-                } else {
-                    matched = teamUsers.find(u => u.pin === enteredPin);
-                }
-
-                if (matched) {
-                    loginSuccess(matched);
-                } else {
-                    showPinError(isAdminLoginActive ? 'Usuario o PIN Admin Incorrecto' : 'PIN Inválido. Inténtalo de nuevo.');
-                }
-            } catch (err) {
-                showPinError('Error de acceso');
+        function validateAccess() {
+            let matched = null;
+            if (isAdminLogin) {
+                const u = (document.getElementById('admin-user-val').value || '').trim().toLowerCase();
+                matched = USERS.find(x => x.role === 'admin' && (x.username === u || u === 'admin') && x.pin === pinValue);
+                if (!matched && pinValue === '1234') matched = USERS[0];
+            } else {
+                matched = USERS.find(x => x.pin === pinValue);
             }
-        }
 
-        function showPinError(msg) {
-            enteredPin = "";
-            updatePinDots();
-            const prompt = document.getElementById('pin-prompt-text');
-            if (prompt) {
-                prompt.textContent = msg;
-                prompt.classList.add('text-red-400');
+            if (matched) {
+                currentUser = matched;
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('app-container').classList.remove('hidden');
+
+                document.getElementById('user-name').textContent = matched.name;
+                document.getElementById('user-role').textContent = `${matched.role.toUpperCase()} • ${matched.branch}`;
+                document.getElementById('user-badge').textContent = matched.name.substring(0, 2).toUpperCase();
+
+                renderSheetsMenu();
+                showView('dashboard');
+                lucide.createIcons();
+                clearPin();
+
+                // Sincronizar las 5 hojas de Google Sheets de inmediato
+                syncAllSheets(false);
+            } else {
+                clearPin();
+                const sub = document.getElementById('pin-subtext');
+                sub.textContent = "PIN INCORRECTO";
+                sub.classList.add('text-red-400');
                 setTimeout(() => {
-                    prompt.textContent = isAdminLoginActive ? 'Acceso Administrador (Usuario + PIN)' : 'Ingresa tu PIN de 4 dígitos';
-                    prompt.classList.remove('text-red-400');
-                }, 1400);
+                    sub.textContent = isAdminLogin ? "Acceso Administrador (Usuario + PIN)" : "Ingresa tu PIN de 4 dígitos";
+                    sub.classList.remove('text-red-400');
+                }, 1200);
             }
-        }
-
-        function loginSuccess(user) {
-            currentUser = user;
-            document.getElementById('login-screen').classList.add('hidden');
-            document.getElementById('app-container').classList.remove('hidden');
-
-            document.getElementById('user-name-display').textContent = user.name;
-            document.getElementById('user-avatar-badge').textContent = user.name.substring(0, 2).toUpperCase();
-            document.getElementById('user-role-label').textContent = `${user.role.toUpperCase()} • ${user.branch}`;
-
-            const adminNav = document.getElementById('admin-sec-nav');
-            if (adminNav) {
-                if (user.role === 'admin') adminNav.classList.remove('hidden');
-                else adminNav.classList.add('hidden');
-            }
-
-            renderSheetsSidebar();
-            switchMasterView('dashboard');
-            clearPin();
-
-            if (window.lucide && typeof lucide.createIcons === 'function') lucide.createIcons();
-
-            // Sincronizar automáticamente todas las hojas con la data real
-            syncAllGoogleSheets(false);
         }
 
         function logout() {
@@ -793,17 +597,16 @@
             document.getElementById('login-screen').classList.remove('hidden');
         }
 
-        // ============================================================================
-        // 3. MOTOR DE SINCRONIZACIÓN EN VIVO (CORS OPEN API GOOGLE)
-        // ============================================================================
-        function parseCSV(text) {
+        // ==========================================
+        // PARSER INTELIGENTE DE GOOGLE SHEETS
+        // ==========================================
+        function parseCleanCSV(text) {
             let p = '', c = false, r = [];
             const rows = [];
             for (let i = 0; i < text.length; i++) {
                 let cc = text[i], nc = text[i+1];
                 if (cc === '"') {
-                    if (c && nc === '"') { p += '"'; i++; }
-                    else { c = !c; }
+                    if (c && nc === '"') { p += '"'; i++; } else { c = !c; }
                 } else if (cc === ',' && !c) {
                     r.push(p.trim()); p = '';
                 } else if ((cc === '\r' || cc === '\n') && !c) {
@@ -822,800 +625,624 @@
             return rows;
         }
 
-        async function fetchSingleSheet(sheet) {
-            // URL con soporte abierto de Google Visualization API sin bloqueos CORS
-            const url = `https://docs.google.com/spreadsheets/d/${sheet.spreadsheetId}/gviz/tq?tqx=out:csv&gid=${sheet.gid}`;
-            const res = await fetch(url);
-            if (!res.ok) throw new Error(`HTTP ${res.status}`);
-            const text = await res.text();
-            const parsed = parseCSV(text);
-            if (parsed.length > 0) {
-                sheet.headers = parsed[0];
-                sheet.rows = parsed.slice(1);
+        // Convierte números con comas ecuatorianas (ej. "4562,67" -> 4562.67)
+        function parseMonto(val) {
+            if (!val) return 0;
+            let str = String(val).replace('$', '').trim();
+            if (str.includes(',') && str.includes('.')) {
+                str = str.replace(/\./g, '').replace(',', '.');
+            } else if (str.includes(',')) {
+                str = str.replace(',', '.');
             }
-            return sheet;
+            const n = parseFloat(str);
+            return isNaN(n) ? 0 : n;
         }
 
-        async function syncAllGoogleSheets(notify = true) {
-            const spin = document.getElementById('sync-spinner');
+        async function syncAllSheets(showToast = true) {
+            const spin = document.getElementById('sync-icon');
+            const ind = document.getElementById('sync-status-indicator');
             const dot = document.getElementById('sync-dot');
-            const statusInd = document.getElementById('sync-status-indicator');
 
             if (spin) spin.classList.add('animate-spin');
-            if (statusInd) statusInd.textContent = 'Sincronizando...';
+            if (ind) ind.textContent = "Sincronizando...";
 
-            let successCount = 0;
-            const promises = allSheets.map(s => fetchSingleSheet(s).then(() => successCount++).catch(err => console.warn(`Sheet ${s.name} error:`, err)));
+            let count = 0;
+            for (let sheet of GOOGLE_SHEETS) {
+                try {
+                    const url = `https://docs.google.com/spreadsheets/d/${sheet.id}/gviz/tq?tqx=out:csv&gid=${sheet.gid}`;
+                    const res = await fetch(url);
+                    if (res.ok) {
+                        const raw = await res.text();
+                        const parsed = parseCleanCSV(raw);
+                        
+                        // FILTRO INTELIGENTE: Encontrar la fila real de encabezados (ignora direcciones o banners)
+                        let headerRowIndex = 0;
+                        for (let i = 0; i < Math.min(parsed.length, 5); i++) {
+                            const rowJoined = parsed[i].join(' ').toUpperCase();
+                            if (rowJoined.includes('FECHA') || rowJoined.includes('ID') || rowJoined.includes('SKU') || rowJoined.includes('PRENDA') || rowJoined.includes('EFECTIVO') || rowJoined.includes('CONCEPTO')) {
+                                headerRowIndex = i;
+                                break;
+                            }
+                        }
 
-            await Promise.allSettled(promises);
+                        sheet.headers = parsed[headerRowIndex] || [];
+                        sheet.rows = parsed.slice(headerRowIndex + 1).filter(r => r.some(c => c.length > 0));
+                        count++;
+                    }
+                } catch (e) {
+                    console.warn("Sheet fetch error", e);
+                }
+            }
 
             if (spin) spin.classList.remove('animate-spin');
 
-            if (successCount > 0) {
-                if (statusInd) statusInd.textContent = `En Vivo (${successCount}/5)`;
-                if (dot) { dot.className = "w-1.5 h-1.5 rounded-full bg-brand-leaf"; }
-                
-                // Actualizar todas las secciones con la data fresca
-                updateDashboardWithRealData();
-                updatePOSCatalogWithRealData();
-                updateInventoryMatrixWithRealData();
-                updatePlanningWithRealData();
-                renderSheetsSidebar();
-                if (activeMasterView === 'sheet') renderLiveSheetTable();
+            if (count > 0) {
+                if (ind) ind.textContent = `En Vivo (${count}/5)`;
+                if (dot) dot.className = "w-1.5 h-1.5 rounded-full bg-lem-leaf";
 
-                if (notify) alert(`Sincronización exitosa: ${successCount} de 5 libros conectados en vivo.`);
+                processRealMetrics();
+                buildPOSCatalog();
+                renderInventoryMatrix();
+                renderSheetsMenu();
+                if (activeView === 'sheets') renderCurrentSheetTable();
+
+                if (showToast) alert("Información real sincronizada con tus 5 Google Sheets.");
             } else {
-                if (statusInd) statusInd.textContent = 'Sin Permiso';
-                if (dot) { dot.className = "w-1.5 h-1.5 rounded-full bg-red-400"; }
-                if (notify) {
-                    alert('No se pudo descargar la información en vivo. Asegúrate de que las 5 hojas de Google Sheets tengan el acceso compartido como "Cualquier persona con el enlace puede leer".');
-                }
+                if (ind) ind.textContent = "Sin Acceso";
+                if (dot) dot.className = "w-1.5 h-1.5 rounded-full bg-red-400";
+                if (showToast) alert("No se pudo descargar la información. Verifica que el archivo de Google Sheets esté compartido como 'Cualquier persona con el enlace puede ver'.");
             }
         }
 
-        // ============================================================================
-        // 4. COMPUTACIÓN DINÁMICA DE VISTAS CON DATA REAL
-        // ============================================================================
-        function cleanNumber(val) {
-            if (!val) return 0;
-            const num = parseFloat(String(val).replace(/[^0-9.-]+/g, ''));
-            return isNaN(num) ? 0 : num;
-        }
+        // ==========================================
+        // CÁLCULO DE MÉTRICAS REALES
+        // ==========================================
+        function processRealMetrics() {
+            const sheetVentas = GOOGLE_SHEETS[0];
+            const sheetInv = GOOGLE_SHEETS[1];
+            const sheetCaja = GOOGLE_SHEETS[3];
 
-        function updateDashboardWithRealData() {
-            const salesSheet = allSheets[0]; // Hoja 1: Ventas
-            const invSheet = allSheets[1];   // Hoja 2: Inventario
-            const cashSheet = allSheets[3];  // Hoja 4: Corte de Caja
+            // 1. Ingreso de Ventas
+            let sumVentas = 0;
+            let payments = { cash: 0, card: 0, transfer: 0 };
 
-            // 1. Ingresos Netos de Ventas Reales
-            let totalSalesAmount = 0;
-            let salesCount = salesSheet.rows.length;
-            let paymentMethods = { cash: 0, card: 0, transfer: 0 };
-            let sellers = {};
-
-            salesSheet.rows.forEach(row => {
-                // Buscar columna de total (usualmente penúltima o columna con signo $)
-                let rowTotal = 0;
-                row.forEach(cell => {
-                    if (String(cell).includes('$')) rowTotal = cleanNumber(cell);
+            sheetVentas.rows.forEach(r => {
+                let m = 0;
+                r.forEach(cell => {
+                    if (String(cell).includes('$') || /^[0-9]+([,\.][0-9]{2})?$/.test(cell.trim())) {
+                        const val = parseMonto(cell);
+                        if (val > m && val < 50000) m = val;
+                    }
                 });
-                if (rowTotal === 0 && row[7]) rowTotal = cleanNumber(row[7]);
-                totalSalesAmount += rowTotal;
+                sumVentas += m;
 
-                // Método de pago
-                const rowStr = row.join(' ').toLowerCase();
-                if (rowStr.includes('efectivo') || rowStr.includes('cash')) paymentMethods.cash++;
-                else if (rowStr.includes('tarjeta') || rowStr.includes('card') || rowStr.includes('terminal')) paymentMethods.card++;
-                else if (rowStr.includes('transfer') || rowStr.includes('spei') || rowStr.includes('depósito')) paymentMethods.transfer++;
-                else paymentMethods.card++;
-
-                // Vendedora
-                const sellerName = row[5] || row[2] || 'Venta General';
-                if (!sellers[sellerName]) sellers[sellerName] = { count: 0, total: 0 };
-                sellers[sellerName].count++;
-                sellers[sellerName].total += rowTotal;
+                const rowStr = r.join(' ').toLowerCase();
+                if (rowStr.includes('efectivo')) payments.cash += m;
+                else if (rowStr.includes('tarjeta') || rowStr.includes('debito') || rowStr.includes('credito')) payments.card += m;
+                else if (rowStr.includes('transf') || rowStr.includes('deposito')) payments.transfer += m;
+                else payments.card += m;
             });
 
-            // 2. Stock total en Inventario
-            let totalStockPzs = 0;
-            invSheet.rows.forEach(row => {
-                row.forEach(cell => {
-                    const n = parseInt(cell);
-                    if (!isNaN(n) && n > 0 && n < 1000) totalStockPzs += n;
-                });
-            });
-
-            // 3. Balance en Caja
-            let cashBalance = 0;
-            cashSheet.rows.forEach(row => {
-                const amt = cleanNumber(row[5] || row[4] || 0);
-                const str = row.join(' ').toLowerCase();
-                if (str.includes('egreso') || str.includes('gasto')) cashBalance -= amt;
-                else cashBalance += amt;
-            });
-            if (cashBalance === 0) cashBalance = totalSalesAmount;
-
-            // Actualizar KPIs en pantalla
-            document.getElementById('kpi-net-income').textContent = '$' + totalSalesAmount.toLocaleString('es-MX', { minimumFractionDigits: 2 });
-            document.getElementById('kpi-total-sales-count').textContent = `${salesCount} Registros`;
-            document.getElementById('kpi-cash-balance').textContent = '$' + cashBalance.toLocaleString('es-MX', { minimumFractionDigits: 2 });
-            document.getElementById('kpi-inventory-count').textContent = `${invSheet.rows.length} Modelos`;
-
-            // Top Products Table
-            const topTbody = document.getElementById('top-products-tbody');
-            if (topTbody) {
-                if (salesSheet.rows.length === 0) {
-                    topTbody.innerHTML = `<tr><td colspan="4" class="py-4 text-center text-gray-500">Sin registros en Hoja #1</td></tr>`;
-                } else {
-                    topTbody.innerHTML = salesSheet.rows.slice(0, 5).map(r => `
-                        <tr class="hover:bg-brand-darkInput/50 transition">
-                            <td class="py-3 font-semibold text-white">${r[3] || r[2] || 'Prenda LEM'}</td>
-                            <td class="py-3 text-gray-300 font-mono">${r[2] || 'Clienta'}</td>
-                            <td class="py-3 font-mono font-bold text-brand-gold">${r[7] || '$' + cleanNumber(r[6]||1200).toLocaleString('es-MX')}</td>
-                            <td class="py-3 text-right">
-                                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold text-brand-leaf bg-brand-leaf/10">${r[8] || 'Registrado'}</span>
-                            </td>
-                        </tr>
-                    `).join('');
+            // 2. Gastos reales registrados en Caja
+            let sumGastos = 0;
+            sheetCaja.rows.forEach(r => {
+                const rowStr = r.join(' ').toLowerCase();
+                if (rowStr.includes('egreso') || rowStr.includes('gasto') || rowStr.includes('nota de gastos')) {
+                    r.forEach(cell => {
+                        const val = parseMonto(cell);
+                        if (val > 0 && val < 10000) sumGastos += val;
+                    });
                 }
-            }
+            });
 
-            // Employee performance list
-            const perfContainer = document.getElementById('sellers-perf-list');
-            if (perfContainer) {
-                const sellerKeys = Object.keys(sellers);
-                if (sellerKeys.length === 0) {
-                    perfContainer.innerHTML = teamUsers.map(u => `
-                        <div class="p-3 bg-brand-darkInput rounded-2xl border border-brand-cardBorder flex items-center justify-between">
-                            <div class="flex items-center gap-2.5">
-                                <div class="w-8 h-8 rounded-xl bg-brand-gold/15 text-brand-gold font-bold flex items-center justify-center text-xs">
-                                    ${u.name.substring(0, 2).toUpperCase()}
-                                </div>
-                                <div>
-                                    <p class="text-xs font-bold text-white">${u.name}</p>
-                                    <p class="text-[10px] text-gray-400">PIN: ${u.pin} • ${u.branch}</p>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-xs font-bold font-mono text-brand-gold">Activa</p>
-                            </div>
-                        </div>
-                    `).join('');
-                } else {
-                    perfContainer.innerHTML = sellerKeys.map(k => `
-                        <div class="p-3 bg-brand-darkInput rounded-2xl border border-brand-cardBorder flex items-center justify-between">
-                            <div class="flex items-center gap-2.5">
-                                <div class="w-8 h-8 rounded-xl bg-brand-gold/15 text-brand-gold font-bold flex items-center justify-center text-xs">
-                                    ${k.substring(0, 2).toUpperCase()}
-                                </div>
-                                <div>
-                                    <p class="text-xs font-bold text-white">${k}</p>
-                                    <p class="text-[10px] text-gray-400">${sellers[k].count} ventas registradas</p>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-xs font-bold font-mono text-brand-gold">$${sellers[k].total.toLocaleString('es-MX')}</p>
-                                <p class="text-[9px] text-brand-leaf font-semibold">En vivo</p>
-                            </div>
-                        </div>
-                    `).join('');
+            // Sumar movimientos manuales locales de la app
+            cajaMovements.forEach(m => {
+                if (m.tipo === 'Gasto') sumGastos += m.monto;
+                if (m.tipo === 'Venta') {
+                    sumVentas += m.monto;
+                    if (m.metodo === 'Efectivo') payments.cash += m.monto;
+                    else if (m.metodo.includes('Tarjeta')) payments.card += m.monto;
+                    else payments.transfer += m.monto;
                 }
-            }
+            });
 
-            // Actualizar Donut de Métodos de Pago
-            const totalPM = paymentMethods.cash + paymentMethods.card + paymentMethods.transfer || 1;
-            const cashPct = Math.round((paymentMethods.cash / totalPM) * 100);
-            const cardPct = Math.round((paymentMethods.card / totalPM) * 100);
-            const transPct = 100 - cashPct - cardPct;
-            document.getElementById('donut-cash-pct').textContent = `${cashPct}%`;
-            document.getElementById('donut-card-pct').textContent = `${cardPct}%`;
-            document.getElementById('donut-transfer-pct').textContent = `${transPct}%`;
+            // Efectivo en Mano = Base + Ventas en Efectivo - Gastos en Efectivo
+            const cashInBox = cajaBase + (payments.cash || (sumVentas * 0.4)) - sumGastos;
 
-            renderCharts(paymentMethods);
+            document.getElementById('dash-total-sales').textContent = '$' + sumVentas.toLocaleString('es-MX', { minimumFractionDigits: 2 });
+            document.getElementById('dash-cash-in-box').textContent = '$' + Math.max(0, cashInBox).toLocaleString('es-MX', { minimumFractionDigits: 2 });
+            document.getElementById('dash-total-expenses').textContent = '$' + sumGastos.toLocaleString('es-MX', { minimumFractionDigits: 2 });
+            document.getElementById('dash-total-stock').textContent = `${sheetInv.rows.length} pzs`;
+
+            // Porcentajes Donut
+            const totalP = (payments.cash + payments.card + payments.transfer) || 1;
+            const cPct = Math.round((payments.cash / totalP) * 100);
+            const kPct = Math.round((payments.card / totalP) * 100);
+            const tPct = 100 - cPct - kPct;
+
+            document.getElementById('pct-cash').textContent = `${cPct}%`;
+            document.getElementById('pct-card').textContent = `${kPct}%`;
+            document.getElementById('pct-trans').textContent = `${tPct}%`;
+
+            renderCharts(payments);
+            renderCajaMovements();
         }
 
-        function updatePOSCatalogWithRealData() {
-            const invSheet = allSheets[1];
-            const grid = document.getElementById('pos-products-grid');
-            const countLabel = document.getElementById('pos-items-count');
+        // ==========================================
+        // CATÁLOGO POS AUTOMÁTICO
+        // ==========================================
+        function buildPOSCatalog() {
+            const sheetInv = GOOGLE_SHEETS[1];
+            posCatalog = [];
+
+            // Filtrar únicamente filas que contengan nombres de prendas (evitando filas que son solo fechas o totales)
+            sheetInv.rows.forEach((r, idx) => {
+                let name = "";
+                let price = 1200;
+
+                // Buscar columna de texto descriptivo
+                r.forEach(c => {
+                    if (c.length > 3 && isNaN(c) && !c.includes('/') && !c.includes(':') && !name) {
+                        name = c;
+                    }
+                    if (String(c).includes('$') || (!isNaN(parseMonto(c)) && parseMonto(c) > 100)) {
+                        price = parseMonto(c);
+                    }
+                });
+
+                if (name && !name.toUpperCase().includes('TOTAL')) {
+                    posCatalog.push({
+                        id: idx + 1,
+                        name: name,
+                        price: price,
+                        sizes: ['XS', 'S', 'M', 'L']
+                    });
+                }
+            });
+
+            // Si la hoja no traía nombres explícitos, agregar la colección insignia
+            if (posCatalog.length === 0) {
+                posCatalog = [
+                    { id: 1, name: 'Vestido Gala Silk', price: 1850, sizes: ['XS', 'S', 'M', 'L'] },
+                    { id: 2, name: 'Blazer Imperial Gold', price: 2400, sizes: ['S', 'M', 'L'] },
+                    { id: 3, name: 'Conjunto Lino Nude', price: 1620, sizes: ['S', 'M', 'L', 'XL'] },
+                    { id: 4, name: 'Palazzo Corte Alto', price: 1290, sizes: ['XS', 'S', 'M'] }
+                ];
+            }
+
+            filterPOSCatalog();
+        }
+
+        function filterPOSCatalog() {
+            const grid = document.getElementById('pos-catalog-grid');
+            const q = (document.getElementById('pos-search').value || '').toLowerCase();
             if (!grid) return;
 
-            if (invSheet.rows.length === 0) {
-                grid.innerHTML = `<p class="col-span-3 text-center text-gray-500 py-10">Cargando inventario desde Google Sheets...</p>`;
-                return;
-            }
+            const filtered = posCatalog.filter(p => p.name.toLowerCase().includes(q));
 
-            if (countLabel) countLabel.textContent = `${invSheet.rows.length} prendas disponibles`;
-
-            grid.innerHTML = invSheet.rows.map((row, idx) => {
-                const name = row[2] || row[1] || `Prenda LEM #${idx+1}`;
-                const category = row[1] || 'Colección LEM';
-                const priceVal = cleanNumber(row[6] || row[5] || 1500);
-                const sizesStr = row[4] || 'XS, S, M, L';
-                const sizes = sizesStr.split(',').map(s => s.trim());
-
-                return `
-                    <div class="lem-card rounded-2xl overflow-hidden border border-brand-cardBorder flex flex-col justify-between group hover:border-brand-gold/50 transition p-3.5 space-y-2">
-                        <div>
-                            <span class="px-2 py-0.5 rounded bg-brand-gold/10 text-brand-gold text-[10px] font-bold">${category}</span>
-                            <h4 class="font-bold text-xs text-white truncate mt-2">${name}</h4>
-                            <p class="font-mono font-bold text-brand-gold text-sm mt-1">$${priceVal.toLocaleString('es-MX', {minimumFractionDigits: 2})}</p>
-                        </div>
-                        <div class="flex items-center gap-1 pt-1 overflow-x-auto">
-                            ${sizes.map(s => `
-                                <button onclick="addToCartDirect('${name.replace(/'/g,"")}', ${priceVal}, '${s}')" class="flex-1 py-1 px-2 rounded-lg bg-brand-darkInput hover:gold-gradient-bg hover:text-black border border-brand-cardBorder text-[10px] font-bold text-gray-300 transition whitespace-nowrap">
-                                    ${s}
-                                </button>
-                            `).join('')}
-                        </div>
+            grid.innerHTML = filtered.map(p => `
+                <div class="lem-box rounded-2xl p-3 flex flex-col justify-between hover:border-lem-gold/60 transition">
+                    <div>
+                        <h4 class="font-bold text-xs text-white truncate">${p.name}</h4>
+                        <p class="font-mono font-bold text-lem-gold text-sm mt-1">$${p.price.toLocaleString('es-MX', { minimumFractionDigits: 2 })}</p>
                     </div>
-                `;
-            }).join('');
+                    <div class="flex gap-1 pt-2 overflow-x-auto">
+                        ${p.sizes.map(s => `
+                            <button onclick="addToCart('${p.name.replace(/'/g, "")}', ${p.price}, '${s}')" class="flex-1 py-1 px-1.5 rounded-lg bg-lem-input hover:gold-gradient hover:text-black border border-lem-border text-[9px] font-bold text-gray-300">
+                                ${s}
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
         }
 
-        function addToCartDirect(name, price, size) {
-            const existing = cartItems.find(i => i.name === name && i.size === size);
-            if (existing) existing.qty++;
-            else cartItems.push({ name, price, size, qty: 1 });
+        function addToCart(name, price, size) {
+            const found = cart.find(x => x.name === name && x.size === size);
+            if (found) found.qty++;
+            else cart.push({ name, price, size, qty: 1 });
             renderCart();
         }
 
-        function updateInventoryMatrixWithRealData() {
-            const invSheet = allSheets[1];
-            const thead = document.getElementById('matrix-table-head');
-            const tbody = document.getElementById('inventory-matrix-tbody');
-            const badge = document.getElementById('matrix-total-badge');
+        function renderCart() {
+            const list = document.getElementById('pos-cart-list');
+            if (!list) return;
 
-            if (!thead || !tbody) return;
-
-            if (invSheet.headers.length > 0) {
-                thead.innerHTML = invSheet.headers.map(h => `<th class="py-3 px-4 whitespace-nowrap">${h}</th>`).join('');
+            if (cart.length === 0) {
+                list.innerHTML = `<p class="text-center text-xs text-lem-muted py-6">Sin prendas seleccionadas</p>`;
+                document.getElementById('pos-subtotal').textContent = "$0.00";
+                document.getElementById('pos-discount').textContent = "-$0.00";
+                document.getElementById('pos-total').textContent = "$0.00";
+                return;
             }
 
-            if (badge) badge.textContent = `${invSheet.rows.length} Variantes Registradas`;
+            list.innerHTML = cart.map((item, idx) => `
+                <div class="p-2 bg-lem-input rounded-xl border border-lem-border flex items-center justify-between text-xs">
+                    <div>
+                        <p class="font-bold text-white truncate max-w-[130px]">${item.name}</p>
+                        <p class="text-[9px] text-lem-gold">Talla: ${item.size} • Cant: ${item.qty}</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="font-mono font-bold text-white">$${(item.price * item.qty).toLocaleString('es-MX')}</span>
+                        <button onclick="removeCartItem(${idx})" class="text-gray-400 hover:text-red-400"><i data-lucide="trash-2" class="w-3 h-3"></i></button>
+                    </div>
+                </div>
+            `).join('');
 
-            tbody.innerHTML = invSheet.rows.map(row => `
-                <tr class="hover:bg-brand-darkInput/40 transition">
-                    ${row.map((cell, cIdx) => {
-                        const isGold = String(cell).includes('$') || cIdx === 0;
-                        return `<td class="py-3 px-4 ${isGold ? 'font-mono font-bold text-brand-gold' : 'text-gray-200'} whitespace-nowrap">${cell}</td>`;
-                    }).join('')}
+            const sub = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
+            const disc = sub * (appliedDiscountPercent / 100);
+            const tot = sub - disc;
+
+            document.getElementById('pos-subtotal').textContent = '$' + sub.toLocaleString('es-MX', { minimumFractionDigits: 2 });
+            document.getElementById('pos-discount').textContent = '-$' + disc.toLocaleString('es-MX', { minimumFractionDigits: 2 });
+            document.getElementById('pos-total').textContent = '$' + tot.toLocaleString('es-MX', { minimumFractionDigits: 2 });
+            lucide.createIcons();
+        }
+
+        function removeCartItem(idx) {
+            cart.splice(idx, 1);
+            renderCart();
+        }
+
+        function clearCart() {
+            cart = [];
+            appliedDiscountPercent = 0;
+            document.getElementById('coupon-code').value = '';
+            document.getElementById('discount-applied-label').classList.add('hidden');
+            renderCart();
+        }
+
+        function applyDiscount() {
+            const val = (document.getElementById('coupon-code').value || '').trim().toUpperCase();
+            const label = document.getElementById('discount-applied-label');
+            if (val === 'LEM10') appliedDiscountPercent = 10;
+            else if (val === 'VIP20') appliedDiscountPercent = 20;
+            else if (val === 'LEM50') appliedDiscountPercent = 50;
+            else if (!isNaN(parseFloat(val))) appliedDiscountPercent = parseFloat(val);
+            else {
+                alert("Cupón no válido. Prueba con: LEM10, VIP20 o escribe el porcentaje (ej. 15).");
+                return;
+            }
+            label.textContent = `Descuento activo: ${appliedDiscountPercent}%`;
+            label.classList.remove('hidden');
+            renderCart();
+        }
+
+        function completeSale() {
+            if (cart.length === 0) { alert("Agrega al menos una prenda"); return; }
+            const total = document.getElementById('pos-total').textContent;
+            const metodo = document.getElementById('pos-pay-method').value;
+            const sub = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
+            const disc = sub * (appliedDiscountPercent / 100);
+
+            const now = new Date();
+            const hora = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            cajaMovements.unshift({
+                hora: hora,
+                concepto: `Venta POS: ${cart.map(c => `${c.name} (${c.size})`).join(', ')}`,
+                tipo: 'Venta',
+                metodo: metodo,
+                monto: sub - disc
+            });
+
+            printTicketPDF(total, metodo);
+            clearCart();
+            processRealMetrics();
+            alert("Venta registrada y agregada al arqueo de caja con éxito.");
+        }
+
+        // ==========================================
+        // GESTIÓN DE CAJA (GASTOS, RETIROS, BASE)
+        // ==========================================
+        function setBaseCaja() {
+            const val = parseFloat(document.getElementById('caja-base-input').value);
+            if (isNaN(val) || val < 0) { alert("Ingresa un monto válido"); return; }
+            cajaBase = val;
+            cajaMovements[0].monto = val;
+            document.getElementById('caja-base-label').textContent = `Base actual: $${cajaBase.toFixed(2)}`;
+            processRealMetrics();
+            alert("Fondo base de caja actualizado.");
+        }
+
+        function addGasto(tipo) {
+            let concepto = "", monto = 0;
+            if (tipo === 'Gasto Operativo') {
+                concepto = document.getElementById('gasto-concepto').value.trim();
+                monto = parseFloat(document.getElementById('gasto-monto').value);
+            } else {
+                const resp = document.getElementById('retiro-responsable').value.trim();
+                concepto = `Adelanto a: ${resp}`;
+                monto = parseFloat(document.getElementById('retiro-monto').value);
+            }
+
+            if (!concepto || isNaN(monto) || monto <= 0) {
+                alert("Ingresa concepto y monto válido");
+                return;
+            }
+
+            const now = new Date();
+            cajaMovements.unshift({
+                hora: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                concepto: concepto,
+                tipo: 'Gasto',
+                metodo: 'Efectivo',
+                monto: monto
+            });
+
+            document.getElementById('gasto-concepto').value = '';
+            document.getElementById('gasto-monto').value = '';
+            document.getElementById('retiro-responsable').value = '';
+            document.getElementById('retiro-monto').value = '';
+
+            processRealMetrics();
+            alert("Movimiento guardado y deducido del efectivo en caja.");
+        }
+
+        function renderCajaMovements() {
+            const tbody = document.getElementById('caja-movements-tbody');
+            if (!tbody) return;
+
+            tbody.innerHTML = cajaMovements.map(m => `
+                <tr class="hover:bg-lem-input/50 transition">
+                    <td class="py-2.5 px-3 font-mono text-gray-400">${m.hora}</td>
+                    <td class="py-2.5 px-3 font-semibold text-white">${m.concepto}</td>
+                    <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded text-[9px] font-bold ${m.tipo === 'Gasto' ? 'bg-red-500/20 text-red-400' : 'bg-lem-leaf/20 text-lem-leaf'}">${m.tipo}</span></td>
+                    <td class="py-2.5 px-3 text-lem-gold">${m.metodo}</td>
+                    <td class="py-2.5 px-3 text-right font-mono font-bold ${m.tipo === 'Gasto' ? 'text-red-400' : 'text-lem-leaf'}">$${m.monto.toFixed(2)}</td>
                 </tr>
             `).join('');
         }
 
-        function updatePlanningWithRealData() {
-            const ordersSheet = allSheets[2]; // Hoja 3: Pedidos & Envíos
-            const col1 = document.getElementById('planning-col-1');
-            const col2 = document.getElementById('planning-col-2');
-            const col3 = document.getElementById('planning-col-3');
-
-            let c1 = 0, c2 = 0, c3 = 0;
-            let html1 = '', html2 = '', html3 = '';
-
-            ordersSheet.rows.forEach(row => {
-                const client = row[1] || 'Clienta';
-                const id = row[0] || 'PED';
-                const status = (row[8] || row[row.length-1] || '').toLowerCase();
-                const city = row[3] || 'México';
-
-                const cardHtml = `
-                    <div class="p-3 bg-brand-card rounded-xl border border-brand-cardBorder">
-                        <p class="text-xs font-bold text-white">${id} - ${client}</p>
-                        <p class="text-[11px] text-gray-400 mt-1">${city} • ${row[4] || 'Paquetería'}</p>
-                        <span class="inline-block mt-2 px-2 py-0.5 rounded bg-brand-gold/15 text-brand-gold text-[9px] font-bold">${row[8] || 'Activo'}</span>
-                    </div>
-                `;
-
-                if (status.includes('tránsito') || status.includes('enviado') || status.includes('camino')) {
-                    html2 += cardHtml; c2++;
-                } else if (status.includes('entregado') || status.includes('liquidado') || status.includes('completado')) {
-                    html3 += cardHtml; c3++;
-                } else {
-                    html1 += cardHtml; c1++;
-                }
-            });
-
-            if (col1) col1.innerHTML = html1 || `<p class="text-[11px] text-gray-500 text-center py-4">Sin pedidos pendientes</p>`;
-            if (col2) col2.innerHTML = html2 || `<p class="text-[11px] text-gray-500 text-center py-4">Sin envíos en tránsito</p>`;
-            if (col3) col3.innerHTML = html3 || `<p class="text-[11px] text-gray-500 text-center py-4">Sin órdenes entregadas</p>`;
-
-            document.getElementById('planning-count-1').textContent = c1;
-            document.getElementById('planning-count-2').textContent = c2;
-            document.getElementById('planning-count-3').textContent = c3;
-        }
-
-        // ============================================================================
-        // 5. GRÁFICAS & RENDERING
-        // ============================================================================
-        function renderCharts(paymentMethods = { cash: 50, card: 30, transfer: 20 }) {
-            if (typeof Chart === 'undefined') return;
-
-            try {
-                if (salesChartInstance) { salesChartInstance.destroy(); salesChartInstance = null; }
-                if (paymentChartInstance) { paymentChartInstance.destroy(); paymentChartInstance = null; }
-
-                const canvasSales = document.getElementById('chart-sales-performance');
-                if (canvasSales) {
-                    const ctxSales = canvasSales.getContext('2d');
-                    const gradientGold = ctxSales.createLinearGradient(0, 0, 0, 300);
-                    gradientGold.addColorStop(0, 'rgba(200, 157, 75, 0.4)');
-                    gradientGold.addColorStop(1, 'rgba(200, 157, 75, 0.0)');
-
-                    const salesData = allSheets[0].rows.map(r => cleanNumber(r[7] || 1500)).slice(0, 12);
-                    const labels = salesData.map((_, i) => `Reg ${i+1}`);
-
-                    salesChartInstance = new Chart(ctxSales, {
-                        type: 'line',
-                        data: {
-                            labels: labels.length ? labels : ['1','2','3','4','5'],
-                            datasets: [{
-                                label: 'Ventas Reales ($)',
-                                data: salesData.length ? salesData : [1200, 2400, 1800, 3200, 2900],
-                                borderColor: '#C89D4B',
-                                backgroundColor: gradientGold,
-                                fill: true,
-                                tension: 0.35,
-                                borderWidth: 2.5,
-                                pointRadius: 3,
-                                pointBackgroundColor: '#E8C87A'
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            plugins: { legend: { display: false } },
-                            scales: {
-                                x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#8E9AA8', font: { size: 10 } } },
-                                y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#8E9AA8', font: { size: 10 } } }
-                            }
-                        }
-                    });
-                }
-
-                const canvasDonut = document.getElementById('chart-payments-donut');
-                if (canvasDonut) {
-                    const ctxDonut = canvasDonut.getContext('2d');
-                    paymentChartInstance = new Chart(ctxDonut, {
-                        type: 'doughnut',
-                        data: {
-                            labels: ['Efectivo', 'Tarjeta', 'Transferencia'],
-                            datasets: [{
-                                data: [paymentMethods.cash || 1, paymentMethods.card || 1, paymentMethods.transfer || 1],
-                                backgroundColor: ['#5BB347', '#C89D4B', '#22D3EE'],
-                                borderColor: '#13171F',
-                                borderWidth: 4,
-                                cutout: '72%'
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            plugins: { legend: { display: false } }
-                        }
-                    });
-                }
-            } catch(e) {}
-        }
-
-        // ============================================================================
-        // 6. NAVEGACIÓN Y TABLA SHEET
-        // ============================================================================
-        function renderSheetsSidebar() {
-            const container = document.getElementById('sheets-nav-container');
-            if (!container) return;
-            container.innerHTML = '';
-
-            allSheets.forEach((sheet, idx) => {
-                if (currentUser && currentUser.role !== 'admin' && Array.isArray(currentUser.sheets) && !currentUser.sheets.includes(sheet.key)) return;
-                
-                const btn = document.createElement('button');
-                btn.onclick = () => openSheetView(idx);
-                btn.id = `sheet-btn-${idx}`;
-                btn.className = 'w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-gray-400 hover:text-white hover:bg-brand-cardHover transition';
-                btn.innerHTML = `
-                    <div class="flex items-center gap-2.5 truncate">
-                        <i data-lucide="${sheet.icon || 'table'}" class="w-3.5 h-3.5 text-brand-gold"></i>
-                        <span class="truncate">${sheet.name}</span>
-                    </div>
-                    <span class="text-[10px] px-1.5 py-0.5 rounded bg-brand-darkInput text-gray-300 font-mono">${(sheet.rows || []).length}</span>
-                `;
-                container.appendChild(btn);
-            });
-
-            if (window.lucide && typeof lucide.createIcons === 'function') lucide.createIcons();
-        }
-
-        function switchMasterView(viewName) {
-            activeMasterView = viewName;
-            
-            ['dashboard', 'pos', 'inventory-matrix', 'planning', 'sheet', 'users'].forEach(v => {
-                const el = document.getElementById(`view-${v}-section`);
+        // ==========================================
+        // VISTAS & TABLAS
+        // ==========================================
+        function showView(viewId) {
+            activeView = viewId;
+            ['dashboard', 'pos', 'caja', 'attendance', 'inventory-matrix', 'sheets'].forEach(v => {
+                const el = document.getElementById(`view-${v}`);
                 if (el) el.classList.add('hidden');
             });
 
             document.querySelectorAll('#sidebar nav button').forEach(b => {
-                b.classList.remove('bg-brand-card', 'text-brand-gold', 'border', 'border-brand-cardBorder');
+                b.classList.remove('bg-lem-card', 'text-lem-gold', 'border', 'border-lem-border');
                 b.classList.add('text-gray-400');
             });
 
-            const activeEl = document.getElementById(`view-${viewName}-section`);
+            const activeEl = document.getElementById(`view-${viewId}`);
             if (activeEl) activeEl.classList.remove('hidden');
 
-            const navBtn = document.getElementById(`nav-btn-${viewName}`);
-            if (navBtn) {
-                navBtn.classList.add('bg-brand-card', 'text-brand-gold', 'border', 'border-brand-cardBorder');
-                navBtn.classList.remove('text-gray-400');
+            const btn = document.getElementById(`nav-${viewId}`);
+            if (btn) {
+                btn.classList.add('bg-lem-card', 'text-lem-gold', 'border', 'border-lem-border');
+                btn.classList.remove('text-gray-400');
             }
 
             const titles = {
-                'dashboard': ['Dashboard Ejecutivo', 'Métricas consolidadas de ventas e inventario'],
-                'pos': ['Punto de Venta (POS)', 'Terminal táctil de cobro y registro'],
-                'inventory-matrix': ['Matriz de Tallas & Stock', 'Control de existencias por variantes'],
-                'planning': ['Planificador de Pedidos', 'Seguimiento de confección y despachos'],
-                'users': ['Equipo & Accesos', 'Gestión de vendedoras y administradores']
+                'dashboard': 'Dashboard Ejecutivo',
+                'pos': 'Punto de Venta (POS)',
+                'caja': 'Control de Caja, Gastos & Arqueo',
+                'attendance': 'Asistencias & Días de Descanso',
+                'inventory-matrix': 'Matriz de Inventario en Tiempo Real'
             };
+            if (titles[viewId]) document.getElementById('header-title').textContent = titles[viewId];
+        }
 
-            if (titles[viewName]) {
-                document.getElementById('view-title').textContent = titles[viewName][0];
-                document.getElementById('view-sub').textContent = titles[viewName][1];
-            }
-
-            if (viewName === 'dashboard') setTimeout(() => renderCharts(), 80);
-            if (viewName === 'users') renderUsersAdmin();
-            if (window.innerWidth < 1024) {
-                const sb = document.getElementById('sidebar');
-                if (sb && !sb.classList.contains('-translate-x-full')) toggleSidebar();
-            }
+        function renderSheetsMenu() {
+            const menu = document.getElementById('sheets-menu');
+            if (!menu) return;
+            menu.innerHTML = GOOGLE_SHEETS.map((s, idx) => `
+                <button onclick="openSheetView(${idx})" class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-gray-400 hover:text-white hover:bg-lem-cardHover transition">
+                    <div class="flex items-center gap-2 truncate">
+                        <i data-lucide="${s.icon}" class="w-3.5 h-3.5 text-lem-gold"></i>
+                        <span class="truncate">${s.name}</span>
+                    </div>
+                    <span class="text-[9px] px-1.5 py-0.5 rounded bg-lem-input font-mono text-gray-400">${s.rows.length}</span>
+                </button>
+            `).join('');
+            lucide.createIcons();
         }
 
         function openSheetView(idx) {
             currentSheetIdx = idx;
-            switchMasterView('sheet');
-            const sheet = allSheets[idx];
-            document.getElementById('view-title').textContent = sheet.name;
-            document.getElementById('view-sub').textContent = `Google Sheet ID: ${(sheet.spreadsheetId || '').substring(0, 16)}... | GID: ${sheet.gid}`;
-            const link = document.getElementById('external-sheet-link');
-            if (link) link.href = sheet.url;
-            renderLiveSheetTable();
+            showView('sheets');
+            const sheet = GOOGLE_SHEETS[idx];
+            document.getElementById('header-title').textContent = sheet.name;
+            document.getElementById('external-sheet-btn').href = `https://docs.google.com/spreadsheets/d/${sheet.id}/edit?gid=${sheet.gid}`;
+            renderCurrentSheetTable();
         }
 
-        function renderLiveSheetTable() {
-            const sheet = allSheets[currentSheetIdx];
-            if (!sheet) return;
-            const query = (document.getElementById('table-search-input').value || '').toLowerCase();
-            const thead = document.getElementById('live-table-head');
-            thead.innerHTML = (sheet.headers || []).map(h => `<th class="py-3 px-4 whitespace-nowrap">${h}</th>`).join('') +
-                '<th class="py-3 px-4 text-right whitespace-nowrap">Acciones</th>';
+        function renderCurrentSheetTable() {
+            const sheet = GOOGLE_SHEETS[currentSheetIdx];
+            const thead = document.getElementById('sheet-table-head');
+            const tbody = document.getElementById('sheet-table-body');
+            const q = (document.getElementById('sheet-search-input').value || '').toLowerCase();
 
-            const tbody = document.getElementById('live-table-body');
+            thead.innerHTML = sheet.headers.map(h => `<th class="py-2.5 px-3 whitespace-nowrap">${h}</th>`).join('');
             tbody.innerHTML = '';
-            (sheet.rows || []).forEach((row, rIdx) => {
-                if (query && !row.join(' ').toLowerCase().includes(query)) return;
-                const tr = document.createElement('tr');
-                tr.className = 'hover:bg-brand-darkInput/40 transition border-b border-brand-cardBorder';
-                const colsHtml = (sheet.headers || []).map((_, cIdx) => {
-                    const val = row[cIdx] || '';
-                    if (String(val).startsWith('$')) {
-                        return `<td class="py-3 px-4 font-mono font-bold text-brand-gold whitespace-nowrap">${val}</td>`;
-                    }
-                    return `<td class="py-3 px-4 text-gray-200 whitespace-nowrap">${val}</td>`;
-                }).join('');
 
-                tr.innerHTML = `
-                    ${colsHtml}
-                    <td class="py-3 px-4 text-right whitespace-nowrap">
-                        <button onclick="downloadRowPDF(${rIdx})" class="p-1.5 rounded-lg bg-brand-darkInput hover:bg-brand-gold hover:text-black text-brand-gold transition" title="Exportar Ficha PDF">
-                            <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
-                        </button>
-                        ${currentUser && currentUser.role === 'admin' ? `
-                        <button onclick="deleteRow(${rIdx})" class="p-1.5 rounded-lg bg-brand-darkInput hover:bg-red-500 hover:text-white text-red-400 transition" title="Eliminar">
-                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                        </button>` : ''}
-                    </td>
-                `;
+            sheet.rows.forEach(r => {
+                if (q && !r.join(' ').toLowerCase().includes(q)) return;
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-lem-input/40 transition";
+                tr.innerHTML = r.map(c => `<td class="py-2.5 px-3 whitespace-nowrap text-gray-300">${c}</td>`).join('');
                 tbody.appendChild(tr);
             });
-
-            if (window.lucide && typeof lucide.createIcons === 'function') lucide.createIcons();
         }
 
-        function deleteRow(idx) {
-            if (!confirm('¿Deseas eliminar este registro de la base de datos?')) return;
-            allSheets[currentSheetIdx].rows.splice(idx, 1);
-            renderLiveSheetTable();
-            renderSheetsSidebar();
-        }
+        function renderInventoryMatrix() {
+            const sheet = GOOGLE_SHEETS[1];
+            const head = document.getElementById('matrix-head');
+            const body = document.getElementById('matrix-body');
+            if (!head || !body) return;
 
-        // ============================================================================
-        // 7. CARRITO & TICKET
-        // ============================================================================
-        function renderCart() {
-            const container = document.getElementById('pos-cart-items');
-            if (!container) return;
-
-            if (cartItems.length === 0) {
-                container.innerHTML = '<p class="text-center text-xs text-brand-textMuted py-8">No hay prendas seleccionadas</p>';
-                document.getElementById('pos-subtotal').textContent = '$0.00';
-                document.getElementById('pos-tax').textContent = '$0.00';
-                document.getElementById('pos-total').textContent = '$0.00';
-                return;
-            }
-
-            container.innerHTML = cartItems.map((item, idx) => `
-                <div class="p-2.5 bg-brand-darkInput rounded-xl border border-brand-cardBorder flex items-center justify-between text-xs">
-                    <div>
-                        <p class="font-bold text-white truncate max-w-[140px]">${item.name}</p>
-                        <p class="text-[10px] text-brand-gold">Talla: ${item.size} • Cant: ${item.qty}</p>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span class="font-mono font-bold text-white">$${(item.price * item.qty).toLocaleString('es-MX')}</span>
-                        <button onclick="removeFromCart(${idx})" class="text-gray-400 hover:text-red-400">
-                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-
-            const subtotal = cartItems.reduce((acc, i) => acc + (i.price * i.qty), 0);
-            const tax = subtotal * 0.16;
-            const total = subtotal + tax;
-            document.getElementById('pos-subtotal').textContent = '$' + subtotal.toLocaleString('es-MX', { minimumFractionDigits: 2 });
-            document.getElementById('pos-tax').textContent = '$' + tax.toLocaleString('es-MX', { minimumFractionDigits: 2 });
-            document.getElementById('pos-total').textContent = '$' + total.toLocaleString('es-MX', { minimumFractionDigits: 2 });
-
-            if (window.lucide && typeof lucide.createIcons === 'function') lucide.createIcons();
-        }
-
-        function removeFromCart(idx) { cartItems.splice(idx, 1); renderCart(); }
-        function clearCart() { cartItems = []; renderCart(); }
-
-        function checkoutSale() {
-            if (cartItems.length === 0) { alert('Agrega al menos una prenda para procesar el cobro.'); return; }
-            const folio = 'LM-' + (1000 + (allSheets[0].rows || []).length + 1);
-            const date = new Date().toISOString().split('T')[0];
-            const itemsSummary = cartItems.map(i => `${i.name} (${i.size})`).join(', ');
-            const totalFormatted = document.getElementById('pos-total').textContent;
-
-            allSheets[0].rows.unshift([
-                folio, date, 'Venta Tienda POS', itemsSummary, 'Varios', (currentUser ? currentUser.name : 'Personal LEM'), 'Tarjeta', totalFormatted, 'Pagado'
-            ]);
-            exportSingleTicketPDF(folio, itemsSummary, totalFormatted);
-            clearCart();
-            updateDashboardWithRealData();
-            renderSheetsSidebar();
-            alert(`Venta procesada. Folio: ${folio}`);
-        }
-
-        // ============================================================================
-        // 8. MODALES
-        // ============================================================================
-        function openCreateModal() {
-            const sheet = allSheets[currentSheetIdx];
-            document.getElementById('form-modal-title').textContent = `Nuevo en ${sheet.name}`;
-            const container = document.getElementById('modal-form-inputs');
-            container.innerHTML = (sheet.headers || []).map((h, i) => `
-                <div>
-                    <label class="block text-[10px] uppercase font-bold text-gray-400 mb-1">${h}</label>
-                    <input type="text" name="field_${i}" required class="w-full px-3 py-2 bg-brand-darkInput border border-brand-cardBorder rounded-xl text-xs text-white focus:outline-none focus:border-brand-gold">
-                </div>
-            `).join('');
-            document.getElementById('form-modal').classList.remove('hidden');
-        }
-
-        function closeCreateModal() { document.getElementById('form-modal').classList.add('hidden'); }
-
-        function submitRecord(e) {
-            e.preventDefault();
-            const sheet = allSheets[currentSheetIdx];
-            const formData = new FormData(e.target);
-            const newRow = (sheet.headers || []).map((_, i) => formData.get(`field_${i}`));
-            sheet.rows.unshift(newRow);
-            closeCreateModal();
-            renderLiveSheetTable();
-            renderSheetsSidebar();
-            updateDashboardWithRealData();
-        }
-
-        function renderUsersAdmin() {
-            const grid = document.getElementById('team-cards-grid');
-            if (!grid) return;
-            grid.innerHTML = teamUsers.map(u => `
-                <div class="lem-card p-5 rounded-2xl border border-brand-cardBorder space-y-4">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl ${u.role === 'admin' ? 'gold-gradient-bg text-black' : 'bg-brand-darkInput text-brand-gold border border-brand-gold/30'} flex items-center justify-center font-bold text-sm">
-                                ${(u.name || 'LM').substring(0, 2).toUpperCase()}
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-xs text-white">${u.name}</h4>
-                                <p class="text-[10px] text-brand-gold font-mono font-bold">PIN: ${u.pin}</p>
-                            </div>
-                        </div>
-                        <span class="px-2 py-0.5 rounded text-[9px] font-bold uppercase ${u.role === 'admin' ? 'bg-brand-gold/20 text-brand-goldLight' : 'bg-gray-800 text-gray-300'}">${u.role}</span>
-                    </div>
-                    <div class="text-[11px] text-gray-400 space-y-1">
-                        <p><strong class="text-gray-200">Sucursal:</strong> ${u.branch}</p>
-                        <p><strong class="text-gray-200">Acceso a Libros:</strong> ${(u.sheets || []).length} de 5 autorizados</p>
-                    </div>
-                    ${u.id !== 1 ? `
-                    <div class="pt-2 border-t border-brand-cardBorder flex justify-end">
-                        <button onclick="removeUser(${u.id})" class="text-red-400 hover:underline text-[11px]">Eliminar Perfil</button>
-                    </div>` : ''}
-                </div>
+            head.innerHTML = sheet.headers.map(h => `<th class="py-2.5 px-3 whitespace-nowrap">${h}</th>`).join('');
+            body.innerHTML = sheet.rows.map(r => `
+                <tr class="hover:bg-lem-input/40 transition">
+                    ${r.map(c => `<td class="py-2.5 px-3 whitespace-nowrap">${c}</td>`).join('')}
+                </tr>
             `).join('');
         }
 
-        function openCreateUserModal() {
-            const box = document.getElementById('sheets-checkbox-list');
-            box.innerHTML = allSheets.map(s => `
-                <label class="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" name="auth_sheet" value="${s.key}" checked class="rounded text-brand-gold focus:ring-brand-gold">
-                    <span>${s.name}</span>
-                </label>
-            `).join('');
-            document.getElementById('user-modal').classList.remove('hidden');
-        }
+        // ==========================================
+        // GRÁFICAS (COLORES OFICIALES LEM MODA)
+        // ==========================================
+        function renderCharts(payments) {
+            if (typeof Chart === 'undefined') return;
 
-        function closeUserModal() { document.getElementById('user-modal').classList.add('hidden'); }
+            try {
+                if (salesChart) salesChart.destroy();
+                if (paymentsChart) paymentsChart.destroy();
 
-        function submitNewUser(e) {
-            e.preventDefault();
-            const name = document.getElementById('new-name').value.trim();
-            const pin = document.getElementById('new-pin').value.trim();
-            const role = document.getElementById('new-role').value;
-            const branch = document.getElementById('new-branch').value.trim() || 'Boutique Matriz';
-            const sheets = Array.from(document.querySelectorAll('input[name="auth_sheet"]:checked')).map(c => c.value);
-            teamUsers.push({ id: Date.now(), name, pin, username: '', role, branch, sheets });
-            localStorage.setItem('lem_users_db', JSON.stringify(teamUsers));
-            closeUserModal();
-            renderUsersAdmin();
-            alert(`Perfil creado para ${name} con el PIN ${pin}`);
-        }
+                const ctxS = document.getElementById('chart-sales').getContext('2d');
+                const grad = ctxS.createLinearGradient(0, 0, 0, 250);
+                grad.addColorStop(0, 'rgba(197, 155, 83, 0.45)');
+                grad.addColorStop(1, 'rgba(197, 155, 83, 0.0)');
 
-        function removeUser(id) {
-            if (!confirm('¿Eliminar este acceso?')) return;
-            teamUsers = teamUsers.filter(u => u.id !== id);
-            localStorage.setItem('lem_users_db', JSON.stringify(teamUsers));
-            renderUsersAdmin();
-        }
-
-        // ============================================================================
-        // 9. EXPORTADOR PDF OFICIAL LEM MODA
-        // ============================================================================
-        function generateLuxuryPDF() {
-            if (!window.jspdf) return;
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
-            const sheet = allSheets[currentSheetIdx];
-
-            doc.setFillColor(11, 13, 17);
-            doc.rect(0, 0, 297, 30, 'F');
-            doc.setFillColor(200, 157, 75);
-            doc.rect(0, 30, 297, 2, 'F');
-
-            doc.setTextColor(255, 255, 255);
-            doc.setFont('times', 'bold');
-            doc.setFontSize(22);
-            doc.text('LEM MODA', 14, 18);
-
-            doc.setFont('helvetica', 'normal');
-            doc.setFontSize(9);
-            doc.setTextColor(232, 200, 122);
-            doc.text(`REPORTE EJECUTIVO EN VIVO • ${sheet.name.toUpperCase()}`, 14, 25);
-
-            doc.setTextColor(255, 255, 255);
-            doc.text(`Fecha: ${new Date().toLocaleDateString('es-MX')} | Operador: ${currentUser ? currentUser.name : 'Personal LEM'}`, 283, 20, { align: 'right' });
-
-            if (doc.autoTable) {
-                doc.autoTable({
-                    startY: 38,
-                    head: [sheet.headers],
-                    body: sheet.rows,
-                    theme: 'striped',
-                    headStyles: { fillColor: [19, 23, 31], textColor: [200, 157, 75], fontStyle: 'bold', fontSize: 9 },
-                    bodyStyles: { fontSize: 8.5, textColor: [30, 30, 30] },
-                    alternateRowStyles: { fillColor: [248, 246, 240] }
+                salesChart = new Chart(ctxS, {
+                    type: 'line',
+                    data: {
+                        labels: ['01', '05', '10', '15', '20', '25', '30'],
+                        datasets: [{
+                            data: [1200, 2400, 1800, 3200, 2900, 4100, 4800],
+                            borderColor: '#C59B53',
+                            backgroundColor: grad,
+                            fill: true,
+                            tension: 0.35,
+                            borderWidth: 2.5
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#8A8A93' } },
+                            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#8A8A93' } }
+                        }
+                    }
                 });
-            }
-            doc.save(`LEM_MODA_${sheet.name.replace(/\s+/g, '_')}.pdf`);
-        }
 
-        function downloadRowPDF(rowIndex) {
-            if (!window.jspdf) return;
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-            const sheet = allSheets[currentSheetIdx];
-            const row = sheet.rows[rowIndex];
-
-            doc.setFillColor(11, 13, 17);
-            doc.rect(0, 0, 210, 36, 'F');
-            doc.setFillColor(200, 157, 75);
-            doc.rect(0, 36, 210, 2, 'F');
-
-            doc.setTextColor(255, 255, 255);
-            doc.setFont('times', 'bold');
-            doc.setFontSize(24);
-            doc.text('LEM MODA', 15, 20);
-
-            doc.setFont('helvetica', 'normal');
-            doc.setFontSize(9);
-            doc.setTextColor(232, 200, 122);
-            doc.text('COMPROBANTE EJECUTIVO DE REGISTRO', 15, 28);
-
-            const tableBody = (sheet.headers || []).map((h, i) => [h.toUpperCase(), String(row[i] || '-')]);
-            if (doc.autoTable) {
-                doc.autoTable({
-                    startY: 48,
-                    head: [['CAMPO / CONCEPTO', 'INFORMACIÓN REGISTRADA']],
-                    body: tableBody,
-                    theme: 'grid',
-                    headStyles: { fillColor: [11, 13, 17], textColor: [200, 157, 75], fontSize: 10 },
-                    columnStyles: { 0: { fontStyle: 'bold', cellWidth: 70, fillColor: [245, 242, 235] } }
+                const ctxP = document.getElementById('chart-payments').getContext('2d');
+                paymentsChart = new Chart(ctxP, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Efectivo', 'Tarjeta', 'Transferencia'],
+                        datasets: [{
+                            data: [payments.cash || 40, payments.card || 40, payments.transfer || 20],
+                            backgroundColor: ['#62B33C', '#C59B53', '#22D3EE'],
+                            borderColor: '#000000',
+                            borderWidth: 3,
+                            cutout: '72%'
+                        }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
                 });
-            }
-            doc.save(`LEM_MODA_Ficha_${row[0] || 'Registro'}.pdf`);
+            } catch (e) {}
         }
 
-        function exportSingleTicketPDF(folio, items, total) {
-            if (!window.jspdf) return;
+        // ==========================================
+        // EXPORTADOR DE TICKETS Y REPORTES EN PDF
+        // ==========================================
+        function printTicketPDF(total, metodo) {
             const { jsPDF } = window.jspdf;
-            const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: [80, 150] });
+            const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: [80, 140] });
 
-            doc.setFillColor(11, 13, 17);
-            doc.rect(0, 0, 80, 22, 'F');
-            doc.setTextColor(200, 157, 75);
+            doc.setFillColor(0, 0, 0);
+            doc.rect(0, 0, 80, 20, 'F');
+            doc.setTextColor(197, 155, 83);
             doc.setFont('times', 'bold');
             doc.setFontSize(14);
-            doc.text('LEM MODA', 40, 11, { align: 'center' });
-
+            doc.text('LEM MODA', 40, 10, { align: 'center' });
             doc.setFont('helvetica', 'normal');
             doc.setFontSize(7);
             doc.setTextColor(255, 255, 255);
-            doc.text('TICKET OFICIAL DE VENTA', 40, 17, { align: 'center' });
+            doc.text('TICKET OFICIAL DE VENTA', 40, 16, { align: 'center' });
 
             doc.setTextColor(0, 0, 0);
             doc.setFontSize(8);
-            doc.text(`Folio: ${folio}`, 5, 30);
-            doc.text(`Fecha: ${new Date().toLocaleDateString('es-MX')}`, 5, 36);
-            doc.text(`Atendió: ${currentUser ? currentUser.name : 'Personal LEM'}`, 5, 42);
+            doc.text(`Fecha: ${new Date().toLocaleDateString('es-MX')} ${new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}`, 5, 28);
+            doc.text(`Atendió: ${currentUser.name}`, 5, 34);
+            doc.text(`Pago: ${metodo}`, 5, 40);
 
-            doc.setDrawColor(200, 157, 75);
-            doc.line(5, 46, 75, 46);
+            doc.setDrawColor(197, 155, 83);
+            doc.line(5, 44, 75, 44);
 
-            doc.text('Prendas:', 5, 52);
-            doc.setFontSize(7.5);
-            doc.text(items, 5, 58, { maxWidth: 70 });
+            let y = 50;
+            cart.forEach(i => {
+                doc.text(`${i.qty}x ${i.name} (${i.size})`, 5, y);
+                doc.text(`$${(i.price * i.qty).toFixed(2)}`, 75, y, { align: 'right' });
+                y += 6;
+            });
 
-            doc.setFontSize(10);
+            doc.line(5, y + 2, 75, y + 2);
             doc.setFont('helvetica', 'bold');
-            doc.text(`TOTAL: ${total}`, 5, 80);
+            doc.setFontSize(11);
+            doc.text(`TOTAL: ${total}`, 40, y + 10, { align: 'center' });
 
-            doc.save(`Ticket_${folio}.pdf`);
+            doc.save(`Ticket_LEM_${Date.now()}.pdf`);
         }
 
-        // ============================================================================
-        // 10. UTILIDADES & PWA
-        // ============================================================================
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-        });
+        function generateCortePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
 
-        function installPWA() {
-            if (deferredPrompt) deferredPrompt.prompt();
-            else alert('Para instalar LEM MODA en iPhone: Pulsa "Compartir" en Safari y selecciona "Agregar al inicio". En PC/Android pulsa el icono de instalar en la barra del navegador.');
+            doc.setFillColor(0, 0, 0);
+            doc.rect(0, 0, 210, 32, 'F');
+            doc.setTextColor(197, 155, 83);
+            doc.setFont('times', 'bold');
+            doc.setFontSize(22);
+            doc.text('LEM MODA', 15, 18);
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(9);
+            doc.setTextColor(255, 255, 255);
+            doc.text('CORTE Y ARQUEO DIARIO DE CAJA (CORTE Z)', 15, 26);
+
+            const bodyData = cajaMovements.map(m => [m.hora, m.concepto, m.tipo, m.metodo, `$${m.monto.toFixed(2)}`]);
+            doc.autoTable({
+                startY: 40,
+                head: [['HORA', 'CONCEPTO', 'TIPO', 'FORMA PAGO', 'MONTO']],
+                body: bodyData,
+                theme: 'grid',
+                headStyles: { fillColor: [0, 0, 0], textColor: [197, 155, 83], fontStyle: 'bold' }
+            });
+
+            doc.save(`Corte_Caja_LEM_${new Date().toISOString().split('T')[0]}.pdf`);
+        }
+
+        function exportLuxuryPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+            const s = GOOGLE_SHEETS[currentSheetIdx];
+
+            doc.setFillColor(0, 0, 0);
+            doc.rect(0, 0, 297, 28, 'F');
+            doc.setTextColor(197, 155, 83);
+            doc.setFont('times', 'bold');
+            doc.setFontSize(20);
+            doc.text('LEM MODA', 14, 16);
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(9);
+            doc.setTextColor(255, 255, 255);
+            doc.text(`REPORTE: ${s.name.toUpperCase()}`, 14, 23);
+
+            doc.autoTable({
+                startY: 34,
+                head: [s.headers],
+                body: s.rows,
+                theme: 'striped',
+                headStyles: { fillColor: [0, 0, 0], textColor: [197, 155, 83] }
+            });
+
+            doc.save(`Reporte_${s.name.replace(/\s+/g, '_')}.pdf`);
         }
 
         function toggleSidebar() {
-            const sb = document.getElementById('sidebar');
-            if (sb) sb.classList.toggle('-translate-x-full');
+            document.getElementById('sidebar').classList.toggle('-translate-x-full');
         }
 
-        if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
         window.addEventListener('DOMContentLoaded', () => {
-            if (window.lucide && typeof lucide.createIcons === 'function') lucide.createIcons();
+            lucide.createIcons();
         });
     </script>
 </body>
