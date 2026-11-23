@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>LEM MODA · Sistema Central ERP & POS</title>
+  <meta name="theme-color" content="#080F0C" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="LEM MODA" />
+  <link rel="manifest" href="manifest.json" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Iconos Lucide -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Gráficos Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Generador PDF Oficial (jsPDF + AutoTable) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            lem: {
+              black: '#070D0A',
+              dark: '#0D1914',
+              card: '#12231C',
+              border: '#1E382D',
+              gold: '#C5A059',
+              goldLight: '#E5C883',
+              goldDark: '#8A6628',
+              leaf: '#6EB43F',
+              emerald: '#10B981'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cinzel:wght@600;700&display=swap');
+    body { font-family: 'Inter', sans-serif; background-color: #070D0A; color: #F1F5F9; }
+    .font-brand { font-family: 'Cinzel', serif; letter-spacing: 0.14em; }
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #8A6628 0%, #C5A059 45%, #F2D99B 75%, #9E7832 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .gold-gradient-bg {
+      background: linear-gradient(135deg, #9E7832 0%, #C5A059 50%, #E2C178 100%);
+    }
+    .glass-card {
+      background: linear-gradient(160deg, rgba(18, 35, 28, 0.92) 0%, rgba(11, 22, 17, 0.96) 100%);
+      border: 1px solid rgba(197, 160, 89, 0.16);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #070D0A; }
+    ::-webkit-scrollbar-thumb { background: #1E382D; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #C5A059; }
+  </style>
+</head>
+<body class="antialiased selection:bg-lem-gold selection:text-black">
+
+  <!-- ================= PANTALLA DE LOGIN (Identidad Imagen 4) ================= -->
+  <div id="loginScreen" class="min-h-screen flex items-center justify-center p-4 relative overflow-hidden" style="background: radial-gradient(circle at top, #153526 0%, #070D0A 65%);">
+    <div class="w-full max-w-md glass-card rounded-3xl p-8 relative z-10 border border-lem-gold/30">
+      <!-- Logo SVG inspirado en Imagen 4 (Hormiga + Hoja Verde + Dorado LEM MODA) -->
+      <div class="flex flex-col items-center mb-7">
+        <div class="w-24 h-24 rounded-2xl bg-black border border-lem-gold/40 flex flex-col items-center justify-center shadow-2xl mb-4 relative">
+          <svg viewBox="0 0 100 100" class="w-16 h-16">
+            <!-- Hoja verde -->
+            <path d="M48 12 C22 18, 18 52, 42 58 C56 54, 58 30, 48 12 Z" fill="#6EB43F"/>
+            <!-- Hormiga estilizada dorada -->
+            <circle cx="48" cy="60" r="5" fill="#C5A059"/>
+            <ellipse cx="59" cy="64" rx="6" ry="4" fill="#C5A059"/>
+            <ellipse cx="73" cy="69" rx="8" ry="6" fill="#9E7832"/>
+            <path d="M45 56 L38 49 M52 64 L46 78 M59 67 L58 82 M67 68 L76 83 M74 64 L84 54" stroke="#C5A059" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h1 class="text-3xl font-bold font-brand gold-gradient-text">LEM MODA</h1>
+        <p class="text-xs uppercase tracking-[0.3em] text-lem-goldLight/80 mt-1">Manager · Sistema Central</p>
+        <span class="text-[11px] text-emerald-400/80 mt-1 bg-emerald-950/60 px-3 py-0.5 rounded-full border border-emerald-700/40">Local Colón · Quito</span>
+      </div>
+
+      <form onsubmit="handleLogin(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-medium text-gray-400 mb-1">Usuario</label>
+          <input id="loginUser" type="text" value="victor" required placeholder="Ej: victor o andrea"
+            class="w-full bg-black/50 border border-lem-border focus:border-lem-gold rounded-xl px-4 py-3 text-sm text-white outline-none transition" />
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-400 mb-1">PIN / Contraseña</label>
+          <input id="loginPass" type="password" value="1234" required placeholder="••••"
+            class="w-full bg-black/50 border border-lem-border focus:border-lem-gold rounded-xl px-4 py-3 text-sm text-white outline-none transition" />
+        </div>
+
+        <button type="submit" class="w-full gold-gradient-bg text-black font-bold py-3.5 rounded-xl shadow-lg hover:brightness-110 transition flex items-center justify-center gap-2">
+          <span>Ingresar al Sistema</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </button>
+      </form>
+
+      <!-- Acceso rápido Demo de Roles -->
+      <div class="mt-6 pt-5 border-t border-white/10">
+        <p class="text-[11px] text-center text-gray-400 mb-2">Prueba rápida de perfiles:</p>
+        <div class="grid grid-cols-2 gap-2">
+          <button onclick="quickFill('victor','1234')" class="text-xs py-2 px-3 rounded-lg bg-lem-card border border-lem-gold/30 text-lem-goldLight hover:bg-lem-border transition">
+            👑 Admin (Victor)
+          </button>
+          <button onclick="quickFill('andrea','1111')" class="text-xs py-2 px-3 rounded-lg bg-lem-card border border-emerald-500/30 text-emerald-300 hover:bg-lem-border transition">
+            🛍️ Vendedora (Andrea)
+          </button>
+        </div>
+      </div>
+
+      <!-- Botón Instalar App PWA -->
+      <button id="installAppBtnLogin" onclick="triggerInstallPWA()" class="mt-4 w-full py-2.5 rounded-xl border border-lem-leaf/40 bg-lem-leaf/10 text-lem-leaf text-xs font-semibold flex items-center justify-center gap-2 hover:bg-lem-leaf/20 transition">
+        <i data-lucide="download" class="w-4 h-4"></i>
+        Instalar App en Android / iPhone / PC
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= APLICACIÓN PRINCIPAL ================= -->
+  <div id="appContainer" class="hidden min-h-screen flex flex-col lg:flex-row">
+
+    <!-- SIDEBAR NAVEGACIÓN (Inspirado en Imágenes 6 y 7) -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-lem-black border-r border-lem-border transform -translate-x-full lg:translate-x-0 lg:static transition-transform duration-200 flex flex-col justify-between">
+      <div>
+        <!-- Brand Header -->
+        <div class="p-5 flex items-center justify-between border-b border-lem-border">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-black border border-lem-gold/50 flex items-center justify-center">
+              <span class="font-brand font-bold text-xs gold-gradient-text">LEM</span>
+            </div>
+            <div>
+              <h2 class="font-brand font-bold text-sm gold-gradient-text">LEM MODA</h2>
+              <p class="text-[10px] text-gray-400">Local Colón · Quito</p>
+            </div>
+          </div>
+          <button onclick="toggleSidebar()" class="lg:hidden text-gray-400 hover:text-white">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- Menú Dinámico según Rol (Admin vs Vendedora) -->
+        <nav id="navMenu" class="p-3 space-y-1 overflow-y-auto max-h-[calc(100vh-180px)]"></nav>
+      </div>
+
+      <!-- Pie de Sidebar: Usuario Activo + Instalar + Salir -->
+      <div class="p-4 border-t border-lem-border space-y-2 bg-black/40">
+        <button onclick="triggerInstallPWA()" class="w-full py-2 px-3 rounded-xl bg-lem-leaf/15 border border-lem-leaf/40 text-lem-leaf text-xs font-semibold flex items-center justify-center gap-2 hover:bg-lem-leaf/25 transition">
+          <i data-lucide="smartphone" class="w-4 h-4"></i> Descargar App
+        </button>
+        <div class="flex items-center justify-between pt-1">
+          <div class="truncate pr-2">
+            <p id="currentUserName" class="text-xs font-bold text-white truncate">VICTOR CARVAJAL</p>
+            <span id="currentUserRole" class="text-[10px] px-2 py-0.5 rounded-full bg-lem-gold/20 text-lem-goldLight font-semibold">ADMIN</span>
+          </div>
+          <button onclick="logout()" title="Cerrar sesión" class="p-2 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 transition">
+            <i data-lucide="log-out" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- CONTENIDO CENTRAL -->
+    <div class="flex-1 flex flex-col min-w-0">
+      <!-- Topbar -->
+      <header class="sticky top-0 z-30 bg-lem-black/90 backdrop-blur-md border-b border-lem-border px-4 lg:px-8 py-3.5 flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-lg bg-lem-card border border-lem-border text-gray-300">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+          <div>
+            <h1 id="pageTitle" class="text-lg lg:text-xl font-bold text-white">Dashboard Ejecutivo</h1>
+            <p id="pageSubtitle" class="text-xs text-gray-400 hidden sm:block">Resumen en tiempo real sincronizado con tus 5 Google Sheets</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2.5">
+          <!-- Botón Conexión Google Sheets -->
+          <button onclick="openApiModal()" class="px-3 py-2 rounded-xl bg-lem-card border border-lem-border text-xs text-gray-300 hover:border-lem-gold flex items-center gap-1.5 transition">
+            <span id="syncDot" class="w-2 h-2 rounded-full bg-lem-leaf animate-pulse"></span>
+            <span class="hidden md:inline">Google Sheets</span>
+          </button>
+
+          <!-- BOTÓN UNIVERSAL DESCARGAR PDF OFICIAL -->
+          <button onclick="exportCurrentModulePDF()" class="gold-gradient-bg text-black font-bold text-xs px-4 py-2.5 rounded-xl shadow-lg hover:brightness-110 transition flex items-center gap-2">
+            <i data-lucide="file-down" class="w-4 h-4"></i>
+            <span>Descargar PDF</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Contenedor Dinámico de Vistas -->
+      <main id="mainView" class="p-4 lg:p-8 flex-1 overflow-y-auto space-y-6"></main>
+    </div>
+  </div>
+
+  <!-- MODAL CONEXIÓN API GOOGLE SHEETS & GUÍA INSTALACIÓN -->
+  <div id="infoModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="glass-card rounded-2xl max-w-lg w-full p-6 border border-lem-gold/40 space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 id="modalTitle" class="text-base font-bold gold-gradient-text">Configuración Google Sheets API</h3>
+        <button onclick="closeModal()" class="text-gray-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <div id="modalBody" class="text-xs text-gray-300 space-y-3"></div>
+    </div>
+  </div>
+
+  <!-- ================= LÓGICA DEL SISTEMA LEM MODA ================= -->
+  <script>
+    // URL de tu Google Apps Script (Pégala aquí o desde el botón "Google Sheets" en la app)
+    let GOOGLE_SCRIPT_URL = localStorage.getItem('lem_api_url') || '';
+    let deferredPrompt = null;
+
+    // Estado Central con datos reales inspirados en tu Local Colón · Quito
+    const state = {
+      currentUser: null,
+      activeModule: 'dashboard',
+      selectedProductIdx: 0,
+      selectedDock: null,
+      cart: [
+        { sku: 'LEM-ABR-01', nombre: 'Abrigo Marinero Imperial', color: 'Negro', talla: 'M', precio: 89.00, cant: 1 },
+        { sku: 'LEM-BLZ-04', nombre: 'Blazer Dorado Edición Colón', color: 'Camel', talla: 'S', precio: 65.50, cant: 2 }
+      ],
+      users: [
+        { id: 'USR-001', nombre: 'VICTOR CARVAJAL', usuario: 'victor', clave: '1234', rol: 'ADMIN', caja: 'TODAS', sucursal: 'Local Colón · Quito', estado: 'ACTIVO' },
+        { id: 'USR-002', nombre: 'ANDREA LOPEZ', usuario: 'andrea', clave: '1111', rol: 'VENDEDORA', caja: 'CAJA 1', sucursal: 'Local Colón · Quito', estado: 'ACTIVO' },
+        { id: 'USR-003', nombre: 'CAMILA TORRES', usuario: 'camila', clave: '2222', rol: 'VENDEDORA', caja: 'CAJA 2', sucursal: 'Local Colón · Quito', estado: 'ACTIVO' }
+      ],
+      cajaHoy: {
+        fecha: new Date().toLocaleDateString('es-EC'),
+        estado: 'ESPERANDO CIERRE DE CAJA',
+        esperado: 415.06,
+        real: 0.00,
+        ayerEsperado: 415.05,
+        ayerReal: 415.06,
+        aperturas: [
+          { responsable: 'ANDREA LOPEZ', caja: 'CAJA 1', monto: 221.32, hora: '09:02 AM' },
+          { responsable: 'CAMILA TORRES', caja: 'CAJA 2', monto: 193.74, hora: '09:10 AM' }
+        ],
+        movimientos: [
+          { fecha: 'Hoy 10:15', tipo: 'VENTA POS', detalle: 'Factura #00412 - Efectivo', responsable: 'ANDREA LOPEZ', monto: 154.50 },
+          { fecha: 'Hoy 11:40', tipo: 'GASTO', detalle: 'Insumos bolsas contramarcadas LEM', responsable: 'VICTOR CARVAJAL', monto: -28.00 },
+          { fecha: 'Hoy 13:05', tipo: 'DEPÓSITO', detalle: 'Depósito Banco Pichincha #9921', responsable: 'VICTOR CARVAJAL', monto: -200.00 },
+          { fecha: 'Hoy 15:20', tipo: 'ADELANTO', detalle: 'Adelanto quincena Camila Torres', responsable: 'VICTOR CARVAJAL', monto: -40.00 }
+        ]
+      },
+      productos: [
+        {
+          sku: 'SAB01000001', nombre: 'Abrigo Marinero Lujo', categoria: 'Abrigos & Chaquetas', temporada: 'Otoño-Invierno',
+          precio: 89.00, mayorista: 64.00, recibido: 200, stock: 142, vendidosTienda: 52, vendidosMayor: 6,
+          img: 'https://images.unsplash.com/photo-1539533018447-63fcce2678e3?auto=format&fit=crop&w=600&q=80',
+          colores: ['#111827', '#92400E', '#1E3A8A', '#D6D3D1'],
+          variantes: [
+            { color: 'Negro Obsidiana', talla: 'S', recibido: 50, mayorista: 2, minorista: 18, stock: 30 },
+            { color: 'Negro Obsidiana', talla: 'M', recibido: 60, mayorista: 4, minorista: 20, stock: 36 },
+            { color: 'Camel Dorado', talla: 'M', recibido: 50, mayorista: 0, minorista: 10, stock: 40 },
+            { color: 'Azul Noche', talla: 'L', recibido: 40, mayorista: 0, minorista: 4, stock: 36 }
+          ]
+        },
+        {
+          sku: 'LEM0200045', nombre: 'Blazer Estructurado Gold', categoria: 'Sastrería Dama', temporada: 'Colección Permanente',
+          precio: 65.50, mayorista: 48.00, recibido: 150, stock: 88, vendidosTienda: 54, vendidosMayor: 8,
+          img: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=600&q=80',
+          colores: ['#C5A059', '#064E3B', '#000000'],
+          variantes: [
+            { color: 'Dorado Arena', talla: 'XS', recibido: 40, mayorista: 2, minorista: 15, stock: 23 },
+            { color: 'Verde Esmeralda', talla: 'S', recibido: 60, mayorista: 4, minorista: 25, stock: 31 },
+            { color: 'Negro', talla: 'M', recibido: 50, mayorista: 2, minorista: 14, stock: 34 }
+          ]
+        },
+        {
+          sku: 'LEM0300089', nombre: 'Vestido Seda Esmeralda', categoria: 'Vestidos Gala', temporada: 'Edición Especial',
+          precio: 74.00, mayorista: 52.00, recibido: 90, stock: 19, vendidosTienda: 65, vendidosMayor: 6,
+          img: 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&w=600&q=80',
+          colores: ['#047857', '#C5A059'],
+          variantes: [
+            { color: 'Esmeralda LEM', talla: 'S', recibido: 45, mayorista: 3, minorista: 34, stock: 8 },
+            { color: 'Champagne Gold', talla: 'M', recibido: 45, mayorista: 3, minorista: 31, stock: 11 }
+          ]
+        },
+        {
+          sku: 'LEM0400112', nombre: 'Pantalón Palazzo Corte Alto', categoria: 'Pantalones', temporada: 'Ejecutiva 2026',
+          precio: 48.00, mayorista: 34.00, recibido: 180, stock: 110, vendidosTienda: 60, vendidosMayor: 10,
+          img: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=600&q=80',
+          colores: ['#1F2937', '#F5F5F4', '#78350F'],
+          variantes: [
+            { color: 'Marfil', talla: 'S', recibido: 60, mayorista: 5, minorista: 20, stock: 35 },
+            { color: 'Negro', talla: 'M', recibido: 70, mayorista: 5, minorista: 25, stock: 40 },
+            { color: 'Moka', talla: 'L', recibido: 50, mayorista: 0, minorista: 15, stock: 35 }
+          ]
+        }
+      ],
+      matrizTaller: [
+        {
+          linea: 'Línea A · Sastrería', colorBadge: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40',
+          dias: [
+            { dia: 'Lun 12', lote: 'LOT-840', prenda: 'Abrigo Marinero', meta: 120, real: 120, rechazo: 2, estado: 'ok', img: 'https://images.unsplash.com/photo-1539533018447-63fcce2678e3?auto=format&fit=crop&w=300&q=80' },
+            { dia: 'Mar 13', lote: 'LOT-845', prenda: 'Blazer Gold', meta: 100, real: 78, rechazo: 6, estado: 'alerta', img: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=300&q=80' },
+            { dia: 'Mié 14', lote: 'LOT-851', prenda: 'Chaleco Sastre', meta: 140, real: 140, rechazo: 1, estado: 'ok', img: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=300&q=80' },
+            { dia: 'Jue 15', lote: 'LOT-860', prenda: 'Abrigo Camel', meta: 90, real: 90, rechazo: 0, estado: 'ok', img: 'https://images.unsplash.com/photo-1539533018447-63fcce2678e3?auto=format&fit=crop&w=300&q=80' }
+          ]
+        },
+        {
+          linea: 'Línea B · Vestidos', colorBadge: 'bg-lem-gold/20 text-lem-goldLight border-lem-gold/40',
+          dias: [
+            { dia: 'Lun 12', lote: 'LOT-901', prenda: 'Vestido Esmeralda', meta: 80, real: 80, rechazo: 1, estado: 'ok', img: 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&w=300&q=80' },
+            { dia: 'Mar 13', lote: 'LOT-904', prenda: 'Blusa Seda LEM', meta: 150, real: 150, rechazo: 2, estado: 'ok', img: 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&w=300&q=80' },
+            { dia: 'Mié 14', lote: 'LOT-910', prenda: 'Top Gala Dorado', meta: 110, real: 85, rechazo: 8, estado: 'alerta', img: 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&w=300&q=80' },
+            { dia: 'Jue 15', lote: 'LOT-915', prenda: 'Falda Plisada', meta: 130, real: 130, rechazo: 0, estado: 'ok', img: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=300&q=80' }
+          ]
+        },
+        {
+          linea: 'Línea C · Acabados', colorBadge: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40',
+          dias: [
+            { dia: 'Lun 12', lote: 'LOT-710', prenda: 'Palazzo Ejecutivo', meta: 160, real: 160, rechazo: 3, estado: 'ok', img: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=300&q=80' },
+            { dia: 'Mar 13', lote: 'LOT-718', prenda: 'Etiquetado Oro LEM', meta: 350, real: 350, rechazo: 0, estado: 'ok', img: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=300&q=80' },
+            { dia: 'Mié 14', lote: 'LOT-725', prenda: 'Control Calidad', meta: 200, real: 170, rechazo: 11, estado: 'alerta', img: 'https://images.unsplash.com/photo-1539533018447-63fcce2678e3?auto=format&fit=crop&w=300&q=80' },
+            { dia: 'Jue 15', lote: 'LOT-730', prenda: 'Despacho Colón', meta: 240, real: 240, rechazo: 0, estado: 'ok', img: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=300&q=80' }
+          ]
+        }
+      ],
+      rrhhDescansos: [
+        { empleada: 'ANDREA LOPEZ', cargo: 'Vendedora Caja 1', fecha: 'Miércoles 27 Nov', tipo: 'Día de Descanso Semanal', estado: 'APROBADO' },
+        { empleada: 'CAMILA TORRES', cargo: 'Vendedora Caja 2', fecha: 'Jueves 28 Nov', tipo: 'Día de Descanso Semanal', estado: 'PENDIENTE' }
+      ]
+    };
+
+    // Definición de Módulos y Permisos por Rol
+    const MODULES = [
+      { id: 'dashboard', label: 'Dashboard Ejecutivo', icon: 'layout-dashboard', roles: ['ADMIN'], subtitle: 'Visión financiera global, KPIs y rendimiento de tienda (Img 6 y 7)' },
+      { id: 'pos', label: 'Punto de Venta (POS)', icon: 'shopping-bag', roles: ['ADMIN', 'VENDEDORA'], subtitle: 'Facturación rápida táctil por prenda, color y talla (Img 8)' },
+      { id: 'caja', label: 'Control de Caja & Gastos', icon: 'wallet', roles: ['ADMIN', 'VENDEDORA'], subtitle: 'Apertura, Cierre de Caja, Gastos, Depósitos, Retiros y Adelantos' },
+      { id: 'inventario', label: 'Inventario & Variantes', icon: 'package-check', roles: ['ADMIN', 'VENDEDORA'], subtitle: 'Ficha maestra por SKU, existencias, check de inventario y tallas (Img 9)' },
+      { id: 'matriz', label: 'Matriz & Taller', icon: 'kanban', roles: ['ADMIN'], subtitle: 'Planificación de líneas de confección, entradas de taller y control de lotes (Img 5)' },
+      { id: 'equipo', label: 'Perfiles & Vendedoras', icon: 'users', roles: ['ADMIN'], subtitle: 'Crear cuentas de nuevas Vendedoras o Administradores y gestionar accesos' },
+      { id: 'rrhh', label: 'Días de Descanso & Histórico', icon: 'calendar-Range', roles: ['ADMIN', 'VENDEDORA'], subtitle: 'Turnos, solicitud de descansos y consolidado mensual' }
+    ];
+
+    function quickFill(u, p) {
+      document.getElementById('loginUser').value = u;
+      document.getElementById('loginPass').value = p;
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      const u = document.getElementById('loginUser').value.trim().toLowerCase();
+      const p = document.getElementById('loginPass').value.trim();
+
+      // Si hay URL de Google Apps Script configurada, valida contra Google Sheets primero
+      if (GOOGLE_SCRIPT_URL) {
+        try {
+          const res = await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            body: JSON.stringify({ action: 'login', payload: { usuario: u, clave: p } })
+          });
+          const json = await res.json();
+          if (json.ok) {
+            iniciarSesionConUsuario({
+              nombre: json.user.NOMBRE,
+              usuario: json.user.USUARIO,
+              rol: json.user.ROL,
+              caja: json.user.CAJA_ASIGNADA
+            });
+            return;
+          }
+        } catch (err) {
+          console.warn('Usando modo local de respaldo:', err);
+        }
+      }
+
+      const found = state.users.find(x => x.usuario.toLowerCase() === u && x.clave === p && x.estado === 'ACTIVO');
+      if (!found) {
+        alert('Credenciales incorrectas o usuario inactivo.');
+        return;
+      }
+      iniciarSesionConUsuario(found);
+    }
+
+    function iniciarSesionConUsuario(user) {
+      state.currentUser = user;
+      state.activeModule = user.rol === 'ADMIN' ? 'dashboard' : 'pos';
+      document.getElementById('loginScreen').classList.add('hidden');
+      document.getElementById('appContainer').classList.remove('hidden');
+      document.getEle
