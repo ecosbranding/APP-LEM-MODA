@@ -1,0 +1,22 @@
+{
+  "name": "LEM MODA · Sistema Central",
+  "short_name": "LEM MODA",
+  "description": "Sistema POS, Caja, Inventario y Taller de LEM MODA",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#070D0A",
+  "theme_color": "#070D0A",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "logo-lem.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "logo-lem.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
