@@ -1,20 +1,21 @@
+json
 {
-  "name": "LEM MODA · Sistema Central",
+  "name": "LEM MODA | Executive Suite",
   "short_name": "LEM MODA",
-  "description": "Sistema POS, Caja, Inventario y Taller de LEM MODA",
+  "description": "Sistema de Gestión y Punto de Venta de Alta Costura para LEM MODA.",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#070D0A",
-  "theme_color": "#070D0A",
+  "background_color": "#0B0D11",
+  "theme_color": "#0B0D11",
   "orientation": "any",
   "icons": [
     {
-      "src": "logo-lem.png",
+      "src": "https://placehold.co/192x192/0B0D11/C89D4B.png?text=LEM+MODA",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "logo-lem.png",
+      "src": "https://placehold.co/512x512/0B0D11/C89D4B.png?text=LEM+MODA",
       "sizes": "512x512",
       "type": "image/png"
     }
